@@ -37,9 +37,9 @@
             // 
             // btnClickThis
             // 
-            btnClickThis.Location = new Point(887, 717);
+            btnClickThis.Location = new Point(1069, 916);
             btnClickThis.Name = "btnClickThis";
-            btnClickThis.Size = new Size(245, 23);
+            btnClickThis.Size = new Size(358, 23);
             btnClickThis.TabIndex = 0;
             btnClickThis.Text = "click this";
             btnClickThis.UseVisualStyleBackColor = true;
@@ -60,14 +60,14 @@
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(847, 728);
+            panel1.Size = new Size(1040, 927);
             panel1.TabIndex = 2;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1144, 765);
+            ClientSize = new Size(1439, 951);
             Controls.Add(panel1);
             Controls.Add(btnClickThis);
             Name = "Form1";
