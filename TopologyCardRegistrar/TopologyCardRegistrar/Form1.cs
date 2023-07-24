@@ -14,12 +14,14 @@ namespace TopologyCardRegistrar
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OpenSvgFile();
+            string svgFilePath = GetSvgFilePath();
+
+            if(svgFilePath != string.Empty)
+                DisplaySvg(svgFilePath);
         }
 
-        (string, string) OpenSvgFile()
+        string GetSvgFilePath()
         {
-            var fileContent = string.Empty;
             var filePath = string.Empty;
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -33,25 +35,20 @@ namespace TopologyCardRegistrar
                 {
                     //Get the path of specified file
                     filePath = openFileDialog.FileName;
-
-                    var svgDocument = Svg.SvgDocument.Open(filePath);
-                    svgDocument.Width = 1024;
-                    svgDocument.Height = 1024;
-                    var bitmap = svgDocument.Draw();
-                    pictureBox1.Size = bitmap.Size;
-                    pictureBox1.Image = bitmap;
-
-                    //Read the contents of the file into a stream
-                    var fileStream = openFileDialog.OpenFile();
-
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
                 }
             }
 
-            return (filePath, fileContent);
+            return filePath;
+        }
+
+        void DisplaySvg(string _filePath)
+        {
+            var svgDocument = Svg.SvgDocument.Open(_filePath);
+            svgDocument.Width = 1024;
+            svgDocument.Height = 1024;
+            var bitmap = svgDocument.Draw();
+            pictureBox1.Size = bitmap.Size;
+            pictureBox1.Image = bitmap;
         }
     }
 }
