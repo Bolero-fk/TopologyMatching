@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace TopologyCardRegistrar
 {
     public partial class Form1 : Form
@@ -16,8 +18,16 @@ namespace TopologyCardRegistrar
         {
             string svgFilePath = GetSvgFilePath();
 
-            if(svgFilePath != string.Empty)
-                DisplaySvg(svgFilePath);
+            if (svgFilePath != string.Empty)
+            {
+                Bitmap bitmap = DisplaySvg(svgFilePath);
+                TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
+                var aaa = statusCalculator.CalculateToPologyStatus(bitmap);
+                foreach (var a in aaa)
+                {
+                    Debug.WriteLine(a);
+                }
+            }
         }
 
         string GetSvgFilePath()
@@ -41,14 +51,23 @@ namespace TopologyCardRegistrar
             return filePath;
         }
 
-        void DisplaySvg(string _filePath)
+        Bitmap DisplaySvg(string _filePath)
         {
             var svgDocument = Svg.SvgDocument.Open(_filePath);
+            svgDocument.Children.Insert(0, new Svg.SvgRectangle
+            {
+                Width = new Svg.SvgUnit(svgDocument.Width.Type, svgDocument.Width.Value),
+                Height = new Svg.SvgUnit(svgDocument.Height.Type, svgDocument.Height.Value),
+                Fill = new Svg.SvgColourServer(Color.White)
+            });
+
             svgDocument.Width = 1024;
             svgDocument.Height = 1024;
             var bitmap = svgDocument.Draw();
             pictureBox1.Size = bitmap.Size;
             pictureBox1.Image = bitmap;
+
+            return bitmap;
         }
     }
 }
