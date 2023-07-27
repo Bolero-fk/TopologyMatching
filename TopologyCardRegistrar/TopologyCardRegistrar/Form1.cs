@@ -26,6 +26,7 @@ namespace TopologyCardRegistrar
 
             if (svgFilePaths.Length != 0)
             {
+                m_nowPage = 0;
                 m_imgFilePaths = svgFilePaths;
                 LoadSvg(m_imgFilePaths[m_nowPage]);
                 ChangePageButtonEnabled();
