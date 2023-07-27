@@ -40,6 +40,7 @@ namespace TopologyCardRegistrar
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "svg files (*.svg)|*.svg";
+                openFileDialog.Multiselect = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {

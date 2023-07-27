@@ -42,6 +42,8 @@
             outputHoleCountPathBox = new TextBox();
             outputHoleCountbutton = new Button();
             splitContainer1 = new SplitContainer();
+            prevButton = new Button();
+            nextButton = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -52,7 +54,7 @@
             // 
             // btnClickThis
             // 
-            btnClickThis.Location = new Point(12, 869);
+            btnClickThis.Location = new Point(12, 872);
             btnClickThis.Name = "btnClickThis";
             btnClickThis.Size = new Size(521, 23);
             btnClickThis.TabIndex = 0;
@@ -82,7 +84,7 @@
             // 
             holeCountLabel.AutoSize = true;
             holeCountLabel.Font = new Font("Yu Gothic UI", 27.75F, FontStyle.Regular, GraphicsUnit.Point);
-            holeCountLabel.Location = new Point(42, 927);
+            holeCountLabel.Location = new Point(35, 927);
             holeCountLabel.Name = "holeCountLabel";
             holeCountLabel.Size = new Size(208, 50);
             holeCountLabel.TabIndex = 3;
@@ -92,7 +94,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(12, 895);
+            label1.Location = new Point(12, 903);
             label1.Name = "label1";
             label1.Size = new Size(356, 32);
             label1.TabIndex = 4;
@@ -112,7 +114,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(3, 3);
+            label3.Location = new Point(3, 2);
             label3.Name = "label3";
             label3.Size = new Size(242, 32);
             label3.TabIndex = 6;
@@ -121,7 +123,7 @@
             // SaveCardButton
             // 
             SaveCardButton.Enabled = false;
-            SaveCardButton.Location = new Point(536, 869);
+            SaveCardButton.Location = new Point(536, 872);
             SaveCardButton.Name = "SaveCardButton";
             SaveCardButton.Size = new Size(516, 23);
             SaveCardButton.TabIndex = 7;
@@ -171,7 +173,7 @@
             // 
             // splitContainer1
             // 
-            splitContainer1.Location = new Point(12, 781);
+            splitContainer1.Location = new Point(12, 795);
             splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -185,15 +187,37 @@
             splitContainer1.Panel2.Controls.Add(label3);
             splitContainer1.Panel2.Controls.Add(outputHoleCountbutton);
             splitContainer1.Panel2.Controls.Add(outputHoleCountPathBox);
-            splitContainer1.Size = new Size(1040, 82);
+            splitContainer1.Size = new Size(1040, 71);
             splitContainer1.SplitterDistance = 520;
             splitContainer1.TabIndex = 13;
+            // 
+            // prevButton
+            // 
+            prevButton.Enabled = false;
+            prevButton.Location = new Point(12, 766);
+            prevButton.Name = "prevButton";
+            prevButton.Size = new Size(75, 23);
+            prevButton.TabIndex = 14;
+            prevButton.Text = "前へ";
+            prevButton.UseVisualStyleBackColor = true;
+            // 
+            // nextButton
+            // 
+            nextButton.Enabled = false;
+            nextButton.Location = new Point(978, 766);
+            nextButton.Name = "nextButton";
+            nextButton.Size = new Size(75, 23);
+            nextButton.TabIndex = 15;
+            nextButton.Text = "次へ";
+            nextButton.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1065, 991);
+            ClientSize = new Size(1065, 980);
+            Controls.Add(nextButton);
+            Controls.Add(prevButton);
             Controls.Add(splitContainer1);
             Controls.Add(SaveCardButton);
             Controls.Add(label1);
@@ -234,5 +258,7 @@
         private TextBox outputHoleCountPathBox;
         private Button outputHoleCountbutton;
         private SplitContainer splitContainer1;
+        private Button prevButton;
+        private Button nextButton;
     }
 }
