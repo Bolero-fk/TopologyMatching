@@ -35,14 +35,13 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            button1 = new Button();
+            saveCardButton = new Button();
             openFileDialog1 = new OpenFileDialog();
-            openFileDialog2 = new OpenFileDialog();
             saveFileDialog1 = new SaveFileDialog();
-            textBox1 = new TextBox();
-            button3 = new Button();
-            textBox2 = new TextBox();
-            button4 = new Button();
+            outputSvgPathTextBox = new TextBox();
+            outputSvgButton = new Button();
+            outputHoleCountPathBox = new TextBox();
+            outputHoleCountbutton = new Button();
             splitContainer1 = new SplitContainer();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
@@ -60,7 +59,7 @@
             btnClickThis.TabIndex = 0;
             btnClickThis.Text = "画像を読み込む";
             btnClickThis.UseVisualStyleBackColor = true;
-            btnClickThis.Click += button1_Click;
+            btnClickThis.Click += LoadSvgButton_Click;
             // 
             // pictureBox1
             // 
@@ -120,56 +119,57 @@
             label3.TabIndex = 6;
             label3.Text = "穴の数の出力先ファイル";
             // 
-            // button1
+            // saveCardButton
             // 
-            button1.Location = new Point(536, 869);
-            button1.Name = "button1";
-            button1.Size = new Size(516, 23);
-            button1.TabIndex = 7;
-            button1.Text = "カードを保存する";
-            button1.UseVisualStyleBackColor = true;
+            saveCardButton.Enabled = false;
+            saveCardButton.Location = new Point(536, 869);
+            saveCardButton.Name = "saveCardButton";
+            saveCardButton.Size = new Size(516, 23);
+            saveCardButton.TabIndex = 7;
+            saveCardButton.Text = "カードを保存する";
+            saveCardButton.UseVisualStyleBackColor = true;
+            saveCardButton.Click += SaveCardButton_Click;
             // 
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
+            openFileDialog1.FileOk += openFileDialog1_FileOk;
             // 
-            // openFileDialog2
+            // outputSvgPathTextBox
             // 
-            openFileDialog2.FileName = "openFileDialog2";
+            outputSvgPathTextBox.Enabled = false;
+            outputSvgPathTextBox.Location = new Point(3, 38);
+            outputSvgPathTextBox.Name = "outputSvgPathTextBox";
+            outputSvgPathTextBox.Size = new Size(433, 23);
+            outputSvgPathTextBox.TabIndex = 8;
             // 
-            // textBox1
+            // outputSvgButton
             // 
-            textBox1.Enabled = false;
-            textBox1.Location = new Point(3, 38);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(433, 23);
-            textBox1.TabIndex = 8;
+            outputSvgButton.Location = new Point(442, 38);
+            outputSvgButton.Name = "outputSvgButton";
+            outputSvgButton.Size = new Size(75, 23);
+            outputSvgButton.TabIndex = 10;
+            outputSvgButton.Text = "参照";
+            outputSvgButton.UseVisualStyleBackColor = true;
+            outputSvgButton.Click += OutputSvgButton_Click;
             // 
-            // button3
+            // outputHoleCountPathBox
             // 
-            button3.Location = new Point(442, 38);
-            button3.Name = "button3";
-            button3.Size = new Size(75, 23);
-            button3.TabIndex = 10;
-            button3.Text = "参照";
-            button3.UseVisualStyleBackColor = true;
+            outputHoleCountPathBox.Enabled = false;
+            outputHoleCountPathBox.Location = new Point(3, 39);
+            outputHoleCountPathBox.Name = "outputHoleCountPathBox";
+            outputHoleCountPathBox.Size = new Size(429, 23);
+            outputHoleCountPathBox.TabIndex = 11;
             // 
-            // textBox2
+            // outputHoleCountbutton
             // 
-            textBox2.Enabled = false;
-            textBox2.Location = new Point(3, 39);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(429, 23);
-            textBox2.TabIndex = 11;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(438, 38);
-            button4.Name = "button4";
-            button4.Size = new Size(75, 23);
-            button4.TabIndex = 12;
-            button4.Text = "参照";
-            button4.UseVisualStyleBackColor = true;
+            outputHoleCountbutton.Location = new Point(438, 38);
+            outputHoleCountbutton.Name = "outputHoleCountbutton";
+            outputHoleCountbutton.Size = new Size(75, 23);
+            outputHoleCountbutton.TabIndex = 12;
+            outputHoleCountbutton.Text = "参照";
+            outputHoleCountbutton.UseVisualStyleBackColor = true;
+            outputHoleCountbutton.Click += OutputHoleCountbutton_Click;
             // 
             // splitContainer1
             // 
@@ -179,14 +179,14 @@
             // splitContainer1.Panel1
             // 
             splitContainer1.Panel1.Controls.Add(label2);
-            splitContainer1.Panel1.Controls.Add(textBox1);
-            splitContainer1.Panel1.Controls.Add(button3);
+            splitContainer1.Panel1.Controls.Add(outputSvgPathTextBox);
+            splitContainer1.Panel1.Controls.Add(outputSvgButton);
             // 
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(label3);
-            splitContainer1.Panel2.Controls.Add(button4);
-            splitContainer1.Panel2.Controls.Add(textBox2);
+            splitContainer1.Panel2.Controls.Add(outputHoleCountbutton);
+            splitContainer1.Panel2.Controls.Add(outputHoleCountPathBox);
             splitContainer1.Size = new Size(1040, 82);
             splitContainer1.SplitterDistance = 520;
             splitContainer1.TabIndex = 13;
@@ -197,7 +197,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1065, 991);
             Controls.Add(splitContainer1);
-            Controls.Add(button1);
+            Controls.Add(saveCardButton);
             Controls.Add(label1);
             Controls.Add(holeCountLabel);
             Controls.Add(panel1);
@@ -229,14 +229,13 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Button button1;
+        private Button saveCardButton;
         private OpenFileDialog openFileDialog1;
-        private OpenFileDialog openFileDialog2;
         private SaveFileDialog saveFileDialog1;
-        private TextBox textBox1;
-        private Button button3;
-        private TextBox textBox2;
-        private Button button4;
+        private TextBox outputSvgPathTextBox;
+        private Button outputSvgButton;
+        private TextBox outputHoleCountPathBox;
+        private Button outputHoleCountbutton;
         private SplitContainer splitContainer1;
     }
 }

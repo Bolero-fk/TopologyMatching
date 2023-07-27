@@ -12,10 +12,10 @@ namespace TopologyCardRegistrar
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            holeCountLabel.Text = string.Empty;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void LoadSvgButton_Click(object sender, EventArgs e)
         {
             string svgFilePath = GetSvgFilePath();
 
@@ -67,6 +67,26 @@ namespace TopologyCardRegistrar
             pictureBox1.Image = bitmap;
 
             return bitmap;
+        }
+
+        private void OutputSvgButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OutputHoleCountbutton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SaveCardButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }
