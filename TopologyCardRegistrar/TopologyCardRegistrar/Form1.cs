@@ -36,8 +36,6 @@ namespace TopologyCardRegistrar
             var filePath = string.Empty;
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                string? currentPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                openFileDialog.InitialDirectory = currentPath;
                 openFileDialog.Filter = "svg files (*.svg)|*.svg";
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
