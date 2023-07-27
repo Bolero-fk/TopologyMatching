@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 
 namespace TopologyCardRegistrar
 {
@@ -22,11 +23,9 @@ namespace TopologyCardRegistrar
             {
                 Bitmap bitmap = DisplaySvg(svgFilePath);
                 TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
-                var aaa = statusCalculator.CalculateToPologyStatus(bitmap);
-                foreach (var a in aaa)
-                {
-                    Debug.WriteLine(a);
-                }
+                string holeCount = string.Join(',', statusCalculator.CalculateToPologyStatus(bitmap).Select(num => num.ToString())); ;
+                holeCountLabel.Text = holeCount;
+                Debug.WriteLine(holeCount);
             }
         }
 
