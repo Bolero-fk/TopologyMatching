@@ -200,6 +200,7 @@
             prevButton.TabIndex = 14;
             prevButton.Text = "前へ";
             prevButton.UseVisualStyleBackColor = true;
+            prevButton.Click += prevButton_Click;
             // 
             // nextButton
             // 
@@ -210,6 +211,7 @@
             nextButton.TabIndex = 15;
             nextButton.Text = "次へ";
             nextButton.UseVisualStyleBackColor = true;
+            nextButton.Click += nextButton_Click;
             // 
             // Form1
             // 

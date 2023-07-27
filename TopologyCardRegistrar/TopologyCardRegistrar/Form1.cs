@@ -6,7 +6,8 @@ namespace TopologyCardRegistrar
 {
     public partial class Form1 : Form
     {
-        string m_imgFilePath = string.Empty;
+        string[] m_imgFilePaths;
+        int m_nowPage = 0;
         int[] m_holeCounts = new int[0];
 
         public Form1()
@@ -21,21 +22,27 @@ namespace TopologyCardRegistrar
 
         private void LoadSvgButton_Click(object sender, EventArgs e)
         {
-            string svgFilePath = GetSvgFilePath();
+            string[] svgFilePaths = GetSvgFilePaths();
 
-            if (svgFilePath != string.Empty)
+            if (svgFilePaths.Length != 0)
             {
-                m_imgFilePath = svgFilePath;
-                Bitmap bitmap = DisplaySvg(svgFilePath);
-                TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
-                m_holeCounts = statusCalculator.CalculateToPologyStatus(bitmap).ToArray();
-                string holeCount = string.Join(',', m_holeCounts.Select(num => num.ToString())); ;
-                holeCountLabel.Text = holeCount;
+                m_imgFilePaths = svgFilePaths;
+                LoadSvg(m_imgFilePaths[m_nowPage]);
+                ChangePageButtonEnabled();
             }
             ChangeSaveCardButton();
         }
 
-        string GetSvgFilePath()
+        private void LoadSvg(string svgFilePath)
+        {
+            Bitmap bitmap = DisplaySvg(svgFilePath);
+            TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
+            m_holeCounts = statusCalculator.CalculateToPologyStatus(bitmap).ToArray();
+            string holeCount = string.Join(',', m_holeCounts.Select(num => num.ToString())); ;
+            holeCountLabel.Text = holeCount;
+        }
+
+        string[] GetSvgFilePaths()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -45,11 +52,11 @@ namespace TopologyCardRegistrar
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Get the path of specified file
-                    return openFileDialog.FileName;
+                    return openFileDialog.FileNames;
                 }
             }
 
-            return string.Empty;
+            return new string[0];
         }
 
         Bitmap DisplaySvg(string _filePath)
@@ -103,12 +110,12 @@ namespace TopologyCardRegistrar
 
         private void SaveCardButton_Click(object sender, EventArgs e)
         {
-            string imgFileName = Path.GetFileName(m_imgFilePath);
+            string imgFileName = Path.GetFileName(m_imgFilePaths[m_nowPage]);
             string jsonPath = outputHoleCountPathBox.Text;
             string imgFolderPath = outputSvgPathTextBox.Text;
 
             // ‰æ‘œ‚ð•Û‘¶‚·‚é
-            File.Copy(m_imgFilePath, Path.Combine(imgFolderPath, imgFileName), true);
+            File.Copy(m_imgFilePaths[m_nowPage], Path.Combine(imgFolderPath, imgFileName), true);
 
             // json‚ð•Û‘¶‚·‚é
             JsonSaver.SaveJson(jsonPath, imgFileName, m_holeCounts);
@@ -123,6 +130,26 @@ namespace TopologyCardRegistrar
             if (holeCountLabel.Text == string.Empty)
                 return;
             SaveCardButton.Enabled = true;
+        }
+
+        void ChangePageButtonEnabled()
+        {
+            prevButton.Enabled = m_nowPage > 0;
+            nextButton.Enabled = m_nowPage < m_imgFilePaths.Length - 1;
+        }
+
+        private void prevButton_Click(object sender, EventArgs e)
+        {
+            m_nowPage--;
+            LoadSvg(m_imgFilePaths[m_nowPage]);
+            ChangePageButtonEnabled();
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            m_nowPage++;
+            LoadSvg(m_imgFilePaths[m_nowPage]);
+            ChangePageButtonEnabled();
         }
     }
 }
