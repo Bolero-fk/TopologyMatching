@@ -7,6 +7,7 @@ namespace TopologyCardRegistrar
     public partial class Form1 : Form
     {
         string m_imgFilePath = string.Empty;
+        int[] m_holeCounts = new int[0];
 
         public Form1()
         {
@@ -27,7 +28,8 @@ namespace TopologyCardRegistrar
                 m_imgFilePath = svgFilePath;
                 Bitmap bitmap = DisplaySvg(svgFilePath);
                 TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
-                string holeCount = string.Join(',', statusCalculator.CalculateToPologyStatus(bitmap).Select(num => num.ToString())); ;
+                m_holeCounts = statusCalculator.CalculateToPologyStatus(bitmap).ToArray();
+                string holeCount = string.Join(',', m_holeCounts.Select(num => num.ToString())); ;
                 holeCountLabel.Text = holeCount;
             }
             ChangeSaveCardButton();
