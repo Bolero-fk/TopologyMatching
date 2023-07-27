@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.DirectoryServices.ActiveDirectory;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace TopologyCardRegistrar
 {
@@ -116,17 +118,27 @@ namespace TopologyCardRegistrar
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
+
+            BitmapData data = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
+
+            // RGBAの各ピクセルは4バイト
+            byte[] pixelValues = new byte[width * height * 4];
+            Marshal.Copy(data.Scan0, pixelValues, 0, pixelValues.Length);
+
+            bitmap.UnlockBits(data);
+
             bool[,] result = new bool[height, width];
 
-            for (int i = 0; i < height; i++)
+            for (int i = 0; i < pixelValues.Length; i += 4)
             {
-                for (int j = 0; j < width; j++)
-                {
-                    float brightness = bitmap.GetPixel(j, i).GetBrightness();
+                int x = (i / 4) % width;
+                int y = (i / 4) / width;
 
-                    // 閾値に基づいてピクセルを白または黒に分類します。
-                    result[i, j] = brightness < threshold; // 白:false, 黒:true
-                }
+                Color pixelColor = Color.FromArgb(pixelValues[i + 3], pixelValues[i + 2], pixelValues[i + 1], pixelValues[i]);
+                float brightness = pixelColor.GetBrightness();
+
+                // 閾値に基づいてピクセルを白または黒に分類します。
+                result[x, y] = brightness < threshold; // 白:false, 黒:true
             }
 
             return result;
