@@ -173,6 +173,7 @@
             // 
             // splitContainer1
             // 
+            splitContainer1.IsSplitterFixed = true;
             splitContainer1.Location = new Point(12, 795);
             splitContainer1.Name = "splitContainer1";
             // 
