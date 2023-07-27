@@ -134,8 +134,10 @@
             outputSvgPathTextBox.Enabled = false;
             outputSvgPathTextBox.Location = new Point(3, 38);
             outputSvgPathTextBox.Name = "outputSvgPathTextBox";
+            outputSvgPathTextBox.RightToLeft = RightToLeft.Yes;
             outputSvgPathTextBox.Size = new Size(433, 23);
             outputSvgPathTextBox.TabIndex = 8;
+            outputSvgPathTextBox.TextAlign = HorizontalAlignment.Right;
             // 
             // outputSvgButton
             // 
@@ -152,8 +154,10 @@
             outputHoleCountPathBox.Enabled = false;
             outputHoleCountPathBox.Location = new Point(3, 39);
             outputHoleCountPathBox.Name = "outputHoleCountPathBox";
+            outputHoleCountPathBox.RightToLeft = RightToLeft.Yes;
             outputHoleCountPathBox.Size = new Size(429, 23);
             outputHoleCountPathBox.TabIndex = 11;
+            outputHoleCountPathBox.TextAlign = HorizontalAlignment.Right;
             // 
             // outputHoleCountbutton
             // 
