@@ -6,6 +6,8 @@ namespace TopologyCardRegistrar
 {
     public partial class Form1 : Form
     {
+        string m_imgFilePath = string.Empty;
+
         public Form1()
         {
             InitializeComponent();
@@ -22,18 +24,17 @@ namespace TopologyCardRegistrar
 
             if (svgFilePath != string.Empty)
             {
+                m_imgFilePath = svgFilePath;
                 Bitmap bitmap = DisplaySvg(svgFilePath);
                 TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
                 string holeCount = string.Join(',', statusCalculator.CalculateToPologyStatus(bitmap).Select(num => num.ToString())); ;
                 holeCountLabel.Text = holeCount;
-                Debug.WriteLine(holeCount);
             }
             ChangeSaveCardButton();
         }
 
         string GetSvgFilePath()
         {
-            var filePath = string.Empty;
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "svg files (*.svg)|*.svg";
@@ -41,11 +42,11 @@ namespace TopologyCardRegistrar
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Get the path of specified file
-                    filePath = openFileDialog.FileName;
+                    return openFileDialog.FileName;
                 }
             }
 
-            return filePath;
+            return string.Empty;
         }
 
         Bitmap DisplaySvg(string _filePath)
@@ -98,6 +99,12 @@ namespace TopologyCardRegistrar
 
         private void SaveCardButton_Click(object sender, EventArgs e)
         {
+            string imgFileName = Path.GetFileName(m_imgFilePath);
+            string jsonPath = outputHoleCountPathBox.Text;
+            string imgFolderPath = outputSvgPathTextBox.Text;
+
+            // ‰æ‘œ‚ð•Û‘¶‚·‚é
+            File.Copy(m_imgFilePath, Path.Combine(imgFolderPath, imgFileName), true);
         }
 
         private void ChangeSaveCardButton()
