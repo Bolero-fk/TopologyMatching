@@ -107,6 +107,9 @@ namespace TopologyCardRegistrar
 
             // ‰æ‘œ‚ð•Û‘¶‚·‚é
             File.Copy(m_imgFilePath, Path.Combine(imgFolderPath, imgFileName), true);
+
+            // json‚ð•Û‘¶‚·‚é
+            JsonSaver.SaveJson(jsonPath, imgFileName, m_holeCounts);
         }
 
         private void ChangeSaveCardButton()
