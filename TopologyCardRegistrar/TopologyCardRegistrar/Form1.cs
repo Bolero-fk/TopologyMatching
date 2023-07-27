@@ -89,6 +89,7 @@ namespace TopologyCardRegistrar
             {
                 string? currentPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 saveFileDialog.Filter = "json files (*.json)|*.json";
+                saveFileDialog.OverwritePrompt = false;
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
