@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace TopologyCardRegistrar
 {
@@ -27,6 +28,7 @@ namespace TopologyCardRegistrar
                 holeCountLabel.Text = holeCount;
                 Debug.WriteLine(holeCount);
             }
+            ChangeSaveCardButton();
         }
 
         string GetSvgFilePath()
@@ -37,8 +39,6 @@ namespace TopologyCardRegistrar
                 string? currentPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 openFileDialog.InitialDirectory = currentPath;
                 openFileDialog.Filter = "svg files (*.svg)|*.svg";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -71,22 +71,46 @@ namespace TopologyCardRegistrar
 
         private void OutputSvgButton_Click(object sender, EventArgs e)
         {
-
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    outputSvgPathTextBox.Text = folderBrowserDialog.SelectedPath;
+                }
+            }
+            ChangeSaveCardButton();
         }
 
         private void OutputHoleCountbutton_Click(object sender, EventArgs e)
         {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                string? currentPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                saveFileDialog.Filter = "json files (*.json)|*.json";
 
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    outputHoleCountPathBox.Text = saveFileDialog.FileName;
+                }
+            }
+            ChangeSaveCardButton();
         }
 
         private void SaveCardButton_Click(object sender, EventArgs e)
         {
-
         }
 
-        private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ChangeSaveCardButton()
         {
-
+            if (outputSvgPathTextBox.Text == string.Empty)
+                return;
+            if (outputHoleCountPathBox.Text == string.Empty)
+                return;
+            if (holeCountLabel.Text == string.Empty)
+                return;
+            SaveCardButton.Enabled = true;
         }
     }
 }

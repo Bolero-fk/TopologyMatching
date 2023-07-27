@@ -35,8 +35,7 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            saveCardButton = new Button();
-            openFileDialog1 = new OpenFileDialog();
+            SaveCardButton = new Button();
             saveFileDialog1 = new SaveFileDialog();
             outputSvgPathTextBox = new TextBox();
             outputSvgButton = new Button();
@@ -119,21 +118,16 @@
             label3.TabIndex = 6;
             label3.Text = "穴の数の出力先ファイル";
             // 
-            // saveCardButton
+            // SaveCardButton
             // 
-            saveCardButton.Enabled = false;
-            saveCardButton.Location = new Point(536, 869);
-            saveCardButton.Name = "saveCardButton";
-            saveCardButton.Size = new Size(516, 23);
-            saveCardButton.TabIndex = 7;
-            saveCardButton.Text = "カードを保存する";
-            saveCardButton.UseVisualStyleBackColor = true;
-            saveCardButton.Click += SaveCardButton_Click;
-            // 
-            // openFileDialog1
-            // 
-            openFileDialog1.FileName = "openFileDialog1";
-            openFileDialog1.FileOk += openFileDialog1_FileOk;
+            SaveCardButton.Enabled = false;
+            SaveCardButton.Location = new Point(536, 869);
+            SaveCardButton.Name = "SaveCardButton";
+            SaveCardButton.Size = new Size(516, 23);
+            SaveCardButton.TabIndex = 7;
+            SaveCardButton.Text = "カードを保存する";
+            SaveCardButton.UseVisualStyleBackColor = true;
+            SaveCardButton.Click += SaveCardButton_Click;
             // 
             // outputSvgPathTextBox
             // 
@@ -197,7 +191,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1065, 991);
             Controls.Add(splitContainer1);
-            Controls.Add(saveCardButton);
+            Controls.Add(SaveCardButton);
             Controls.Add(label1);
             Controls.Add(holeCountLabel);
             Controls.Add(panel1);
@@ -229,8 +223,7 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Button saveCardButton;
-        private OpenFileDialog openFileDialog1;
+        private Button SaveCardButton;
         private SaveFileDialog saveFileDialog1;
         private TextBox outputSvgPathTextBox;
         private Button outputSvgButton;
