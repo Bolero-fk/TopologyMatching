@@ -32,6 +32,13 @@ namespace TopologyCardRegistrar
                     topologyId[i, j] = -1;
                 }
 
+            for (int i = 0; i < binary.GetLength(0); i++)
+                for (int j = 0; j < binary.GetLength(1); j++)
+                {
+                    if (IsNoise(i, j, binary))
+                        binary[i, j] = !binary[i, j];
+                }
+
             // 割り振られていないマスが見つかったらそのマスと同じ色で連結している部分にidを割り振る
             int topologyCount = 0;
             for (int i = 0; i < binary.GetLength(0); i++)
@@ -55,6 +62,35 @@ namespace TopologyCardRegistrar
             topologyStatus.Sort();
 
             return topologyStatus;
+        }
+
+        bool IsNoise(int x, int y, bool[,] binary)
+        {
+            // 黒色は8方向、白色は4方向に移動させる。
+            int[] black_dir_x = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
+            int[] black_dir_y = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 };
+            int[] white_dir_x = new int[] { 0, 0, -1, 1 };
+            int[] white_dir_y = new int[] { -1, 1, 0, 0 };
+
+            int[] dir_x = binary[x, y] ? black_dir_x : white_dir_x;
+            int[] dir_y = binary[x, y] ? black_dir_y : white_dir_y;
+
+            int sameColorCount = 0;
+
+            for (int d = 0; d < dir_x.Length; d++)
+            {
+                int next_x = x + dir_x[d];
+                int next_y = y + dir_y[d];
+
+                // 隣接マスが図形外の場合は飛ばす
+                if (next_x < 0 || next_x > binary.GetLength(0) - 1 || next_y < 0 || next_y > binary.GetLength(1) - 1)
+                    continue;
+
+                if (binary[x, y] == binary[next_x, next_y])
+                    sameColorCount++;
+            }
+
+            return sameColorCount == 0;
         }
 
         /// <summary>
