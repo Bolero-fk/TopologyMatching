@@ -37,6 +37,8 @@ body {
     font-size: 24px;
     border-radius: 5px;
     cursor: pointer;
+    background-image: url('images/card-back1.png');
+    background-size: cover;
 }
 
 #reset-button {

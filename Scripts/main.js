@@ -20,6 +20,7 @@ window.onload = () => {
     for (let i = 0; i < ROW * COLUMN; i++) {
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
+        cardElement.style.backgroundImage = 'url(./TopologyCards/images/U+22F1.svg)';
         gameBoard.appendChild(cardElement);
         const card = {
             element: cardElement,
