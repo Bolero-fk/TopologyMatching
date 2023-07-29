@@ -31,12 +31,6 @@ export class GameEngine {
 
             this.sortedCardWithcomplexityLevel.get(card.holeCount.toString()).push(card);
         });
-
-        this.sortedCardWithcomplexityLevel.forEach((value, key) => {
-            console.log(value);
-        });
-
-        console.log(this.sortedCardWithcomplexityLevel.size);
     }
 
     // ゲーム開始時の初期化処理

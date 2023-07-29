@@ -24,7 +24,6 @@ function flipCard(card: Card, flipstatus: boolean = undefined) {
         card.revealed = flipstatus;
 
     if (card.revealed) {
-        console.log();
         card.element.style.backgroundColor = getComputedStyle(card.element).getPropertyValue("--front-background-color");
         card.element.style.backgroundImage = card.frontImageUrl;
     }
@@ -36,16 +35,14 @@ function flipCard(card: Card, flipstatus: boolean = undefined) {
     return;
 }
 
-const ROW = 2; // Change these values to your preferred grid size
-const COLUMN = 2;
+const ROW = 4; // Change these values to your preferred grid size
+const COLUMN = 5;
 
 window.onload = () => {
     const gameBoard = document.getElementById('game-board');
     const resetButton = document.getElementById('reset-button');
 
-    let json: string = '[{ "ImageName": "add_fill.svg", "HoleCount": [0] }, { "ImageName": "add_line.svg", "HoleCount": [0] }, { "ImageName": "application_fill.svg", "HoleCount": [4] }, { "ImageName": "application_line.svg", "HoleCount": [0, 0, 0, 1] }]';
-
-    const gameEngine = new GameEngine(JSON.parse(json));
+    const gameEngine = new GameEngine(LoadTopologyCardsJson("./TopologyCards/cards.json"));
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
 
     // Set the CSS variables
@@ -102,3 +99,17 @@ window.onload = () => {
         revealedCards = [];
     };
 };
+
+function LoadTopologyCardsJson(url: string): any {
+    let result: any;
+    $.ajax({
+        url: url,
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            result = data;
+        }
+    });
+
+    return result;
+}
