@@ -3,7 +3,7 @@ import { GameEngine } from './gameEngine.js';
 interface Card {
     element: HTMLElement;
     revealed: boolean;
-    pairId: number;
+    pairKey: string;
     frontImageUrl: string;
 }
 
@@ -26,7 +26,6 @@ function flipCard(card: Card, flipstatus: boolean = undefined) {
     if (card.revealed) {
         console.log();
         card.element.style.backgroundColor = getComputedStyle(card.element).getPropertyValue("--front-background-color");
-        card.element.textContent = String(card.pairId);
         card.element.style.backgroundImage = card.frontImageUrl;
     }
     else {
@@ -37,8 +36,8 @@ function flipCard(card: Card, flipstatus: boolean = undefined) {
     return;
 }
 
-const ROW = 4; // Change these values to your preferred grid size
-const COLUMN = 5;
+const ROW = 2; // Change these values to your preferred grid size
+const COLUMN = 2;
 
 window.onload = () => {
     const gameBoard = document.getElementById('game-board');
@@ -47,6 +46,7 @@ window.onload = () => {
     let json: string = '[{ "ImageName": "add_fill.svg", "HoleCount": [0] }, { "ImageName": "add_line.svg", "HoleCount": [0] }, { "ImageName": "application_fill.svg", "HoleCount": [4] }, { "ImageName": "application_line.svg", "HoleCount": [0, 0, 0, 1] }]';
 
     const gameEngine = new GameEngine(JSON.parse(json));
+    const cardStatus = gameEngine.startGame(ROW * COLUMN);
 
     // Set the CSS variables
     gameBoard.style.setProperty('--cols', String(COLUMN));
@@ -64,8 +64,8 @@ window.onload = () => {
         const card: Card = {
             element: cardElement,
             revealed: false,
-            pairId: pairIds[i],
-            frontImageUrl: 'url(./TopologyCards/images/U+22F1.svg)'
+            pairKey: cardStatus[i].pairKey,
+            frontImageUrl: 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')'
         };
 
         card.element.onclick = () => {
@@ -77,7 +77,7 @@ window.onload = () => {
             revealedCards.push(card);
 
             if (revealedCards.length == 2) {
-                if (revealedCards[0].pairId == revealedCards[1].pairId) {
+                if (revealedCards[0].pairKey == revealedCards[1].pairKey) {
                     revealedCards = [];
                 } else {
                     setTimeout(() => {
@@ -100,10 +100,5 @@ window.onload = () => {
         }
 
         revealedCards = [];
-
-        shuffleArray(pairIds);
-        for (let i = 0; i < ROW * COLUMN; i++) {
-            cards[i].pairId = pairIds[i];
-        }
     };
 };

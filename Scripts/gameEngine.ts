@@ -2,12 +2,13 @@ class CardStatus {
     imageName: string;
     holeCount: number[];
     complexityLevel: number;
-    pairId: number;
+    pairKey: string;
 
     constructor(imageName: string, holeCount: number[]) {
         this.imageName = imageName;
         this.holeCount = holeCount;
         this.complexityLevel = holeCount.reduce((sum, curr) => sum + curr, 0) + holeCount.length;
+        this.pairKey = holeCount.toString();
     }
 };
 
@@ -16,7 +17,7 @@ export class GameEngine {
     // メンバー変数、ゲームの状態を保持
     private cards: CardStatus[] = new Array(); // Cardはカードを表現する型です
 
-    private sortedCardWithcomplexityLevel: Map<number, CardStatus[]> = new Map();
+    private sortedCardWithcomplexityLevel: Map<string, CardStatus[]> = new Map();
     private selectedCards: CardStatus[];
 
     // コンストラクター、初期化処理を行う
@@ -25,18 +26,28 @@ export class GameEngine {
             const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
             this.cards.push(card);
 
-            if (!this.sortedCardWithcomplexityLevel.has(card.complexityLevel))
-                this.sortedCardWithcomplexityLevel.set(card.complexityLevel, []);
+            if (!this.sortedCardWithcomplexityLevel.has(card.holeCount.toString()))
+                this.sortedCardWithcomplexityLevel.set(card.holeCount.toString(), []);
 
-            this.sortedCardWithcomplexityLevel.get(card.complexityLevel).push(card);
+            this.sortedCardWithcomplexityLevel.get(card.holeCount.toString()).push(card);
         });
 
-        this.sortedCardWithcomplexityLevel = new Map([...this.sortedCardWithcomplexityLevel.entries()].sort((a, b) => a[0] - b[0]));
+        this.sortedCardWithcomplexityLevel.forEach((value, key) => {
+            console.log(value);
+        });
+
+        console.log(this.sortedCardWithcomplexityLevel.size);
     }
 
     // ゲーム開始時の初期化処理
-    startGame() {
-        // ここでカードをシャッフルし、ゲームボードをレンダリングします。
+    startGame(cardNum: number): CardStatus[] {
+        this.selectedCards = this.shuffleArray(this.cards);
+
+        while (this.selectCard.length > cardNum) {
+            this.selectedCards.pop();
+        }
+
+        return this.selectedCards;
     }
 
     // カードを選択したときの処理
@@ -48,5 +59,16 @@ export class GameEngine {
     checkIfGameEnded(): boolean {
         // ゲームが終了したかどうかをチェックし、結果を返します。
         return true;
+    }
+
+    shuffleArray<T>(array: T[]): T[] {
+        const newArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
+
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // 要素の入れ替え
+        }
+
+        return newArray;
     }
 }

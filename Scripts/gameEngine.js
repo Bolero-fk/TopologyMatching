@@ -3,6 +3,7 @@ class CardStatus {
         this.imageName = imageName;
         this.holeCount = holeCount;
         this.complexityLevel = holeCount.reduce((sum, curr) => sum + curr, 0) + holeCount.length;
+        this.pairKey = holeCount.toString();
     }
 }
 ;
@@ -15,21 +16,22 @@ export class GameEngine {
         topologyCards.forEach(topologyCard => {
             const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
             this.cards.push(card);
-            if (!this.sortedCardWithcomplexityLevel.has(card.complexityLevel))
-                this.sortedCardWithcomplexityLevel.set(card.complexityLevel, []);
-            this.sortedCardWithcomplexityLevel.get(card.complexityLevel).push(card);
+            if (!this.sortedCardWithcomplexityLevel.has(card.holeCount.toString()))
+                this.sortedCardWithcomplexityLevel.set(card.holeCount.toString(), []);
+            this.sortedCardWithcomplexityLevel.get(card.holeCount.toString()).push(card);
         });
-        for (const [key, value] of this.sortedCardWithcomplexityLevel) {
-            console.log(`キー: ${key}, 値: ${value.length}`);
-        }
-        this.sortedCardWithcomplexityLevel = new Map([...this.sortedCardWithcomplexityLevel.entries()].sort((a, b) => a[0] - b[0]));
-        for (const [key, value] of this.sortedCardWithcomplexityLevel) {
-            console.log(`キー: ${key}, 値: ${value.length}`);
-        }
+        this.sortedCardWithcomplexityLevel.forEach((value, key) => {
+            console.log(value);
+        });
+        console.log(this.sortedCardWithcomplexityLevel.size);
     }
     // ゲーム開始時の初期化処理
-    startGame() {
-        // ここでカードをシャッフルし、ゲームボードをレンダリングします。
+    startGame(cardNum) {
+        this.selectedCards = this.shuffleArray(this.cards);
+        while (this.selectCard.length > cardNum) {
+            this.selectedCards.pop();
+        }
+        return this.selectedCards;
     }
     // カードを選択したときの処理
     selectCard() {
@@ -39,5 +41,13 @@ export class GameEngine {
     checkIfGameEnded() {
         // ゲームが終了したかどうかをチェックし、結果を返します。
         return true;
+    }
+    shuffleArray(array) {
+        const newArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // 要素の入れ替え
+        }
+        return newArray;
     }
 }
