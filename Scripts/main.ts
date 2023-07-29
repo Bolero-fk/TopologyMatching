@@ -2,6 +2,7 @@ interface Card {
     element: HTMLElement;
     revealed: boolean;
     pairId: number;
+    frontImageUrl: string;
 }
 
 let cards: Card[] = [];
@@ -12,6 +13,26 @@ function shuffleArray(array: any[]) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
+}
+
+function flipCard(card: Card, flipstatus: boolean = undefined) {
+    if (flipstatus === undefined)
+        card.revealed = !card.revealed;
+    else
+        card.revealed = flipstatus;
+
+    if (card.revealed) {
+        console.log();
+        card.element.style.backgroundColor = getComputedStyle(card.element).getPropertyValue("--front-background-color");
+        card.element.textContent = String(card.pairId);
+        card.element.style.backgroundImage = card.frontImageUrl;
+    }
+    else {
+        card.element.style.backgroundColor = getComputedStyle(card.element).getPropertyValue("--back-background-color");
+        card.element.textContent = '';
+        card.element.style.backgroundImage = '';
+    }
+    return;
 }
 
 const ROW = 4; // Change these values to your preferred grid size
@@ -32,13 +53,13 @@ window.onload = () => {
     for (let i = 0; i < ROW * COLUMN; i++) {
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
-        cardElement.style.backgroundImage = 'url(./TopologyCards/images/U+22F1.svg)';
         gameBoard.appendChild(cardElement);
 
         const card: Card = {
             element: cardElement,
             revealed: false,
-            pairId: pairIds[i]
+            pairId: pairIds[i],
+            frontImageUrl: 'url(./TopologyCards/images/U+22F1.svg)'
         };
 
         card.element.onclick = () => {
@@ -46,8 +67,7 @@ window.onload = () => {
                 return;
             }
 
-            card.revealed = true;
-            card.element.textContent = String(card.pairId);
+            flipCard(card);
             revealedCards.push(card);
 
             if (revealedCards.length == 2) {
@@ -56,8 +76,7 @@ window.onload = () => {
                 } else {
                     setTimeout(() => {
                         for (let card of revealedCards) {
-                            card.revealed = false;
-                            card.element.textContent = '';
+                            flipCard(card);
                         }
 
                         revealedCards = [];
@@ -71,8 +90,7 @@ window.onload = () => {
 
     resetButton.onclick = () => {
         for (let card of cards) {
-            card.revealed = false;
-            card.element.textContent = '';
+            flipCard(card, false);
         }
 
         revealedCards = [];

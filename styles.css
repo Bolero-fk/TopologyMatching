@@ -18,7 +18,7 @@ body {
     /* Each card's width (100px) + margin (10px) * 2 + padding (20px) */
     height: calc(44px + 120px * var(--rows));
     padding: 20px;
-    background-color: #fff;
+    background-color: #def2ff;
     border: 2px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
@@ -37,8 +37,9 @@ body {
     font-size: 24px;
     border-radius: 5px;
     cursor: pointer;
-    background-image: url('images/card-back1.png');
     background-size: cover;
+    --front-background-color: #ffffff;
+    --back-background-color: #0099ff;
 }
 
 #reset-button {
