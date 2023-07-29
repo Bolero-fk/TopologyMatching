@@ -7,10 +7,13 @@ function shuffleArray(array) {
     }
 }
 const ROW = 4; // Change these values to your preferred grid size
-const COLUMN = 4;
+const COLUMN = 5;
 window.onload = () => {
     const gameBoard = document.getElementById('game-board');
     const resetButton = document.getElementById('reset-button');
+    // Set the CSS variables
+    gameBoard.style.setProperty('--cols', String(COLUMN));
+    gameBoard.style.setProperty('--rows', String(ROW));
     let pairIds = Array.from({ length: ROW * COLUMN / 2 }, (_, i) => i + 1); // Generate pair IDs
     pairIds = pairIds.concat(pairIds); // Duplicate the array to create pairs
     shuffleArray(pairIds);
