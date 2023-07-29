@@ -1,3 +1,5 @@
+import { GameEngine } from './gameEngine.js';
+
 interface Card {
     element: HTMLElement;
     revealed: boolean;
@@ -41,6 +43,10 @@ const COLUMN = 5;
 window.onload = () => {
     const gameBoard = document.getElementById('game-board');
     const resetButton = document.getElementById('reset-button');
+
+    let json: string = '[{ "ImageName": "add_fill.svg", "HoleCount": [0] }, { "ImageName": "add_line.svg", "HoleCount": [0] }, { "ImageName": "application_fill.svg", "HoleCount": [4] }, { "ImageName": "application_line.svg", "HoleCount": [0, 0, 0, 1] }]';
+
+    const gameEngine = new GameEngine(JSON.parse(json));
 
     // Set the CSS variables
     gameBoard.style.setProperty('--cols', String(COLUMN));
