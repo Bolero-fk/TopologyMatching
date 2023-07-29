@@ -1,28 +1,29 @@
-var cards = [];
-var revealedCards = [];
+let cards = [];
+let revealedCards = [];
 function shuffleArray(array) {
-    var _a;
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        _a = [array[j], array[i]], array[i] = _a[0], array[j] = _a[1];
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
 }
-window.onload = function () {
-    var gameBoard = document.getElementById('game-board');
-    var resetButton = document.getElementById('reset-button');
-    var pairIds = [1, 1, 2, 2]; // For this simple game, we have 2 pairs.
+const ROW = 4; // Change these values to your preferred grid size
+const COLUMN = 4;
+window.onload = () => {
+    const gameBoard = document.getElementById('game-board');
+    const resetButton = document.getElementById('reset-button');
+    let pairIds = Array.from({ length: ROW * COLUMN / 2 }, (_, i) => i + 1); // Generate pair IDs
+    pairIds = pairIds.concat(pairIds); // Duplicate the array to create pairs
     shuffleArray(pairIds);
-    var _loop_1 = function (i) {
-        var cardElement = document.createElement('div');
+    for (let i = 0; i < ROW * COLUMN; i++) {
+        const cardElement = document.createElement('div');
         cardElement.className = 'card';
-        if (gameBoard)
-            gameBoard.appendChild(cardElement);
-        var card = {
+        gameBoard.appendChild(cardElement);
+        const card = {
             element: cardElement,
             revealed: false,
             pairId: pairIds[i]
         };
-        card.element.onclick = function () {
+        card.element.onclick = () => {
             if (card.revealed || revealedCards.length == 2) {
                 return;
             }
@@ -34,11 +35,10 @@ window.onload = function () {
                     revealedCards = [];
                 }
                 else {
-                    setTimeout(function () {
-                        for (var _i = 0, revealedCards_1 = revealedCards; _i < revealedCards_1.length; _i++) {
-                            var card_1 = revealedCards_1[_i];
-                            card_1.revealed = false;
-                            card_1.element.textContent = '';
+                    setTimeout(() => {
+                        for (let card of revealedCards) {
+                            card.revealed = false;
+                            card.element.textContent = '';
                         }
                         revealedCards = [];
                     }, 1000);
@@ -46,21 +46,16 @@ window.onload = function () {
             }
         };
         cards.push(card);
-    };
-    for (var i = 0; i < 4; i++) {
-        _loop_1(i);
     }
-    if (resetButton)
-        resetButton.onclick = function () {
-            for (var _i = 0, cards_1 = cards; _i < cards_1.length; _i++) {
-                var card = cards_1[_i];
-                card.revealed = false;
-                card.element.textContent = '';
-            }
-            revealedCards = [];
-            shuffleArray(pairIds);
-            for (var i = 0; i < 4; i++) {
-                cards[i].pairId = pairIds[i];
-            }
-        };
+    resetButton.onclick = () => {
+        for (let card of cards) {
+            card.revealed = false;
+            card.element.textContent = '';
+        }
+        revealedCards = [];
+        shuffleArray(pairIds);
+        for (let i = 0; i < ROW * COLUMN; i++) {
+            cards[i].pairId = pairIds[i];
+        }
+    };
 };

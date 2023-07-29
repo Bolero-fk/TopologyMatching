@@ -14,18 +14,21 @@ function shuffleArray(array: any[]) {
     }
 }
 
+const ROW = 4; // Change these values to your preferred grid size
+const COLUMN = 4;
+
 window.onload = () => {
     const gameBoard = document.getElementById('game-board');
     const resetButton = document.getElementById('reset-button');
 
-    const pairIds = [1, 1, 2, 2];  // For this simple game, we have 2 pairs.
+    let pairIds = Array.from({ length: ROW * COLUMN / 2 }, (_, i) => i + 1);  // Generate pair IDs
+    pairIds = pairIds.concat(pairIds);  // Duplicate the array to create pairs
     shuffleArray(pairIds);
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < ROW * COLUMN; i++) {
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
-        if (gameBoard)
-            gameBoard.appendChild(cardElement);
+        gameBoard.appendChild(cardElement);
 
         const card: Card = {
             element: cardElement,
@@ -61,18 +64,17 @@ window.onload = () => {
         cards.push(card);
     }
 
-    if (resetButton)
-        resetButton.onclick = () => {
-            for (let card of cards) {
-                card.revealed = false;
-                card.element.textContent = '';
-            }
+    resetButton.onclick = () => {
+        for (let card of cards) {
+            card.revealed = false;
+            card.element.textContent = '';
+        }
 
-            revealedCards = [];
+        revealedCards = [];
 
-            shuffleArray(pairIds);
-            for (let i = 0; i < 4; i++) {
-                cards[i].pairId = pairIds[i];
-            }
-        };
+        shuffleArray(pairIds);
+        for (let i = 0; i < ROW * COLUMN; i++) {
+            cards[i].pairId = pairIds[i];
+        }
+    };
 };
