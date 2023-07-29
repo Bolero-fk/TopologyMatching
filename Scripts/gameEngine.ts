@@ -14,13 +14,24 @@ class CardStatus {
 export class GameEngine {
 
     // メンバー変数、ゲームの状態を保持
-    private cards: CardStatus[]; // Cardはカードを表現する型です
+    private cards: CardStatus[] = new Array(); // Cardはカードを表現する型です
+
+    private sortedCardWithcomplexityLevel: Map<number, CardStatus[]> = new Map();
+    private selectedCards: CardStatus[];
 
     // コンストラクター、初期化処理を行う
     constructor(topologyCards) {
         topologyCards.forEach(topologyCard => {
-            this.cards.push(new CardStatus(topologyCard.ImageName, topologyCard.HoleCount));
+            const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
+            this.cards.push(card);
+
+            if (!this.sortedCardWithcomplexityLevel.has(card.complexityLevel))
+                this.sortedCardWithcomplexityLevel.set(card.complexityLevel, []);
+
+            this.sortedCardWithcomplexityLevel.get(card.complexityLevel).push(card);
         });
+
+        this.sortedCardWithcomplexityLevel = new Map([...this.sortedCardWithcomplexityLevel.entries()].sort((a, b) => a[0] - b[0]));
     }
 
     // ゲーム開始時の初期化処理

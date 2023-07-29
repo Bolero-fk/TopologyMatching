@@ -9,9 +9,23 @@ class CardStatus {
 export class GameEngine {
     // コンストラクター、初期化処理を行う
     constructor(topologyCards) {
+        // メンバー変数、ゲームの状態を保持
+        this.cards = new Array(); // Cardはカードを表現する型です
+        this.sortedCardWithcomplexityLevel = new Map();
         topologyCards.forEach(topologyCard => {
-            const cardStatus = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
+            const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
+            this.cards.push(card);
+            if (!this.sortedCardWithcomplexityLevel.has(card.complexityLevel))
+                this.sortedCardWithcomplexityLevel.set(card.complexityLevel, []);
+            this.sortedCardWithcomplexityLevel.get(card.complexityLevel).push(card);
         });
+        for (const [key, value] of this.sortedCardWithcomplexityLevel) {
+            console.log(`キー: ${key}, 値: ${value.length}`);
+        }
+        this.sortedCardWithcomplexityLevel = new Map([...this.sortedCardWithcomplexityLevel.entries()].sort((a, b) => a[0] - b[0]));
+        for (const [key, value] of this.sortedCardWithcomplexityLevel) {
+            console.log(`キー: ${key}, 値: ${value.length}`);
+        }
     }
     // ゲーム開始時の初期化処理
     startGame() {
