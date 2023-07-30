@@ -10,8 +10,7 @@ class CardStatus {
 export class GameEngine {
     // コンストラクター、初期化処理を行う
     constructor(topologyCards) {
-        // メンバー変数、ゲームの状態を保持
-        this.cards = new Array(); // Cardはカードを表現する型です
+        this.cards = new Array();
         this.cardGroups = new Map();
         topologyCards.forEach(topologyCard => {
             const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
@@ -21,13 +20,19 @@ export class GameEngine {
     // ゲーム開始時の初期化処理
     startGame(cardNum) {
         this.initializeCardGroups();
-        this.selectedCards = new Array();
+        const selectedCards = new Array();
         for (let i = 0; i < cardNum / 2; i++) {
-            this.selectedCards.push(...this.getAndDeleteRandomTwoCard());
+            // カードをランダムに2枚追加する
+            selectedCards.push(...this.getAndDeleteRandomTwoCard());
         }
-        this.selectedCards = this.shuffleArray(this.selectedCards);
-        return this.selectedCards;
+        // カードをシャッフルする
+        return this.shuffleArray(selectedCards);
     }
+    /**
+     * 入力された配列をシャッフルしたものを返します
+     * @param array - シャッフルしたい配列
+     * @returns シャッフルされた配列
+     */
     shuffleArray(array) {
         const newArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
         for (let i = newArray.length - 1; i > 0; i--) {
@@ -36,13 +41,16 @@ export class GameEngine {
         }
         return newArray;
     }
+    /**
+     * cardGroupsからランダムに二枚取得し、それらをcardGroupsから削除します
+     * @returns 取得したカード
+     */
     getAndDeleteRandomTwoCard() {
         const keysArray = new Array();
         for (const key of this.cardGroups.keys()) {
             const length = this.cardGroups.get(key).length;
             keysArray.push(...new Array(length).fill(key));
         }
-        Array.from(this.cardGroups.keys());
         const randomIndex = Math.floor(Math.random() * keysArray.length);
         const randomKey = keysArray[randomIndex];
         const result = this.cardGroups.get(randomKey).splice(-2);
@@ -50,13 +58,18 @@ export class GameEngine {
             this.cardGroups.delete(randomKey);
         return result;
     }
+    /**
+     * cardGroupsを初期化します
+     */
     initializeCardGroups() {
         this.cardGroups = new Map;
+        // cardsをholeCountごとにまとめる
         this.cards.forEach(card => {
             if (!this.cardGroups.has(card.holeCount.toString()))
                 this.cardGroups.set(card.holeCount.toString(), []);
             this.cardGroups.get(card.holeCount.toString()).push(card);
         });
+        // holeCountごとに偶数になるように各groupの枚数を調整する
         const deleteKeys = [];
         this.cardGroups.forEach((value, key) => {
             if (value.length % 2 == 1) {
@@ -68,6 +81,7 @@ export class GameEngine {
         for (const key of deleteKeys) {
             this.cardGroups.delete(key);
         }
+        // それぞれのcardGroupをシャッフルする
         this.cardGroups.forEach(cardGroup => {
             cardGroup = this.shuffleArray(cardGroup);
         });

@@ -14,11 +14,9 @@ class CardStatus {
 
 export class GameEngine {
 
-    // メンバー変数、ゲームの状態を保持
-    private cards: CardStatus[] = new Array(); // Cardはカードを表現する型です
+    private cards: CardStatus[] = new Array();
 
     private cardGroups: Map<string, CardStatus[]> = new Map();
-    private selectedCards: CardStatus[];
 
     // コンストラクター、初期化処理を行う
     constructor(topologyCards) {
@@ -32,17 +30,22 @@ export class GameEngine {
     startGame(cardNum: number): CardStatus[] {
         this.initializeCardGroups();
 
-        this.selectedCards = new Array();
+        const selectedCards = new Array();
 
         for (let i = 0; i < cardNum / 2; i++) {
-            this.selectedCards.push(...this.getAndDeleteRandomTwoCard());
+            // カードをランダムに2枚追加する
+            selectedCards.push(...this.getAndDeleteRandomTwoCard());
         }
 
-        this.selectedCards = this.shuffleArray(this.selectedCards);
-
-        return this.selectedCards;
+        // カードをシャッフルする
+        return this.shuffleArray(selectedCards);
     }
 
+    /**
+     * 入力された配列をシャッフルしたものを返します
+     * @param array - シャッフルしたい配列
+     * @returns シャッフルされた配列
+     */
     shuffleArray<T>(array: T[]): T[] {
         const newArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
 
@@ -54,6 +57,10 @@ export class GameEngine {
         return newArray;
     }
 
+    /**
+     * cardGroupsからランダムに二枚取得し、それらをcardGroupsから削除します
+     * @returns 取得したカード
+     */
     getAndDeleteRandomTwoCard(): CardStatus[] {
         const keysArray = new Array<string>();
 
@@ -62,7 +69,6 @@ export class GameEngine {
             keysArray.push(... new Array(length).fill(key));
         }
 
-        Array.from(this.cardGroups.keys());
         const randomIndex = Math.floor(Math.random() * keysArray.length);
         const randomKey = keysArray[randomIndex];
 
@@ -74,17 +80,21 @@ export class GameEngine {
         return result;
     }
 
+    /**
+     * cardGroupsを初期化します
+     */
     initializeCardGroups(): void {
         this.cardGroups = new Map<string, CardStatus[]>;
 
+        // cardsをholeCountごとにまとめる
         this.cards.forEach(card => {
-
             if (!this.cardGroups.has(card.holeCount.toString()))
                 this.cardGroups.set(card.holeCount.toString(), []);
 
             this.cardGroups.get(card.holeCount.toString()).push(card);
         });
 
+        // holeCountごとに偶数になるように各groupの枚数を調整する
         const deleteKeys: string[] = [];
         this.cardGroups.forEach((value, key) => {
             if (value.length % 2 == 1) {
@@ -98,6 +108,7 @@ export class GameEngine {
             this.cardGroups.delete(key);
         }
 
+        // それぞれのcardGroupをシャッフルする
         this.cardGroups.forEach(cardGroup => {
             cardGroup = this.shuffleArray(cardGroup);
         });
