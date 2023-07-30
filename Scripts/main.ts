@@ -91,13 +91,7 @@ window.onload = () => {
         cards.push(card);
     }
 
-    resetButton.onclick = () => {
-        for (let card of cards) {
-            flipCard(card, false);
-        }
-
-        revealedCards = [];
-    };
+    resetButton.onclick = RestartGame;
 };
 
 function LoadTopologyCardsJson(url: string): any {
@@ -112,4 +106,17 @@ function LoadTopologyCardsJson(url: string): any {
     });
 
     return result;
+}
+
+function RestartGame(): void {
+    const gameEngine = new GameEngine(LoadTopologyCardsJson("./TopologyCards/cards.json"));
+    const cardStatus = gameEngine.startGame(ROW * COLUMN);
+
+    for (let i = 0; i < cardStatus.length; i++) {
+        cards[i].pairKey = cardStatus[i].pairKey;
+        cards[i].frontImageUrl = 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')';
+        flipCard(cards[i], false);
+    }
+
+    revealedCards = [];
 }
