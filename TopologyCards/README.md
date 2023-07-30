@@ -1,7 +1,7 @@
-#トポロジー神経衰弱 データセット
+# トポロジー神経衰弱 データセット
 このディレクトリにはトポロジー神経衰弱ゲーム用の画像データとjsonファイルが含まれています。
 
-##ディレクトリ構成
+## ディレクトリ構成
 以下のようなディレクトリ構成となっています。
 
 ```
@@ -19,8 +19,8 @@
 
 ```
 
-##ファイル説明
-###images/
+## ファイル説明
+### images/
 神経衰弱ゲームに使用する画像データが格納されています。
 画像には
 1. [デジタル庁のイラストレーション・アイコン素材](https://www.digital.go.jp/policies/servicedesign/designsystem/Illustration_Icons/)
@@ -28,9 +28,10 @@
 
 が使用されています。
 
-ライセンス情報
-デジタル庁のイラストレーション・アイコン素材: [イラストレーション・アイコン素材利用規約](https://www.digital.go.jp/policies/servicedesign/designsystem/Illustration_Icons/terms_of_use/)
-Google Fonts Noto Sans: [SIL Open Font License (OFL)](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
+#### ライセンス情報
+1. デジタル庁のイラストレーション・アイコン素材: [イラストレーション・アイコン素材利用規約](https://www.digital.go.jp/policies/servicedesign/designsystem/Illustration_Icons/terms_of_use/)
+2. Google Fonts Noto Sans: [SIL Open Font License (OFL)](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
+
 ライセンスの詳細は各ライセンス提供元のウェブサイトやドキュメンテーションを参照してください。
 
 ### cards.json
