@@ -48,10 +48,10 @@ export class GameEngine {
 
     // ゲーム開始時の初期化処理
     startGame(cardNum: number): CardStatus[] {
-        this.selectedCards = this.shuffleArray(this.cards);
+        this.selectedCards = new Array();
 
-        while (this.selectedCards.length > cardNum) {
-            this.selectedCards.pop();
+        for (let i = 0; i < cardNum / 2; i++) {
+            this.selectedCards.push(...this.getAndDeleteRandomTwoCard());
         }
 
         return this.selectedCards;
@@ -66,5 +66,18 @@ export class GameEngine {
         }
 
         return newArray;
+    }
+
+    getAndDeleteRandomTwoCard(): CardStatus[] {
+        const keysArray = Array.from(this.sortedCardWithcomplexityLevel.keys());
+        const randomIndex = Math.floor(Math.random() * keysArray.length);
+        const randomKey = keysArray[randomIndex];
+
+        const result = this.sortedCardWithcomplexityLevel.get(randomKey).splice(-2);
+
+        if (this.sortedCardWithcomplexityLevel.get(randomKey).length == 0)
+            this.sortedCardWithcomplexityLevel.delete(randomKey);
+
+        return result;
     }
 }

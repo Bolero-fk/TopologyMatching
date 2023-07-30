@@ -20,19 +20,25 @@ export class GameEngine {
                 this.sortedCardWithcomplexityLevel.set(card.holeCount.toString(), []);
             this.sortedCardWithcomplexityLevel.get(card.holeCount.toString()).push(card);
         });
+        const deleteKeys = [];
         this.sortedCardWithcomplexityLevel.forEach((value, key) => {
             if (value.length % 2 == 1) {
                 value.pop();
-                console.log(key);
             }
+            if (value.length == 0)
+                deleteKeys.push(key);
         });
+        for (const key of deleteKeys) {
+            this.sortedCardWithcomplexityLevel.delete(key);
+        }
     }
     // ゲーム開始時の初期化処理
     startGame(cardNum) {
-        this.selectedCards = this.shuffleArray(this.cards);
-        while (this.selectedCards.length > cardNum) {
-            this.selectedCards.pop();
+        this.selectedCards = new Array();
+        for (let i = 0; i < cardNum / 2; i++) {
+            this.selectedCards.push(...this.getAndDeleteRandomTwoCard());
         }
+        console.log(cardNum, this.selectedCards.length);
         return this.selectedCards;
     }
     shuffleArray(array) {
@@ -42,5 +48,15 @@ export class GameEngine {
             [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // 要素の入れ替え
         }
         return newArray;
+    }
+    getAndDeleteRandomTwoCard() {
+        const keysArray = Array.from(this.sortedCardWithcomplexityLevel.keys());
+        const randomIndex = Math.floor(Math.random() * keysArray.length);
+        const randomKey = keysArray[randomIndex];
+        console.log(randomKey);
+        const result = this.sortedCardWithcomplexityLevel.get(randomKey).splice(-2);
+        if (this.sortedCardWithcomplexityLevel.get(randomKey).length == 0)
+            this.sortedCardWithcomplexityLevel.delete(randomKey);
+        return result;
     }
 }
