@@ -2,15 +2,31 @@
 <html>
 
 <head>
+    <meta charset=”UTF-8″>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
+    <h1>トポロジー神経衰弱ゲーム</h1>
     <div id="game-board">
         <!-- Game board where the cards will be dynamically added -->
     </div>
 
-    <button id="reset-button">ゲームをリセット</button>
+    <button id="reset-button">Restart Game</button>
+
+    <div>
+        <h2>ルール説明</h2>
+        <p>自由に2枚のカードを選択すると、選択されたカードが表向きになります。</p>
+        <p>選んだ2枚のカードがトポロジー同相な図形であれば、その2枚を取り除きます。</p>
+        <ul>
+            <p>トポロジー同相とは、形状がゴムのように伸縮自在であると想像したとき、一方の図形からもう一方の図形へ変形できるものを指します。</p>
+            <p>わかりやすい例は"穴"の数で各図形の穴の数によって同相かどうかを判定できます。</p>
+            <p>「〇」と「△」は穴の数が一つなのでトポロジー同相ですが、「〇」と「8」は穴の数が異なっているのでトポロジー同相ではありません。</p>
+            <p>また、穴の中に別の図形が存在する場合はそれぞれ独立して考えることができるので、「◎」と「〇〇」はトポロジー同相です。</p>
+        </ul>
+        <p>選んだカードがトポロジー同相でなかった場合、選んだ2枚のカードが再び裏に戻ります。</p>
+        <p>この手順を繰り返し、全てのカードを取り除くとクリアです。</p>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="./Scripts/main.js"></script>
