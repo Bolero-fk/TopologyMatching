@@ -17,7 +17,7 @@ export class GameEngine {
     // メンバー変数、ゲームの状態を保持
     private cards: CardStatus[] = new Array(); // Cardはカードを表現する型です
 
-    private sortedCardWithcomplexityLevel: Map<string, CardStatus[]> = new Map();
+    private cardGroups: Map<string, CardStatus[]> = new Map();
     private selectedCards: CardStatus[];
 
     // コンストラクター、初期化処理を行う
@@ -26,14 +26,14 @@ export class GameEngine {
             const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
             this.cards.push(card);
 
-            if (!this.sortedCardWithcomplexityLevel.has(card.holeCount.toString()))
-                this.sortedCardWithcomplexityLevel.set(card.holeCount.toString(), []);
+            if (!this.cardGroups.has(card.holeCount.toString()))
+                this.cardGroups.set(card.holeCount.toString(), []);
 
-            this.sortedCardWithcomplexityLevel.get(card.holeCount.toString()).push(card);
+            this.cardGroups.get(card.holeCount.toString()).push(card);
         });
 
         const deleteKeys: string[] = [];
-        this.sortedCardWithcomplexityLevel.forEach((value, key) => {
+        this.cardGroups.forEach((value, key) => {
             if (value.length % 2 == 1) {
                 value.pop();
             }
@@ -42,7 +42,7 @@ export class GameEngine {
         });
 
         for (const key of deleteKeys) {
-            this.sortedCardWithcomplexityLevel.delete(key);
+            this.cardGroups.delete(key);
         }
     }
 
@@ -73,19 +73,19 @@ export class GameEngine {
     getAndDeleteRandomTwoCard(): CardStatus[] {
         const keysArray = new Array<string>();
 
-        for (const key of this.sortedCardWithcomplexityLevel.keys()) {
-            const length: number = this.sortedCardWithcomplexityLevel.get(key).length;
+        for (const key of this.cardGroups.keys()) {
+            const length: number = this.cardGroups.get(key).length;
             keysArray.push(... new Array(length).fill(key));
         }
 
-        Array.from(this.sortedCardWithcomplexityLevel.keys());
+        Array.from(this.cardGroups.keys());
         const randomIndex = Math.floor(Math.random() * keysArray.length);
         const randomKey = keysArray[randomIndex];
 
-        const result = this.sortedCardWithcomplexityLevel.get(randomKey).splice(-2);
+        const result = this.cardGroups.get(randomKey).splice(-2);
 
-        if (this.sortedCardWithcomplexityLevel.get(randomKey).length == 0)
-            this.sortedCardWithcomplexityLevel.delete(randomKey);
+        if (this.cardGroups.get(randomKey).length == 0)
+            this.cardGroups.delete(randomKey);
 
         return result;
     }
