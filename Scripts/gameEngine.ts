@@ -71,7 +71,14 @@ export class GameEngine {
     }
 
     getAndDeleteRandomTwoCard(): CardStatus[] {
-        const keysArray = Array.from(this.sortedCardWithcomplexityLevel.keys());
+        const keysArray = new Array<string>();
+
+        for (const key of this.sortedCardWithcomplexityLevel.keys()) {
+            const length: number = this.sortedCardWithcomplexityLevel.get(key).length;
+            keysArray.push(... new Array(length).fill(key));
+        }
+
+        Array.from(this.sortedCardWithcomplexityLevel.keys());
         const randomIndex = Math.floor(Math.random() * keysArray.length);
         const randomKey = keysArray[randomIndex];
 
