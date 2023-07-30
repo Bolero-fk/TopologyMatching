@@ -28,9 +28,10 @@
 
 が使用されています。
 
-ライセンス情報
-デジタル庁のイラストレーション・アイコン素材: [イラストレーション・アイコン素材利用規約](https://www.digital.go.jp/policies/servicedesign/designsystem/Illustration_Icons/terms_of_use/)
-Google Fonts Noto Sans: [SIL Open Font License (OFL)](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
+#### ライセンス情報
+1. デジタル庁のイラストレーション・アイコン素材: [イラストレーション・アイコン素材利用規約](https://www.digital.go.jp/policies/servicedesign/designsystem/Illustration_Icons/terms_of_use/)
+2. Google Fonts Noto Sans: [SIL Open Font License (OFL)](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
+
 ライセンスの詳細は各ライセンス提供元のウェブサイトやドキュメンテーションを参照してください。
 
 ### cards.json
