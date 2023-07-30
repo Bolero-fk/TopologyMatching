@@ -20,23 +20,18 @@ export class GameEngine {
                 this.sortedCardWithcomplexityLevel.set(card.holeCount.toString(), []);
             this.sortedCardWithcomplexityLevel.get(card.holeCount.toString()).push(card);
         });
+        this.sortedCardWithcomplexityLevel.forEach((value, key) => {
+            if (value.length % 2 == 1)
+                console.log(key);
+        });
     }
     // ゲーム開始時の初期化処理
     startGame(cardNum) {
         this.selectedCards = this.shuffleArray(this.cards);
-        while (this.selectCard.length > cardNum) {
+        while (this.selectedCards.length > cardNum) {
             this.selectedCards.pop();
         }
         return this.selectedCards;
-    }
-    // カードを選択したときの処理
-    selectCard() {
-        // ここで選択したカードの処理を行います。
-    }
-    // ゲームが終了したかをチェックする
-    checkIfGameEnded() {
-        // ゲームが終了したかどうかをチェックし、結果を返します。
-        return true;
     }
     shuffleArray(array) {
         const newArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
