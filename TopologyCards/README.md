@@ -27,6 +27,7 @@
 2. [Google Fonts Noto Sans](https://fonts.google.com/noto/fonts?query=Noto+Sans)をsvg画像に変換したもの
 
 が使用されています。
+フォントからsvgへの変換は[このサイト](https://bolero-fk.github.io/FontToSvgConverter/)を利用しています。
 
 #### ライセンス情報
 1. デジタル庁のイラストレーション・アイコン素材: [イラストレーション・アイコン素材利用規約](https://www.digital.go.jp/policies/servicedesign/designsystem/Illustration_Icons/terms_of_use/)
