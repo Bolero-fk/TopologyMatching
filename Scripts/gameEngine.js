@@ -16,24 +16,11 @@ export class GameEngine {
         topologyCards.forEach(topologyCard => {
             const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
             this.cards.push(card);
-            if (!this.cardGroups.has(card.holeCount.toString()))
-                this.cardGroups.set(card.holeCount.toString(), []);
-            this.cardGroups.get(card.holeCount.toString()).push(card);
         });
-        const deleteKeys = [];
-        this.cardGroups.forEach((value, key) => {
-            if (value.length % 2 == 1) {
-                value.pop();
-            }
-            if (value.length == 0)
-                deleteKeys.push(key);
-        });
-        for (const key of deleteKeys) {
-            this.cardGroups.delete(key);
-        }
     }
     // ゲーム開始時の初期化処理
     startGame(cardNum) {
+        this.initializeCardGroups();
         this.selectedCards = new Array();
         for (let i = 0; i < cardNum / 2; i++) {
             this.selectedCards.push(...this.getAndDeleteRandomTwoCard());
@@ -62,5 +49,27 @@ export class GameEngine {
         if (this.cardGroups.get(randomKey).length == 0)
             this.cardGroups.delete(randomKey);
         return result;
+    }
+    initializeCardGroups() {
+        this.cardGroups = new Map;
+        this.cards.forEach(card => {
+            if (!this.cardGroups.has(card.holeCount.toString()))
+                this.cardGroups.set(card.holeCount.toString(), []);
+            this.cardGroups.get(card.holeCount.toString()).push(card);
+        });
+        const deleteKeys = [];
+        this.cardGroups.forEach((value, key) => {
+            if (value.length % 2 == 1) {
+                value.pop();
+            }
+            if (value.length == 0)
+                deleteKeys.push(key);
+        });
+        for (const key of deleteKeys) {
+            this.cardGroups.delete(key);
+        }
+        this.cardGroups.forEach(cardGroup => {
+            cardGroup = this.shuffleArray(cardGroup);
+        });
     }
 }
