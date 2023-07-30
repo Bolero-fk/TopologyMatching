@@ -32,10 +32,18 @@ export class GameEngine {
             this.sortedCardWithcomplexityLevel.get(card.holeCount.toString()).push(card);
         });
 
+        const deleteKeys: string[] = [];
         this.sortedCardWithcomplexityLevel.forEach((value, key) => {
-            if (value.length % 2 == 1)
-                console.log(key);
+            if (value.length % 2 == 1) {
+                value.pop();
+            }
+            if (value.length == 0)
+                deleteKeys.push(key);
         });
+
+        for (const key of deleteKeys) {
+            this.sortedCardWithcomplexityLevel.delete(key);
+        }
     }
 
     // ゲーム開始時の初期化処理
