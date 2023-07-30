@@ -54,6 +54,8 @@ export class GameEngine {
             this.selectedCards.push(...this.getAndDeleteRandomTwoCard());
         }
 
+        this.selectedCards = this.shuffleArray(this.selectedCards);
+
         return this.selectedCards;
     }
 

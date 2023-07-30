@@ -38,7 +38,7 @@ export class GameEngine {
         for (let i = 0; i < cardNum / 2; i++) {
             this.selectedCards.push(...this.getAndDeleteRandomTwoCard());
         }
-        console.log(cardNum, this.selectedCards.length);
+        this.selectedCards = this.shuffleArray(this.selectedCards);
         return this.selectedCards;
     }
     shuffleArray(array) {
@@ -53,7 +53,6 @@ export class GameEngine {
         const keysArray = Array.from(this.sortedCardWithcomplexityLevel.keys());
         const randomIndex = Math.floor(Math.random() * keysArray.length);
         const randomKey = keysArray[randomIndex];
-        console.log(randomKey);
         const result = this.sortedCardWithcomplexityLevel.get(randomKey).splice(-2);
         if (this.sortedCardWithcomplexityLevel.get(randomKey).length == 0)
             this.sortedCardWithcomplexityLevel.delete(randomKey);
