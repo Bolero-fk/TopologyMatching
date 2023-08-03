@@ -95,8 +95,8 @@ export class GameEngine {
         });
 
         // それぞれのcardGroupをシャッフルする
-        this.cardGroups.forEach(cardGroup => {
-            cardGroup = this.shuffleArray(cardGroup);
+        this.cardGroups.forEach((cardGroup, key) => {
+            this.cardGroups.set(key, this.shuffleArray(cardGroup));
         });
 
         // holeCountごとに偶数になるように各groupの枚数を調整する

@@ -69,10 +69,14 @@ export class GameEngine {
                 this.cardGroups.set(card.holeCount.toString(), []);
             this.cardGroups.get(card.holeCount.toString()).push(card);
         });
+        const randomIndex = Math.floor(Math.random() * Array.from(this.cardGroups.keys()).length);
+        const firstKey = Array.from(this.cardGroups.keys())[randomIndex];
         // それぞれのcardGroupをシャッフルする
-        this.cardGroups.forEach(cardGroup => {
-            cardGroup = this.shuffleArray(cardGroup);
+        console.log(this.cardGroups.get(firstKey)[0].imageName);
+        this.cardGroups.forEach((cardGroup, key) => {
+            this.cardGroups.set(key, this.shuffleArray(cardGroup));
         });
+        console.log(this.cardGroups.get(firstKey)[0].imageName);
         // holeCountごとに偶数になるように各groupの枚数を調整する
         const deleteKeys = [];
         this.cardGroups.forEach((value, key) => {
