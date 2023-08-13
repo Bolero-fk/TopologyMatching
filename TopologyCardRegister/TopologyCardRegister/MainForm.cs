@@ -37,8 +37,8 @@ namespace TopologyCardRegister
         {
             Bitmap bitmap = LoadSvg(svgFilePath);
 
-            pictureBox1.Size = bitmap.Size;
-            pictureBox1.Image = bitmap;
+            svgDisplayBox.Size = bitmap.Size;
+            svgDisplayBox.Image = bitmap;
 
             DisplayHoleCount(bitmap);
         }
@@ -125,7 +125,7 @@ namespace TopologyCardRegister
         void TryEnableSaveCardButton()
         {
             if (CanSaveCard())
-                SaveCardButton.Enabled = true;
+                saveCardButton.Enabled = true;
         }
 
         bool CanSaveCard()

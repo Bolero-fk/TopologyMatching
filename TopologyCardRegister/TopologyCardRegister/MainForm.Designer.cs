@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            btnClickThis = new Button();
-            pictureBox1 = new PictureBox();
-            panel1 = new Panel();
+            loadSvgButton = new Button();
+            svgDisplayBox = new PictureBox();
+            panel = new Panel();
             holeCountLabel = new Label();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            SaveCardButton = new Button();
+            holeCountDescription = new Label();
+            outputSvgLabel = new Label();
+            outputHoleCountLabel = new Label();
+            saveCardButton = new Button();
             saveFileDialog1 = new SaveFileDialog();
             outputSvgPathTextBox = new TextBox();
             outputSvgButton = new Button();
@@ -44,41 +44,41 @@
             splitContainer1 = new SplitContainer();
             prevButton = new Button();
             nextButton = new Button();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)svgDisplayBox).BeginInit();
+            panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
             SuspendLayout();
             // 
-            // btnClickThis
+            // loadSvgButton
             // 
-            btnClickThis.Location = new Point(12, 872);
-            btnClickThis.Name = "btnClickThis";
-            btnClickThis.Size = new Size(521, 23);
-            btnClickThis.TabIndex = 0;
-            btnClickThis.Text = "画像を読み込む";
-            btnClickThis.UseVisualStyleBackColor = true;
-            btnClickThis.Click += OnClickLoadSvgButton;
+            loadSvgButton.Location = new Point(12, 872);
+            loadSvgButton.Name = "loadSvgButton";
+            loadSvgButton.Size = new Size(521, 23);
+            loadSvgButton.TabIndex = 0;
+            loadSvgButton.Text = "画像を読み込む";
+            loadSvgButton.UseVisualStyleBackColor = true;
+            loadSvgButton.Click += OnClickLoadSvgButton;
             // 
-            // pictureBox1
+            // svgDisplayBox
             // 
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(714, 596);
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
+            svgDisplayBox.Location = new Point(0, 0);
+            svgDisplayBox.Name = "svgDisplayBox";
+            svgDisplayBox.Size = new Size(714, 596);
+            svgDisplayBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            svgDisplayBox.TabIndex = 1;
+            svgDisplayBox.TabStop = false;
             // 
-            // panel1
+            // panel
             // 
-            panel1.AutoScroll = true;
-            panel1.Controls.Add(pictureBox1);
-            panel1.Location = new Point(12, 12);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1040, 748);
-            panel1.TabIndex = 2;
+            panel.AutoScroll = true;
+            panel.Controls.Add(svgDisplayBox);
+            panel.Location = new Point(12, 12);
+            panel.Name = "panel";
+            panel.Size = new Size(1040, 748);
+            panel.TabIndex = 2;
             // 
             // holeCountLabel
             // 
@@ -90,46 +90,46 @@
             holeCountLabel.TabIndex = 3;
             holeCountLabel.Text = "Hole Count";
             // 
-            // label1
+            // holeCountDescription
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(12, 903);
-            label1.Name = "label1";
-            label1.Size = new Size(356, 32);
-            label1.TabIndex = 4;
-            label1.Text = "入力された画像の要素ごとの穴の数";
+            holeCountDescription.AutoSize = true;
+            holeCountDescription.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            holeCountDescription.Location = new Point(12, 903);
+            holeCountDescription.Name = "holeCountDescription";
+            holeCountDescription.Size = new Size(356, 32);
+            holeCountDescription.TabIndex = 4;
+            holeCountDescription.Text = "入力された画像の要素ごとの穴の数";
             // 
-            // label2
+            // outputSvgLabel
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(3, 3);
-            label2.Name = "label2";
-            label2.Size = new Size(329, 32);
-            label2.TabIndex = 5;
-            label2.Text = "入力された画像の保存先フォルダ";
+            outputSvgLabel.AutoSize = true;
+            outputSvgLabel.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            outputSvgLabel.Location = new Point(3, 3);
+            outputSvgLabel.Name = "outputSvgLabel";
+            outputSvgLabel.Size = new Size(329, 32);
+            outputSvgLabel.TabIndex = 5;
+            outputSvgLabel.Text = "入力された画像の保存先フォルダ";
             // 
-            // label3
+            // outputHoleCountLabel
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(3, 2);
-            label3.Name = "label3";
-            label3.Size = new Size(242, 32);
-            label3.TabIndex = 6;
-            label3.Text = "穴の数の出力先ファイル";
+            outputHoleCountLabel.AutoSize = true;
+            outputHoleCountLabel.Font = new Font("Yu Gothic UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            outputHoleCountLabel.Location = new Point(3, 2);
+            outputHoleCountLabel.Name = "outputHoleCountLabel";
+            outputHoleCountLabel.Size = new Size(242, 32);
+            outputHoleCountLabel.TabIndex = 6;
+            outputHoleCountLabel.Text = "穴の数の出力先ファイル";
             // 
-            // SaveCardButton
+            // saveCardButton
             // 
-            SaveCardButton.Enabled = false;
-            SaveCardButton.Location = new Point(536, 872);
-            SaveCardButton.Name = "SaveCardButton";
-            SaveCardButton.Size = new Size(516, 23);
-            SaveCardButton.TabIndex = 7;
-            SaveCardButton.Text = "カードを保存する";
-            SaveCardButton.UseVisualStyleBackColor = true;
-            SaveCardButton.Click += OnClickSaveCardButton;
+            saveCardButton.Enabled = false;
+            saveCardButton.Location = new Point(536, 872);
+            saveCardButton.Name = "saveCardButton";
+            saveCardButton.Size = new Size(516, 23);
+            saveCardButton.TabIndex = 7;
+            saveCardButton.Text = "カードを保存する";
+            saveCardButton.UseVisualStyleBackColor = true;
+            saveCardButton.Click += OnClickSaveCardButton;
             // 
             // outputSvgPathTextBox
             // 
@@ -179,13 +179,13 @@
             // 
             // splitContainer1.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(label2);
+            splitContainer1.Panel1.Controls.Add(outputSvgLabel);
             splitContainer1.Panel1.Controls.Add(outputSvgPathTextBox);
             splitContainer1.Panel1.Controls.Add(outputSvgButton);
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(label3);
+            splitContainer1.Panel2.Controls.Add(outputHoleCountLabel);
             splitContainer1.Panel2.Controls.Add(outputHoleCountbutton);
             splitContainer1.Panel2.Controls.Add(outputHoleCountPathBox);
             splitContainer1.Size = new Size(1040, 71);
@@ -214,7 +214,7 @@
             nextButton.UseVisualStyleBackColor = true;
             nextButton.Click += OnClickNextButton;
             // 
-            // Form1
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -222,18 +222,18 @@
             Controls.Add(nextButton);
             Controls.Add(prevButton);
             Controls.Add(splitContainer1);
-            Controls.Add(SaveCardButton);
-            Controls.Add(label1);
+            Controls.Add(saveCardButton);
+            Controls.Add(holeCountDescription);
             Controls.Add(holeCountLabel);
-            Controls.Add(panel1);
-            Controls.Add(btnClickThis);
+            Controls.Add(panel);
+            Controls.Add(loadSvgButton);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "Form1";
+            Name = "MainForm";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)svgDisplayBox).EndInit();
+            panel.ResumeLayout(false);
+            panel.PerformLayout();
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
@@ -246,14 +246,14 @@
 
         #endregion
 
-        private Button btnClickThis;
-        private PictureBox pictureBox1;
-        private Panel panel1;
+        private Button loadSvgButton;
+        private PictureBox svgDisplayBox;
+        private Panel panel;
         private Label holeCountLabel;
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Button SaveCardButton;
+        private Label holeCountDescription;
+        private Label outputSvgLabel;
+        private Label outputHoleCountLabel;
+        private Button saveCardButton;
         private SaveFileDialog saveFileDialog1;
         private TextBox outputSvgPathTextBox;
         private Button outputSvgButton;
