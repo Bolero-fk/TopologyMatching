@@ -6,9 +6,9 @@ namespace TopologyCardRegister
 {
     public partial class MainForm : Form
     {
-        string[] m_imgFilePaths;
+        string[] m_imgFilePaths = Array.Empty<string>();
         int m_nowPage = 0;
-        int[] m_holeCounts = new int[0];
+        int[] m_holeCounts = Array.Empty<int>();
 
         public MainForm()
         {
