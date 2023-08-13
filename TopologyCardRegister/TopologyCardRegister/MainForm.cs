@@ -22,16 +22,16 @@ namespace TopologyCardRegister
 
         private void OnClickLoadSvgButton(object sender, EventArgs e)
         {
-            string[] svgFilePaths = GetSvgFilePaths();
+            string[] svgFilePaths = RequestSvgFilePaths();
 
             if (svgFilePaths.Length != 0)
             {
                 m_nowPage = 0;
                 m_imgFilePaths = svgFilePaths;
                 DisplaySvg(m_imgFilePaths[m_nowPage]);
-                ChangePageButtonEnabled();
+                TryTogglePaginationButton();
             }
-            ChangeSaveCardButton();
+            TryEnableSaveCardButton();
         }
 
         private void DisplaySvg(string svgFilePath)
@@ -46,7 +46,7 @@ namespace TopologyCardRegister
             pictureBox1.Image = bitmap;
         }
 
-        string[] GetSvgFilePaths()
+        string[] RequestSvgFilePaths()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -89,7 +89,7 @@ namespace TopologyCardRegister
                     outputSvgPathTextBox.Text = folderBrowserDialog.SelectedPath;
                 }
             }
-            ChangeSaveCardButton();
+            TryEnableSaveCardButton();
         }
 
         private void OnClickOutputHoleCountbutton(object sender, EventArgs e)
@@ -106,7 +106,7 @@ namespace TopologyCardRegister
                     outputHoleCountPathBox.Text = saveFileDialog.FileName;
                 }
             }
-            ChangeSaveCardButton();
+            TryEnableSaveCardButton();
         }
 
         private void OnClickSaveCardButton(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace TopologyCardRegister
             JsonSaver.SaveJson(jsonPath, imgFileName, m_holeCounts);
         }
 
-        private void ChangeSaveCardButton()
+        private void TryEnableSaveCardButton()
         {
             if (outputSvgPathTextBox.Text == string.Empty)
                 return;
@@ -133,7 +133,7 @@ namespace TopologyCardRegister
             SaveCardButton.Enabled = true;
         }
 
-        void ChangePageButtonEnabled()
+        void TryTogglePaginationButton()
         {
             prevButton.Enabled = m_nowPage > 0;
             nextButton.Enabled = m_nowPage < m_imgFilePaths.Length - 1;
@@ -143,14 +143,14 @@ namespace TopologyCardRegister
         {
             m_nowPage--;
             DisplaySvg(m_imgFilePaths[m_nowPage]);
-            ChangePageButtonEnabled();
+            TryTogglePaginationButton();
         }
 
         void OnClickNextButton(object sender, EventArgs e)
         {
             m_nowPage++;
             DisplaySvg(m_imgFilePaths[m_nowPage]);
-            ChangePageButtonEnabled();
+            TryTogglePaginationButton();
         }
     }
 }
