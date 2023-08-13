@@ -20,7 +20,7 @@ namespace TopologyCardRegister
             holeCountLabel.Text = string.Empty;
         }
 
-        private void OnClickLoadSvgButton(object sender, EventArgs e)
+        void OnClickLoadSvgButton(object sender, EventArgs e)
         {
             string[] svgFilePaths = RequestSvgFilePaths();
 
@@ -34,7 +34,7 @@ namespace TopologyCardRegister
             TryEnableSaveCardButton();
         }
 
-        private void DisplaySvg(string svgFilePath)
+        void DisplaySvg(string svgFilePath)
         {
             Bitmap bitmap = LoadSvg(svgFilePath);
             TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
@@ -78,7 +78,7 @@ namespace TopologyCardRegister
             return svgDocument.Draw();
         }
 
-        private void OnClickOutputSvgButton(object sender, EventArgs e)
+        void OnClickOutputSvgButton(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
@@ -90,7 +90,7 @@ namespace TopologyCardRegister
             TryEnableSaveCardButton();
         }
 
-        private void OnClickOutputHoleCountbutton(object sender, EventArgs e)
+        void OnClickOutputHoleCountbutton(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
@@ -106,7 +106,7 @@ namespace TopologyCardRegister
             TryEnableSaveCardButton();
         }
 
-        private void OnClickSaveCardButton(object sender, EventArgs e)
+        void OnClickSaveCardButton(object sender, EventArgs e)
         {
             string imgFileName = Path.GetFileName(m_imgFilePaths[m_nowPage]);
             string jsonPath = outputHoleCountPathBox.Text;
@@ -119,7 +119,7 @@ namespace TopologyCardRegister
             JsonSaver.SaveJson(jsonPath, imgFileName, m_holeCounts);
         }
 
-        private void TryEnableSaveCardButton()
+        void TryEnableSaveCardButton()
         {
             if (CanSaveCard())
                 SaveCardButton.Enabled = true;
