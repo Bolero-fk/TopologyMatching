@@ -10,6 +10,10 @@ namespace TopologyCardRegister
         int m_nowPage = 0;
         int[] m_holeCounts = Array.Empty<int>();
 
+        const int DISPLAY_IMAGE_HEIGHT_IN_PIXELS = 1024;
+        const int DISPLAY_IMAGE_WIDTH_IN_PIXELS = 1024;
+        static readonly Color DISPLAY_IMAGE_BACKGROUND_COLOR = Color.White;
+
         public MainForm()
         {
             InitializeComponent();
@@ -63,11 +67,11 @@ namespace TopologyCardRegister
             {
                 Width = new Svg.SvgUnit(svgDocument.Width.Type, svgDocument.Width.Value),
                 Height = new Svg.SvgUnit(svgDocument.Height.Type, svgDocument.Height.Value),
-                Fill = new Svg.SvgColourServer(Color.White)
+                Fill = new Svg.SvgColourServer(DISPLAY_IMAGE_BACKGROUND_COLOR)
             });
 
-            svgDocument.Width = 1024;
-            svgDocument.Height = 1024;
+            svgDocument.Height = DISPLAY_IMAGE_HEIGHT_IN_PIXELS;
+            svgDocument.Width = DISPLAY_IMAGE_WIDTH_IN_PIXELS;
             var bitmap = svgDocument.Draw();
             pictureBox1.Size = bitmap.Size;
             pictureBox1.Image = bitmap;
