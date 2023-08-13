@@ -55,7 +55,6 @@ namespace TopologyCardRegister
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Get the path of specified file
                     return openFileDialog.FileNames;
                 }
             }
@@ -85,7 +84,6 @@ namespace TopologyCardRegister
             {
                 if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Get the path of specified file
                     outputSvgPathTextBox.Text = folderBrowserDialog.SelectedPath;
                 }
             }
@@ -102,7 +100,6 @@ namespace TopologyCardRegister
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Get the path of specified file
                     outputHoleCountPathBox.Text = saveFileDialog.FileName;
                 }
             }
