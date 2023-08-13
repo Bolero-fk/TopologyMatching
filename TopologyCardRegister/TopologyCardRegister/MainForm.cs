@@ -28,19 +28,22 @@ namespace TopologyCardRegister
             {
                 m_nowPage = 0;
                 m_imgFilePaths = svgFilePaths;
-                LoadSvg(m_imgFilePaths[m_nowPage]);
+                DisplaySvg(m_imgFilePaths[m_nowPage]);
                 ChangePageButtonEnabled();
             }
             ChangeSaveCardButton();
         }
 
-        private void LoadSvg(string svgFilePath)
+        private void DisplaySvg(string svgFilePath)
         {
-            Bitmap bitmap = DisplaySvg(svgFilePath);
+            Bitmap bitmap = LoadSvg(svgFilePath);
             TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
             m_holeCounts = statusCalculator.CalculateToPologyStatus(bitmap).ToArray();
             string holeCount = string.Join(',', m_holeCounts.Select(num => num.ToString())); ;
             holeCountLabel.Text = holeCount;
+
+            pictureBox1.Size = bitmap.Size;
+            pictureBox1.Image = bitmap;
         }
 
         string[] GetSvgFilePaths()
@@ -60,7 +63,7 @@ namespace TopologyCardRegister
             return new string[0];
         }
 
-        Bitmap DisplaySvg(string _filePath)
+        Bitmap LoadSvg(string _filePath)
         {
             var svgDocument = Svg.SvgDocument.Open(_filePath);
             svgDocument.Children.Insert(0, new Svg.SvgRectangle
@@ -72,11 +75,8 @@ namespace TopologyCardRegister
 
             svgDocument.Height = DISPLAY_IMAGE_HEIGHT_IN_PIXELS;
             svgDocument.Width = DISPLAY_IMAGE_WIDTH_IN_PIXELS;
-            var bitmap = svgDocument.Draw();
-            pictureBox1.Size = bitmap.Size;
-            pictureBox1.Image = bitmap;
 
-            return bitmap;
+            return svgDocument.Draw();
         }
 
         private void OnClickOutputSvgButton(object sender, EventArgs e)
@@ -142,14 +142,14 @@ namespace TopologyCardRegister
         void OnClickPrevButton(object sender, EventArgs e)
         {
             m_nowPage--;
-            LoadSvg(m_imgFilePaths[m_nowPage]);
+            DisplaySvg(m_imgFilePaths[m_nowPage]);
             ChangePageButtonEnabled();
         }
 
         void OnClickNextButton(object sender, EventArgs e)
         {
             m_nowPage++;
-            LoadSvg(m_imgFilePaths[m_nowPage]);
+            DisplaySvg(m_imgFilePaths[m_nowPage]);
             ChangePageButtonEnabled();
         }
     }
