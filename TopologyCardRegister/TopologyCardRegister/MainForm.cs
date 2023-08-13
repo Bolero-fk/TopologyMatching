@@ -16,7 +16,7 @@ namespace TopologyCardRegister
             holeCountLabel.Text = string.Empty;
         }
 
-        private void LoadSvgButton_Click(object sender, EventArgs e)
+        private void OnClickLoadSvgButton(object sender, EventArgs e)
         {
             string[] svgFilePaths = GetSvgFilePaths();
 
@@ -75,7 +75,7 @@ namespace TopologyCardRegister
             return bitmap;
         }
 
-        private void OutputSvgButton_Click(object sender, EventArgs e)
+        private void OnClickOutputSvgButton(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
@@ -88,7 +88,7 @@ namespace TopologyCardRegister
             ChangeSaveCardButton();
         }
 
-        private void OutputHoleCountbutton_Click(object sender, EventArgs e)
+        private void OnClickOutputHoleCountbutton(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
@@ -105,7 +105,7 @@ namespace TopologyCardRegister
             ChangeSaveCardButton();
         }
 
-        private void SaveCardButton_Click(object sender, EventArgs e)
+        private void OnClickSaveCardButton(object sender, EventArgs e)
         {
             string imgFileName = Path.GetFileName(m_imgFilePaths[m_nowPage]);
             string jsonPath = outputHoleCountPathBox.Text;
@@ -135,14 +135,14 @@ namespace TopologyCardRegister
             nextButton.Enabled = m_nowPage < m_imgFilePaths.Length - 1;
         }
 
-        private void prevButton_Click(object sender, EventArgs e)
+        void OnClickPrevButton(object sender, EventArgs e)
         {
             m_nowPage--;
             LoadSvg(m_imgFilePaths[m_nowPage]);
             ChangePageButtonEnabled();
         }
 
-        private void nextButton_Click(object sender, EventArgs e)
+        void OnClickNextButton(object sender, EventArgs e)
         {
             m_nowPage++;
             LoadSvg(m_imgFilePaths[m_nowPage]);

@@ -60,7 +60,7 @@
             btnClickThis.TabIndex = 0;
             btnClickThis.Text = "画像を読み込む";
             btnClickThis.UseVisualStyleBackColor = true;
-            btnClickThis.Click += LoadSvgButton_Click;
+            btnClickThis.Click += OnClickLoadSvgButton;
             // 
             // pictureBox1
             // 
@@ -129,7 +129,7 @@
             SaveCardButton.TabIndex = 7;
             SaveCardButton.Text = "カードを保存する";
             SaveCardButton.UseVisualStyleBackColor = true;
-            SaveCardButton.Click += SaveCardButton_Click;
+            SaveCardButton.Click += OnClickSaveCardButton;
             // 
             // outputSvgPathTextBox
             // 
@@ -149,7 +149,7 @@
             outputSvgButton.TabIndex = 10;
             outputSvgButton.Text = "参照";
             outputSvgButton.UseVisualStyleBackColor = true;
-            outputSvgButton.Click += OutputSvgButton_Click;
+            outputSvgButton.Click += OnClickOutputSvgButton;
             // 
             // outputHoleCountPathBox
             // 
@@ -169,7 +169,7 @@
             outputHoleCountbutton.TabIndex = 12;
             outputHoleCountbutton.Text = "参照";
             outputHoleCountbutton.UseVisualStyleBackColor = true;
-            outputHoleCountbutton.Click += OutputHoleCountbutton_Click;
+            outputHoleCountbutton.Click += OnClickOutputHoleCountbutton;
             // 
             // splitContainer1
             // 
@@ -201,7 +201,7 @@
             prevButton.TabIndex = 14;
             prevButton.Text = "前へ";
             prevButton.UseVisualStyleBackColor = true;
-            prevButton.Click += prevButton_Click;
+            prevButton.Click += OnClickPrevButton;
             // 
             // nextButton
             // 
@@ -212,7 +212,7 @@
             nextButton.TabIndex = 15;
             nextButton.Text = "次へ";
             nextButton.UseVisualStyleBackColor = true;
-            nextButton.Click += nextButton_Click;
+            nextButton.Click += OnClickNextButton;
             // 
             // Form1
             // 
