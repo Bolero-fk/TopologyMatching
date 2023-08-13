@@ -59,7 +59,7 @@ namespace TopologyCardRegister
                 }
             }
 
-            return new string[0];
+            return Array.Empty<string>();
         }
 
         Bitmap LoadSvg(string _filePath)
