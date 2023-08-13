@@ -121,13 +121,20 @@ namespace TopologyCardRegister
 
         private void TryEnableSaveCardButton()
         {
+            if (CanSaveCard())
+                SaveCardButton.Enabled = true;
+        }
+
+        bool CanSaveCard()
+        {
             if (outputSvgPathTextBox.Text == string.Empty)
-                return;
+                return false;
             if (outputHoleCountPathBox.Text == string.Empty)
-                return;
+                return false;
             if (holeCountLabel.Text == string.Empty)
-                return;
-            SaveCardButton.Enabled = true;
+                return false;
+
+            return true;
         }
 
         void TryTogglePaginationButton()
