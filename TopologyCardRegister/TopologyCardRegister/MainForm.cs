@@ -4,13 +4,13 @@ using System.Windows.Forms;
 
 namespace TopologyCardRegister
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         string[] m_imgFilePaths;
         int m_nowPage = 0;
         int[] m_holeCounts = new int[0];
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
