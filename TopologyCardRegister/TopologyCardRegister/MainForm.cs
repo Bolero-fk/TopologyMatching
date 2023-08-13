@@ -22,12 +22,11 @@ namespace TopologyCardRegister
 
         void OnClickLoadSvgButton(object sender, EventArgs e)
         {
-            string[] svgFilePaths = RequestSvgFilePaths();
+            m_imgFilePaths = RequestSvgFilePaths();
 
-            if (svgFilePaths.Length != 0)
+            if (m_imgFilePaths.Length != 0)
             {
                 m_nowPage = 0;
-                m_imgFilePaths = svgFilePaths;
                 DisplaySvg(m_imgFilePaths[m_nowPage]);
                 TryTogglePaginationButton();
             }
@@ -39,8 +38,7 @@ namespace TopologyCardRegister
             Bitmap bitmap = LoadSvg(svgFilePath);
             TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
             m_holeCounts = statusCalculator.CalculateToPologyStatus(bitmap).ToArray();
-            string holeCount = string.Join(',', m_holeCounts.Select(num => num.ToString())); ;
-            holeCountLabel.Text = holeCount;
+            holeCountLabel.Text = string.Join(',', m_holeCounts.Select(num => num.ToString()));
 
             pictureBox1.Size = bitmap.Size;
             pictureBox1.Image = bitmap;
@@ -94,7 +92,6 @@ namespace TopologyCardRegister
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                string? currentPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 saveFileDialog.Filter = "json files (*.json)|*.json";
                 saveFileDialog.OverwritePrompt = false;
 
