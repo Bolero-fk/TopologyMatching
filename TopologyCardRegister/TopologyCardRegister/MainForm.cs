@@ -36,12 +36,18 @@ namespace TopologyCardRegister
         void DisplaySvg(string svgFilePath)
         {
             Bitmap bitmap = LoadSvg(svgFilePath);
-            TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
-            m_holeCounts = statusCalculator.CalculateToPologyStatus(bitmap).ToArray();
-            holeCountLabel.Text = string.Join(',', m_holeCounts.Select(num => num.ToString()));
 
             pictureBox1.Size = bitmap.Size;
             pictureBox1.Image = bitmap;
+
+            DisplayHoleCount(bitmap);
+        }
+
+        void DisplayHoleCount(Bitmap bitmap)
+        {
+            TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
+            m_holeCounts = statusCalculator.CalculateToPologyStatus(bitmap).ToArray();
+            holeCountLabel.Text = string.Join(',', m_holeCounts.Select(num => num.ToString()));
         }
 
         string[] RequestSvgFilePaths()
