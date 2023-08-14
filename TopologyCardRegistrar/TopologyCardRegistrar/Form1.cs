@@ -115,10 +115,10 @@ namespace TopologyCardRegistrar
             string jsonPath = outputHoleCountPathBox.Text;
             string imgFolderPath = outputSvgPathTextBox.Text;
 
-            // ‰æ‘œ‚ð•Û‘¶‚·‚é
+            // ï¿½æ‘œï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½
             File.Copy(m_imgFilePaths[m_nowPage], Path.Combine(imgFolderPath, imgFileName), true);
 
-            // json‚ð•Û‘¶‚·‚é
+            // jsonï¿½ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½
             JsonSaver.SaveJson(jsonPath, imgFileName, m_holeCounts);
         }
 
