@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace TopologyCardRegistrar
+namespace TopologyCardRegister
 {
     public partial class Form1 : Form
     {

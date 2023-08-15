@@ -4,7 +4,7 @@ using System.DirectoryServices.ActiveDirectory;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-namespace TopologyCardRegistrar
+namespace TopologyCardRegister
 {
     public class TopologyStatusCalculator
     {

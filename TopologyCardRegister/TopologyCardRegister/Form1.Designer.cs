@@ -1,4 +1,4 @@
-﻿namespace TopologyCardRegistrar
+﻿namespace TopologyCardRegister
 {
     partial class Form1
     {

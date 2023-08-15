@@ -1,4 +1,4 @@
-namespace TopologyCardRegistrar
+namespace TopologyCardRegister
 {
     internal static class Program
     {
