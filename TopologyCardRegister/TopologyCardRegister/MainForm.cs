@@ -46,7 +46,7 @@ namespace TopologyCardRegister
         void DisplayHoleCount(Bitmap bitmap)
         {
             TopologyStatusCalculator statusCalculator = new TopologyStatusCalculator();
-            m_holeCounts = statusCalculator.CalculateToPologyStatus(bitmap).ToArray();
+            m_holeCounts = statusCalculator.CalculateHoleCount(bitmap).ToArray();
             holeCountLabel.Text = string.Join(',', m_holeCounts.Select(num => num.ToString()));
         }
 

@@ -157,7 +157,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
         /// </summary>
-        public List<int> CalculateToPologyStatus(Bitmap _bitmap)
+        public List<int> CalculateHoleCount(Bitmap _bitmap)
         {
             // 入力された画像を二値化したグラフに変換します
             Grid grid = ConvertToBinaryGrid(_bitmap);
@@ -171,14 +171,14 @@ namespace TopologyCardRegister
             var whiteSegmentIds = CalculateWhiteSegmentIdNextToBlackSegment(grid);
 
             // 黒色成分の数が連結成分の数に、それに隣接する白の数-1が穴の数になる
-            List<int> topologyStatus = new List<int>();
-            foreach (HashSet<int> nextId in whiteSegmentIds.Values)
-                topologyStatus.Add(nextId.Count - 1);
+            List<int> holeCount = new List<int>();
+            foreach (HashSet<int> whiteSegmentId in whiteSegmentIds.Values)
+                holeCount.Add(whiteSegmentId.Count - 1);
 
             // 穴の数を昇順になるように並び変える
-            topologyStatus.Sort();
+            holeCount.Sort();
 
-            return topologyStatus;
+            return holeCount;
         }
 
         /// <summary>
