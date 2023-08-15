@@ -287,7 +287,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
-        public Grid ConvertToBinaryGrid(Bitmap bitmap, float threshold = 0.5f)
+        Grid ConvertToBinaryGrid(Bitmap bitmap, float threshold = 0.5f)
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
@@ -325,7 +325,7 @@ namespace TopologyCardRegister
         /// 各黒色成分の隣にある白成分を返します
         /// result[黒色成分のセグメントId] := キーに使われているセグメントに隣接する白色セグメントのId
         /// </summary>
-        private Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid grid)
+        Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid grid)
         {
             Dictionary<int, HashSet<int>> whiteSegmentIds = new Dictionary<int, HashSet<int>>();
             Pos[] nextDirections = BLACK_NEXT_DIRECTIONS;
