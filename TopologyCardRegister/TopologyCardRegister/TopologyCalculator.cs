@@ -138,17 +138,7 @@ namespace TopologyCardRegister
             // 入力された画像を二値化します。
             Grid binary = ConvertToBinary(_bitmap);
 
-            binary.For((h, w) =>
-            {
-                Pos checkPos = new Pos(h, w);
-                if (IsNoise(checkPos, binary))
-                {
-                    if (binary[checkPos].m_color == Grid.Cell.CellColor.BLACK)
-                        binary[checkPos].m_color = Grid.Cell.CellColor.WHITE;
-                    else if (binary[checkPos].m_color == Grid.Cell.CellColor.WHITE)
-                        binary[checkPos].m_color = Grid.Cell.CellColor.BLACK;
-                }
-            });
+            ChangeNoiseCellColor(binary);
 
             // 割り振られていないマスが見つかったらそのマスと同じ色で連結している部分にidを割り振る
             int topologyCount = 0;
@@ -174,6 +164,21 @@ namespace TopologyCardRegister
             topologyStatus.Sort();
 
             return topologyStatus;
+        }
+
+        void ChangeNoiseCellColor(Grid binary)
+        {
+            binary.For((h, w) =>
+            {
+                Pos checkPos = new Pos(h, w);
+                if (IsNoise(checkPos, binary))
+                {
+                    if (binary[checkPos].m_color == Grid.Cell.CellColor.BLACK)
+                        binary[checkPos].m_color = Grid.Cell.CellColor.WHITE;
+                    else if (binary[checkPos].m_color == Grid.Cell.CellColor.WHITE)
+                        binary[checkPos].m_color = Grid.Cell.CellColor.BLACK;
+                }
+            });
         }
 
         bool IsNoise(Pos pos, Grid binary)
