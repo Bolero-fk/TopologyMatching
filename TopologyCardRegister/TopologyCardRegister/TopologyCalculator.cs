@@ -167,11 +167,12 @@ namespace TopologyCardRegister
             AssignSegmentIdToGridCell(binary);
 
             // 各黒成分の隣にある白成分の数を数える
-            var nextIds = CalculateNextIds(binary);
+            // whiteSegmentIds[黒色成分のセグメントId]: キーに使われているセグメントに隣接する白色セグメントのId
+            var whiteSegmentIds = CalculateWhiteSegmentIdNextToBlackSegment(binary);
 
             // 黒色成分の数が連結成分の数に、それに隣接する白の数-1が穴の数になる
             List<int> topologyStatus = new List<int>();
-            foreach (HashSet<int> nextId in nextIds.Values)
+            foreach (HashSet<int> nextId in whiteSegmentIds.Values)
                 topologyStatus.Add(nextId.Count - 1);
 
             // 穴の数を昇順になるように並び変える
@@ -324,9 +325,9 @@ namespace TopologyCardRegister
         /// 各黒色成分の隣にある白成分を返します
         /// result[黒色成分のセグメントId] := キーに使われているセグメントに隣接する白色セグメントのId
         /// </summary>
-        private Dictionary<int, HashSet<int>> CalculateNextIds(Grid binary)
+        private Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid binary)
         {
-            Dictionary<int, HashSet<int>> nextIds = new Dictionary<int, HashSet<int>>();
+            Dictionary<int, HashSet<int>> whiteSegmentIds = new Dictionary<int, HashSet<int>>();
             Pos[] nextDirections = BLACK_NEXT_DIRECTIONS;
 
             binary.For((h, w) =>
@@ -337,6 +338,7 @@ namespace TopologyCardRegister
                 if (binary[pos].m_color == Grid.Cell.CellColor.WHITE)
                     return;
 
+                int blackSegmentId = binary[pos].m_segmentId;
                 foreach (Pos nextDirection in nextDirections)
                 {
                     Pos nextPos = pos + nextDirection;
@@ -349,16 +351,16 @@ namespace TopologyCardRegister
                     if (binary[nextPos].m_color == Grid.Cell.CellColor.BLACK)
                         continue;
 
-                    // nextIdsの初期化
-                    if (!nextIds.ContainsKey(binary[pos].m_segmentId))
-                        nextIds.Add(binary[pos].m_segmentId, new HashSet<int>());
+                    // whiteSegmentIdsがblackSegmentIdをキーとして持たない場合はキーを追加する
+                    if (!whiteSegmentIds.ContainsKey(blackSegmentId))
+                        whiteSegmentIds.Add(blackSegmentId, new HashSet<int>());
 
                     // 白色のidを追加する
-                    nextIds[binary[pos].m_segmentId].Add(binary[nextPos].m_segmentId);
+                    whiteSegmentIds[blackSegmentId].Add(/* 白色セグメントのid */ binary[nextPos].m_segmentId);
                 }
             });
 
-            return nextIds;
+            return whiteSegmentIds;
         }
     }
 }
