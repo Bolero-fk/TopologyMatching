@@ -21,7 +21,6 @@ function flipCard(card, flipstatus = undefined) {
     }
     else {
         card.element.style.backgroundColor = getComputedStyle(card.element).getPropertyValue("--back-background-color");
-        card.element.textContent = '';
         card.element.style.backgroundImage = '';
     }
 }
