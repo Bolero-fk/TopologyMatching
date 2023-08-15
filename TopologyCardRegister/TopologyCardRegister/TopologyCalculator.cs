@@ -185,8 +185,6 @@ namespace TopologyCardRegister
         {
             Pos[] adjacentDirections = binary[pos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_ADJACENT_DIRECTIONS : WHITE_ADJACENT_DIRECTIONS;
 
-            int sameColorCount = 0;
-
             foreach (Pos adjacentDirection in adjacentDirections)
             {
                 Pos nextPos = pos + adjacentDirection;
@@ -196,10 +194,10 @@ namespace TopologyCardRegister
                     continue;
 
                 if (binary[pos].m_color == binary[nextPos].m_color)
-                    sameColorCount++;
+                    return false;
             }
 
-            return sameColorCount == 0;
+            return true;
         }
 
         /// <summary>
