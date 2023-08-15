@@ -293,13 +293,7 @@ namespace TopologyCardRegister
             int height = bitmap.Height;
 
             // bitmapの各ピクセルを取得する処理が遅いので配列に各ピクセルのRGBAを転写してそれを処理に使う
-            BitmapData data = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
-
-            // RGBAの各ピクセルは4バイト
-            byte[] pixelValues = new byte[width * height * 4];
-            Marshal.Copy(data.Scan0, pixelValues, 0, pixelValues.Length);
-
-            bitmap.UnlockBits(data);
+            byte[] pixelValues = CopyBitmap(bitmap);
 
             Grid grid = new Grid(height, width);
 
@@ -319,6 +313,25 @@ namespace TopologyCardRegister
             }
 
             return grid;
+        }
+
+        /// <summary>
+        /// bitmapデータをbyte配列をコピーしたものを返します
+        /// </summary>
+        byte[] CopyBitmap(Bitmap bitmap)
+        {
+            int width = bitmap.Width;
+            int height = bitmap.Height;
+
+            BitmapData data = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
+
+            // RGBAの各ピクセルは4バイト
+            byte[] pixelValues = new byte[width * height * 4];
+            Marshal.Copy(data.Scan0, pixelValues, 0, pixelValues.Length);
+
+            bitmap.UnlockBits(data);
+
+            return pixelValues;
         }
 
         /// <summary>
