@@ -12,6 +12,9 @@ namespace TopologyCardRegister
         {
         }
 
+        /// <summary>
+        /// svg画像をbitmapのグリッドに変換したデータを管理するクラスです
+        /// </summary>
         public class Grid
         {
             public class Cell
@@ -66,16 +69,25 @@ namespace TopologyCardRegister
                 set => this.m_cells[h, w] = value;
             }
 
+            /// <summary>
+            /// 入力されたposがグリッド内かどうかを判定します
+            /// </summary>
             public bool IsIn(Pos pos)
             {
                 return IsIn(pos.m_x, pos.m_y);
             }
 
+            /// <summary>
+            /// 入力された座標(h, w)がグリッド内かどうかを判定します
+            /// </summary>
             public bool IsIn(int h, int w)
             {
                 return 0 <= h && h <= m_height - 1 && 0 <= w && w <= m_width - 1;
             }
 
+            /// <summary>
+            /// グリッド内の全セルに対して入力されたfunctionを適用します
+            /// </summary>
             public void For(Action<int, int> function)
             {
                 for (int h = 0; h < m_height; h++)
@@ -88,6 +100,9 @@ namespace TopologyCardRegister
             }
         }
 
+        /// <summary>
+        /// グリッドの座標を管理するクラスです
+        /// </summary>
         public class Pos
         {
             public int m_x;
@@ -127,7 +142,7 @@ namespace TopologyCardRegister
 
         /*
          * 以下の図の「.」を白、「#」を黒としたときに、黒のパーツの数が1、その穴の数が1となるように
-         * 黒の隣接判定は8方向、白の隣接判定は4方向にする。
+         * 黒の隣接判定は8方向、白の隣接判定は4方向にする
          * .......
          * ..###..
          * .#...#.
@@ -140,13 +155,11 @@ namespace TopologyCardRegister
         static readonly Pos[] WHITE_ADJACENT_DIRECTIONS = new Pos[] { UP, RIGHT, DOWN, LEFT };
 
         /// <summary>
-        /// 入力された図形から各連結成分の穴の数を数えて昇順にして返します。
+        /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
         /// </summary>
-        /// <param name="_bitmap"></param>
-        /// <returns></returns>
         public List<int> CalculateToPologyStatus(Bitmap _bitmap)
         {
-            // 入力された画像を二値化します。
+            // 入力された画像を二値化したグラフに変換します
             Grid binary = ConvertToBinary(_bitmap);
 
             ChangeNoiseCellColor(binary);
@@ -156,6 +169,7 @@ namespace TopologyCardRegister
             // 各黒成分の隣にある白成分の数を数える
             var nextIds = CalculateNextIds(binary);
 
+            // 黒色成分の数が連結成分の数に、それに隣接する白の数-1が穴の数になる
             List<int> topologyStatus = new List<int>();
             foreach (HashSet<int> nextId in nextIds.Values)
                 topologyStatus.Add(nextId.Count - 1);
@@ -166,6 +180,13 @@ namespace TopologyCardRegister
             return topologyStatus;
         }
 
+        /// <summary>
+        /// 隣接するセルの色が全て別の色になっているようなセルはノイズとみなして色を変えます
+        /// 以下の図の#はノイズと認識されます
+        /// ...
+        /// .#.
+        /// ...
+        /// </summary>
         void ChangeNoiseCellColor(Grid binary)
         {
             binary.For((h, w) =>
@@ -181,6 +202,9 @@ namespace TopologyCardRegister
             });
         }
 
+        /// <summary>
+        /// posの位置にあるセルがノイズかどうかを判定します
+        /// </summary>
         bool IsNoise(Pos pos, Grid binary)
         {
             Pos[] adjacentDirections = binary[pos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_ADJACENT_DIRECTIONS : WHITE_ADJACENT_DIRECTIONS;
@@ -193,6 +217,7 @@ namespace TopologyCardRegister
                 if (!binary.IsIn(nextPos))
                     continue;
 
+                // 周囲のセルが同色ならノイズでない
                 if (binary[pos].m_color == binary[nextPos].m_color)
                     return false;
             }
@@ -200,6 +225,9 @@ namespace TopologyCardRegister
             return true;
         }
 
+        /// <summary>
+        /// セグメントIdをグリッドのセルに割り当てます
+        /// </summary>
         void AssignSegmentIdToGridCell(Grid binary)
         {
             int segmentCount = 0;
@@ -218,13 +246,8 @@ namespace TopologyCardRegister
         }
 
         /// <summary>
-        /// [startX, startY]と連結している成分にidを割り振ります。
+        /// startPosの位置にあるセルと連結しているセグメントにidを割り当てます
         /// </summary>
-        /// <param name="startX"></param>
-        /// <param name="startY"></param>
-        /// <param name="id"></param>
-        /// <param name="binary"></param>
-        /// <param name="topologyId"></param>
         void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid binary)
         {
             Queue<Pos> segmentPos = new Queue<Pos>();
@@ -261,16 +284,14 @@ namespace TopologyCardRegister
         }
 
         /// <summary>
-        /// 入力されたbitmapデータを二値化して返します。
+        /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
-        /// <param name="bitmap"></param>
-        /// <param name="threshold"></param>
-        /// <returns></returns>
         public Grid ConvertToBinary(Bitmap bitmap, float threshold = 0.5f)
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
 
+            // bitmapの各ピクセルを取得する処理が遅いので配列に各ピクセルのRGBAを転写してそれを処理に使う
             BitmapData data = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
 
             // RGBAの各ピクセルは4バイト
@@ -289,7 +310,7 @@ namespace TopologyCardRegister
                 Color pixelColor = Color.FromArgb(pixelValues[i + 3], pixelValues[i + 2], pixelValues[i + 1], pixelValues[i]);
                 float brightness = pixelColor.GetBrightness();
 
-                // 閾値に基づいてピクセルを白または黒に分類します。
+                // 閾値に基づいてピクセルを白または黒に分類します
                 if (brightness < threshold)
                     result[x, y].m_color = Grid.Cell.CellColor.BLACK;
                 else
@@ -300,11 +321,9 @@ namespace TopologyCardRegister
         }
 
         /// <summary>
-        /// 各黒色成分の隣にある白成分を返します。
+        /// 各黒色成分の隣にある白成分を返します
+        /// result[黒色成分のセグメントId] := キーに使われているセグメントに隣接する白色セグメントのId
         /// </summary>
-        /// <param name="binary"></param>
-        /// <param name="topologyId"></param>
-        /// <returns></returns>
         private Dictionary<int, HashSet<int>> CalculateNextIds(Grid binary)
         {
             Dictionary<int, HashSet<int>> nextIds = new Dictionary<int, HashSet<int>>();
