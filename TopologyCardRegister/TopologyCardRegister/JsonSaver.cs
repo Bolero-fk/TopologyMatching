@@ -24,16 +24,13 @@ public class JsonSaver
 
         topologyCards.RemoveAll(x => x.ImageName == imageName);
 
-        var topologyCard = new TopologyCard
+        topologyCards.Add(new TopologyCard
         {
             ImageName = imageName,
             HoleCount = holeCounts,
-        };
-        topologyCards.Add(topologyCard);
+        });
 
-        string jsonOutput = JsonConvert.SerializeObject(topologyCards);
-
-        File.WriteAllText(jsonPath, jsonOutput);
+        File.WriteAllText(jsonPath, JsonConvert.SerializeObject(topologyCards));
     }
 
     static List<TopologyCard> LoadTopologyCardJson(string jsonPath)
