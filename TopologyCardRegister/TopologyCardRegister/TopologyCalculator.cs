@@ -54,15 +54,54 @@ namespace TopologyCardRegister
                 }
             }
 
+            public Cell this[Pos pos]
+            {
+                get => this.m_cells[pos.m_x, pos.m_y];
+                set => this.m_cells[pos.m_x, pos.m_y] = value;
+            }
+
             public Cell this[int h, int w]
             {
                 get => this.m_cells[h, w];
                 set => this.m_cells[h, w] = value;
             }
 
+            public bool IsIn(Pos pos)
+            {
+                return IsIn(pos.m_x, pos.m_y);
+            }
+
             public bool IsIn(int h, int w)
             {
                 return 0 <= h && h <= m_height - 1 && 0 <= w && w <= m_width - 1;
+            }
+        }
+
+        public class Pos
+        {
+            public int m_x;
+            public int m_y;
+
+            public Pos()
+            {
+                m_x = 0;
+                m_y = 0;
+            }
+
+            public Pos(int x, int y)
+            {
+                m_x = x;
+                m_y = y;
+            }
+
+            public static Pos operator +(Pos a, Pos b)
+            {
+                return new Pos(a.m_x + b.m_x, a.m_y + b.m_y);
+            }
+
+            public static Pos operator -(Pos a, Pos b)
+            {
+                return new Pos(a.m_x - b.m_x, a.m_y - b.m_y);
             }
         }
 
@@ -79,12 +118,13 @@ namespace TopologyCardRegister
             for (int i = 0; i < binary.m_height; i++)
                 for (int j = 0; j < binary.m_width; j++)
                 {
-                    if (IsNoise(i, j, binary))
+                    Pos checkPos = new Pos(i, j);
+                    if (IsNoise(checkPos, binary))
                     {
-                        if (binary[i, j].m_color == Grid.Cell.CellColor.BLACK)
-                            binary[i, j].m_color = Grid.Cell.CellColor.WHITE;
-                        else if (binary[i, j].m_color == Grid.Cell.CellColor.WHITE)
-                            binary[i, j].m_color = Grid.Cell.CellColor.BLACK;
+                        if (binary[checkPos].m_color == Grid.Cell.CellColor.BLACK)
+                            binary[checkPos].m_color = Grid.Cell.CellColor.WHITE;
+                        else if (binary[checkPos].m_color == Grid.Cell.CellColor.WHITE)
+                            binary[checkPos].m_color = Grid.Cell.CellColor.BLACK;
                     }
                 }
 
@@ -93,14 +133,13 @@ namespace TopologyCardRegister
             for (int i = 0; i < binary.m_height; i++)
                 for (int j = 0; j < binary.m_width; j++)
                 {
-                    if (binary[i, j].m_segmentId != -1)
+                    Pos checkPos = new Pos(i, j);
+                    if (binary[checkPos].m_segmentId != -1)
                         continue;
 
-                    Dfs(i, j, topologyCount, ref binary);
+                    Dfs(checkPos, topologyCount, ref binary);
                     topologyCount++;
                 }
-
-            Debug.WriteLine(topologyCount);
 
             // 各黒成分の隣にある白成分の数を数える
             var nextIds = CalculateNextIds(binary);
@@ -115,7 +154,7 @@ namespace TopologyCardRegister
             return topologyStatus;
         }
 
-        bool IsNoise(int x, int y, Grid binary)
+        bool IsNoise(Pos pos, Grid binary)
         {
             // 黒色は8方向、白色は4方向に移動させる。
             int[] black_dir_x = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
@@ -123,21 +162,20 @@ namespace TopologyCardRegister
             int[] white_dir_x = new int[] { 0, 0, -1, 1 };
             int[] white_dir_y = new int[] { -1, 1, 0, 0 };
 
-            int[] dir_x = binary[x, y].m_color == Grid.Cell.CellColor.BLACK ? black_dir_x : white_dir_x;
-            int[] dir_y = binary[x, y].m_color == Grid.Cell.CellColor.BLACK ? black_dir_y : white_dir_y;
+            int[] dir_x = binary[pos].m_color == Grid.Cell.CellColor.BLACK ? black_dir_x : white_dir_x;
+            int[] dir_y = binary[pos].m_color == Grid.Cell.CellColor.BLACK ? black_dir_y : white_dir_y;
 
             int sameColorCount = 0;
 
             for (int d = 0; d < dir_x.Length; d++)
             {
-                int next_x = x + dir_x[d];
-                int next_y = y + dir_y[d];
+                Pos nextPos = pos + new Pos(dir_x[d], dir_y[d]);
 
                 // 隣接マスが図形外の場合は飛ばす
-                if (!binary.IsIn(next_x, next_y))
+                if (!binary.IsIn(nextPos))
                     continue;
 
-                if (binary[x, y].m_color == binary[next_x, next_y].m_color)
+                if (binary[pos].m_color == binary[nextPos].m_color)
                     sameColorCount++;
             }
 
@@ -152,7 +190,7 @@ namespace TopologyCardRegister
         /// <param name="id"></param>
         /// <param name="binary"></param>
         /// <param name="topologyId"></param>
-        void Dfs(int startX, int startY, int id, ref Grid binary)
+        void Dfs(Pos startPos, int id, ref Grid binary)
         {
             // 黒色は8方向、白色は4方向に移動させる。
             int[] black_dir_x = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
@@ -160,37 +198,36 @@ namespace TopologyCardRegister
             int[] white_dir_x = new int[] { 0, 0, -1, 1 };
             int[] white_dir_y = new int[] { -1, 1, 0, 0 };
 
-            Queue<(int, int)> queue = new Queue<(int, int)>();
-            queue.Enqueue((startX, startY));
+            Queue<Pos> queue = new Queue<Pos>();
+            queue.Enqueue(startPos);
 
-            int[] dir_x = binary[startX, startY].m_color == Grid.Cell.CellColor.BLACK ? black_dir_x : white_dir_x;
-            int[] dir_y = binary[startX, startY].m_color == Grid.Cell.CellColor.BLACK ? black_dir_y : white_dir_y;
+            int[] dir_x = binary[startPos].m_color == Grid.Cell.CellColor.BLACK ? black_dir_x : white_dir_x;
+            int[] dir_y = binary[startPos].m_color == Grid.Cell.CellColor.BLACK ? black_dir_y : white_dir_y;
 
-            binary[startX, startY].m_segmentId = id;
+            binary[startPos].m_segmentId = id;
 
             while (queue.Count > 0)
             {
-                (int now_x, int now_y) = queue.Dequeue();
+                Pos nowPos = queue.Dequeue();
 
                 for (int d = 0; d < dir_x.Length; d++)
                 {
-                    int next_x = now_x + dir_x[d];
-                    int next_y = now_y + dir_y[d];
+                    Pos nextPos = nowPos + new Pos(dir_x[d], dir_y[d]);
 
                     // 隣接マスが図形外の場合は飛ばす
-                    if (!binary.IsIn(next_x, next_y))
+                    if (!binary.IsIn(nextPos))
                         continue;
 
                     // 隣接マスが既にidを振られている場合は飛ばす
-                    if (binary[next_x, next_y].m_segmentId != -1)
+                    if (binary[nextPos].m_segmentId != -1)
                         continue;
 
                     // 隣接マスの色が異なる場合は飛ばす
-                    if (binary[next_x, next_y].m_color != binary[now_x, now_y].m_color)
+                    if (binary[nextPos].m_color != binary[nowPos].m_color)
                         continue;
 
-                    binary[next_x, next_y].m_segmentId = id;
-                    queue.Enqueue((next_x, next_y));
+                    binary[nextPos].m_segmentId = id;
+                    queue.Enqueue(nextPos);
                 }
             }
         }
@@ -249,29 +286,30 @@ namespace TopologyCardRegister
             for (int x = 0; x < binary.m_height; x++)
                 for (int y = 0; y < binary.m_width; y++)
                 {
+                    Pos pos = new Pos(x, y);
+
                     //　白色は飛ばす
-                    if (binary[x, y].m_color == Grid.Cell.CellColor.WHITE)
+                    if (binary[pos].m_color == Grid.Cell.CellColor.WHITE)
                         continue;
 
                     for (int d = 0; d < black_dir_x.Length; d++)
                     {
-                        int next_x = x + black_dir_x[d];
-                        int next_y = y + black_dir_y[d];
+                        Pos nextPos = pos + new Pos(black_dir_x[d], black_dir_y[d]);
 
                         // 隣接マスが図形外の場合は飛ばす
-                        if (!binary.IsIn(next_x, next_y))
+                        if (!binary.IsIn(nextPos))
                             continue;
 
                         // 隣接マスが黒色の場合は飛ばす
-                        if (binary[next_x, next_y].m_color == Grid.Cell.CellColor.BLACK)
+                        if (binary[nextPos].m_color == Grid.Cell.CellColor.BLACK)
                             continue;
 
                         // nextIdsの初期化
-                        if (!nextIds.ContainsKey(binary[x, y].m_segmentId))
-                            nextIds.Add(binary[x, y].m_segmentId, new HashSet<int>());
+                        if (!nextIds.ContainsKey(binary[pos].m_segmentId))
+                            nextIds.Add(binary[pos].m_segmentId, new HashSet<int>());
 
                         // 白色のidを追加する
-                        nextIds[binary[x, y].m_segmentId].Add(binary[next_x, next_y].m_segmentId);
+                        nextIds[binary[pos].m_segmentId].Add(binary[nextPos].m_segmentId);
                     }
 
                 }
