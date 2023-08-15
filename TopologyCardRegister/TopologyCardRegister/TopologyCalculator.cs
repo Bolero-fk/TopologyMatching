@@ -201,7 +201,7 @@ namespace TopologyCardRegister
                 if (binary[checkPos].m_segmentId != -1)
                     return;
 
-                Dfs(checkPos, segmentCount, ref binary);
+                AssignSegmentIdToSameSegmentCell(checkPos, segmentCount, binary);
                 segmentCount++;
             });
         }
@@ -214,19 +214,18 @@ namespace TopologyCardRegister
         /// <param name="id"></param>
         /// <param name="binary"></param>
         /// <param name="topologyId"></param>
-        void Dfs(Pos startPos, int id, ref Grid binary)
+        void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid binary)
         {
-
-            Queue<Pos> queue = new Queue<Pos>();
-            queue.Enqueue(startPos);
+            Queue<Pos> segmentPos = new Queue<Pos>();
+            segmentPos.Enqueue(startPos);
 
             Pos[] adjacentDirections = binary[startPos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_ADJACENT_DIRECTIONS : WHITE_ADJACENT_DIRECTIONS;
 
             binary[startPos].m_segmentId = id;
 
-            while (queue.Count > 0)
+            while (segmentPos.Count > 0)
             {
-                Pos nowPos = queue.Dequeue();
+                Pos nowPos = segmentPos.Dequeue();
 
                 foreach (Pos adjacentDirection in adjacentDirections)
                 {
@@ -245,7 +244,7 @@ namespace TopologyCardRegister
                         continue;
 
                     binary[nextPos].m_segmentId = id;
-                    queue.Enqueue(nextPos);
+                    segmentPos.Enqueue(nextPos);
                 }
             }
         }
