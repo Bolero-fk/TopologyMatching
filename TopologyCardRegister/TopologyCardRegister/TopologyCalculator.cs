@@ -105,6 +105,18 @@ namespace TopologyCardRegister
             }
         }
 
+        static readonly Pos UP = new Pos(0, 1);
+        static readonly Pos UP_RIGHT = new Pos(1, 1);
+        static readonly Pos RIGHT = new Pos(1, 0);
+        static readonly Pos DOWN_RIGHT = new Pos(1, -1);
+        static readonly Pos DOWN = new Pos(0, -1);
+        static readonly Pos DOWN_LEFT = new Pos(-1, -1);
+        static readonly Pos LEFT = new Pos(-1, 0);
+        static readonly Pos UP_LEFT = new Pos(-1, 1);
+
+        static readonly Pos[] BLACK_ADJACENT_DIRECTIONS = new Pos[] { UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT };
+        static readonly Pos[] WHITE_ADJACENT_DIRECTIONS = new Pos[] { UP, RIGHT, DOWN, LEFT };
+
         /// <summary>
         /// 入力された図形から各連結成分の穴の数を数えて昇順にして返します。
         /// </summary>
@@ -156,20 +168,13 @@ namespace TopologyCardRegister
 
         bool IsNoise(Pos pos, Grid binary)
         {
-            // 黒色は8方向、白色は4方向に移動させる。
-            int[] black_dir_x = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
-            int[] black_dir_y = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 };
-            int[] white_dir_x = new int[] { 0, 0, -1, 1 };
-            int[] white_dir_y = new int[] { -1, 1, 0, 0 };
-
-            int[] dir_x = binary[pos].m_color == Grid.Cell.CellColor.BLACK ? black_dir_x : white_dir_x;
-            int[] dir_y = binary[pos].m_color == Grid.Cell.CellColor.BLACK ? black_dir_y : white_dir_y;
+            Pos[] adjacentDirections = binary[pos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_ADJACENT_DIRECTIONS : WHITE_ADJACENT_DIRECTIONS;
 
             int sameColorCount = 0;
 
-            for (int d = 0; d < dir_x.Length; d++)
+            foreach (Pos adjacentDirection in adjacentDirections)
             {
-                Pos nextPos = pos + new Pos(dir_x[d], dir_y[d]);
+                Pos nextPos = pos + adjacentDirection;
 
                 // 隣接マスが図形外の場合は飛ばす
                 if (!binary.IsIn(nextPos))
@@ -192,17 +197,11 @@ namespace TopologyCardRegister
         /// <param name="topologyId"></param>
         void Dfs(Pos startPos, int id, ref Grid binary)
         {
-            // 黒色は8方向、白色は4方向に移動させる。
-            int[] black_dir_x = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
-            int[] black_dir_y = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 };
-            int[] white_dir_x = new int[] { 0, 0, -1, 1 };
-            int[] white_dir_y = new int[] { -1, 1, 0, 0 };
 
             Queue<Pos> queue = new Queue<Pos>();
             queue.Enqueue(startPos);
 
-            int[] dir_x = binary[startPos].m_color == Grid.Cell.CellColor.BLACK ? black_dir_x : white_dir_x;
-            int[] dir_y = binary[startPos].m_color == Grid.Cell.CellColor.BLACK ? black_dir_y : white_dir_y;
+            Pos[] adjacentDirections = binary[startPos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_ADJACENT_DIRECTIONS : WHITE_ADJACENT_DIRECTIONS;
 
             binary[startPos].m_segmentId = id;
 
@@ -210,9 +209,9 @@ namespace TopologyCardRegister
             {
                 Pos nowPos = queue.Dequeue();
 
-                for (int d = 0; d < dir_x.Length; d++)
+                foreach (Pos adjacentDirection in adjacentDirections)
                 {
-                    Pos nextPos = nowPos + new Pos(dir_x[d], dir_y[d]);
+                    Pos nextPos = nowPos + adjacentDirection;
 
                     // 隣接マスが図形外の場合は飛ばす
                     if (!binary.IsIn(nextPos))
@@ -280,8 +279,7 @@ namespace TopologyCardRegister
         private Dictionary<int, HashSet<int>> CalculateNextIds(Grid binary)
         {
             Dictionary<int, HashSet<int>> nextIds = new Dictionary<int, HashSet<int>>();
-            int[] black_dir_x = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
-            int[] black_dir_y = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 };
+            Pos[] adjacentDirections = BLACK_ADJACENT_DIRECTIONS;
 
             for (int x = 0; x < binary.m_height; x++)
                 for (int y = 0; y < binary.m_width; y++)
@@ -292,9 +290,9 @@ namespace TopologyCardRegister
                     if (binary[pos].m_color == Grid.Cell.CellColor.WHITE)
                         continue;
 
-                    for (int d = 0; d < black_dir_x.Length; d++)
+                    foreach (Pos adjacentDirection in adjacentDirections)
                     {
-                        Pos nextPos = pos + new Pos(black_dir_x[d], black_dir_y[d]);
+                        Pos nextPos = pos + adjacentDirection;
 
                         // 隣接マスが図形外の場合は飛ばす
                         if (!binary.IsIn(nextPos))
