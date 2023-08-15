@@ -151,8 +151,8 @@ namespace TopologyCardRegister
          * ..###..
          * .......
          */
-        static readonly Pos[] BLACK_ADJACENT_DIRECTIONS = new Pos[] { UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT };
-        static readonly Pos[] WHITE_ADJACENT_DIRECTIONS = new Pos[] { UP, RIGHT, DOWN, LEFT };
+        static readonly Pos[] BLACK_NEXT_DIRECTIONS = new Pos[] { UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT };
+        static readonly Pos[] WHITE_NEXT_DIRECTIONS = new Pos[] { UP, RIGHT, DOWN, LEFT };
 
         /// <summary>
         /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
@@ -207,11 +207,11 @@ namespace TopologyCardRegister
         /// </summary>
         bool IsNoise(Pos pos, Grid binary)
         {
-            Pos[] adjacentDirections = binary[pos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_ADJACENT_DIRECTIONS : WHITE_ADJACENT_DIRECTIONS;
+            Pos[] nextDirections = binary[pos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
 
-            foreach (Pos adjacentDirection in adjacentDirections)
+            foreach (Pos nextDirection in nextDirections)
             {
-                Pos nextPos = pos + adjacentDirection;
+                Pos nextPos = pos + nextDirection;
 
                 // 隣接マスが図形外の場合は飛ばす
                 if (!binary.IsIn(nextPos))
@@ -253,7 +253,7 @@ namespace TopologyCardRegister
             Queue<Pos> segmentPos = new Queue<Pos>();
             segmentPos.Enqueue(startPos);
 
-            Pos[] adjacentDirections = binary[startPos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_ADJACENT_DIRECTIONS : WHITE_ADJACENT_DIRECTIONS;
+            Pos[] nextDirections = binary[startPos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
 
             binary[startPos].m_segmentId = id;
 
@@ -261,9 +261,9 @@ namespace TopologyCardRegister
             {
                 Pos nowPos = segmentPos.Dequeue();
 
-                foreach (Pos adjacentDirection in adjacentDirections)
+                foreach (Pos nextDirection in nextDirections)
                 {
-                    Pos nextPos = nowPos + adjacentDirection;
+                    Pos nextPos = nowPos + nextDirection;
 
                     // 隣接マスが図形外の場合は飛ばす
                     if (!binary.IsIn(nextPos))
@@ -327,7 +327,7 @@ namespace TopologyCardRegister
         private Dictionary<int, HashSet<int>> CalculateNextIds(Grid binary)
         {
             Dictionary<int, HashSet<int>> nextIds = new Dictionary<int, HashSet<int>>();
-            Pos[] adjacentDirections = BLACK_ADJACENT_DIRECTIONS;
+            Pos[] nextDirections = BLACK_NEXT_DIRECTIONS;
 
             binary.For((h, w) =>
             {
@@ -337,9 +337,9 @@ namespace TopologyCardRegister
                 if (binary[pos].m_color == Grid.Cell.CellColor.WHITE)
                     return;
 
-                foreach (Pos adjacentDirection in adjacentDirections)
+                foreach (Pos nextDirection in nextDirections)
                 {
-                    Pos nextPos = pos + adjacentDirection;
+                    Pos nextPos = pos + nextDirection;
 
                     // 隣接マスが図形外の場合は飛ばす
                     if (!binary.IsIn(nextPos))
