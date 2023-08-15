@@ -125,6 +125,17 @@ namespace TopologyCardRegister
         static readonly Pos LEFT = new Pos(-1, 0);
         static readonly Pos UP_LEFT = new Pos(-1, 1);
 
+        /*
+         * 以下の図の「.」を白、「#」を黒としたときに、黒のパーツの数が1、その穴の数が1となるように
+         * 黒の隣接判定は8方向、白の隣接判定は4方向にする。
+         * .......
+         * ..###..
+         * .#...#.
+         * ..#.#..
+         * .#...#.
+         * ..###..
+         * .......
+         */
         static readonly Pos[] BLACK_ADJACENT_DIRECTIONS = new Pos[] { UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT };
         static readonly Pos[] WHITE_ADJACENT_DIRECTIONS = new Pos[] { UP, RIGHT, DOWN, LEFT };
 
