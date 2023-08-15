@@ -14,7 +14,7 @@ public class JsonSaver
     }
 
 
-    static public void SaveJson(string jsonPath, string imgName, int[] holeCounts)
+    static public void SaveJson(string jsonPath, string imageName, int[] holeCounts)
     {
         List<TopologyCard> topologyCards = new List<TopologyCard>();
         if (File.Exists(jsonPath))
@@ -26,11 +26,11 @@ public class JsonSaver
                 topologyCards = readData;
         }
 
-        topologyCards.RemoveAll(x => x.ImageName == imgName);
+        topologyCards.RemoveAll(x => x.ImageName == imageName);
 
         var topologyCard = new TopologyCard
         {
-            ImageName = imgName,
+            ImageName = imageName,
             HoleCount = holeCounts,
         };
         topologyCards.Add(topologyCard);
