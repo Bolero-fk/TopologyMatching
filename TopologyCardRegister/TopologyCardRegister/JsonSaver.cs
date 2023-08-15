@@ -19,11 +19,7 @@ public class JsonSaver
         List<TopologyCard> topologyCards = new List<TopologyCard>();
         if (File.Exists(jsonPath))
         {
-            string existingJson = File.ReadAllText(jsonPath);
-            List<TopologyCard>? readData = JsonConvert.DeserializeObject<List<TopologyCard>>(existingJson);
-
-            if (readData != null)
-                topologyCards = readData;
+            topologyCards = LoadTopologyCardJson(jsonPath);
         }
 
         topologyCards.RemoveAll(x => x.ImageName == imageName);
@@ -38,5 +34,22 @@ public class JsonSaver
         string jsonOutput = JsonConvert.SerializeObject(topologyCards);
 
         File.WriteAllText(jsonPath, jsonOutput);
+    }
+
+    static List<TopologyCard> LoadTopologyCardJson(string jsonPath)
+    {
+        try
+        {
+            List<TopologyCard>? readData = JsonConvert.DeserializeObject<List<TopologyCard>>(File.ReadAllText(jsonPath));
+
+            if (readData != null)
+                return readData;
+        }
+        catch (Newtonsoft.Json.JsonSerializationException)
+        {
+            return new List<TopologyCard>();
+        }
+
+        return new List<TopologyCard>();
     }
 }
