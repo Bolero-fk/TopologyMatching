@@ -140,18 +140,7 @@ namespace TopologyCardRegister
 
             ChangeNoiseCellColor(binary);
 
-            // 割り振られていないマスが見つかったらそのマスと同じ色で連結している部分にidを割り振る
-            int topologyCount = 0;
-
-            binary.For((h, w) =>
-            {
-                Pos checkPos = new Pos(h, w);
-                if (binary[checkPos].m_segmentId != -1)
-                    return;
-
-                Dfs(checkPos, topologyCount, ref binary);
-                topologyCount++;
-            });
+            AssignSegmentIdToGridCell(binary);
 
             // 各黒成分の隣にある白成分の数を数える
             var nextIds = CalculateNextIds(binary);
@@ -198,6 +187,23 @@ namespace TopologyCardRegister
             }
 
             return true;
+        }
+
+        void AssignSegmentIdToGridCell(Grid binary)
+        {
+            int segmentCount = 0;
+
+            binary.For((h, w) =>
+            {
+                Pos checkPos = new Pos(h, w);
+
+                // 割り振られていないマスが見つかったらそのマスと同じ色で連結している部分にidを割り振る
+                if (binary[checkPos].m_segmentId != -1)
+                    return;
+
+                Dfs(checkPos, segmentCount, ref binary);
+                segmentCount++;
+            });
         }
 
         /// <summary>
