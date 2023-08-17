@@ -4,6 +4,10 @@ class Card {
         this.element = element;
         this.isFlipped = false;
     }
+    changeCard(pairKey, imageName) {
+        this.pairKey = pairKey;
+        this.frontImageUrl = 'url(./TopologyCards/images/' + imageName + ')';
+    }
     /**
      * 入力されたカードを裏返します
      * @param isFlipped どちらの面にするか(指定しない場合は現在と逆の状態にする)
@@ -47,8 +51,7 @@ window.onload = () => {
         gameBoard.appendChild(cardElement);
         const card = new Card(cardElement);
         card.isFlipped = false;
-        card.pairKey = cardStatus[i].pairKey;
-        card.frontImageUrl = 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')';
+        card.changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
         card.element.onclick = () => {
             if (card.isFlipped || selectesCards.length == 2) {
                 return;
@@ -93,8 +96,7 @@ function RestartGame() {
     const gameEngine = new GameEngine(LoadTopologyCardsJson("./TopologyCards/cards.json"));
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
     for (let i = 0; i < cardStatus.length; i++) {
-        cards[i].pairKey = cardStatus[i].pairKey;
-        cards[i].frontImageUrl = 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')';
+        cards[i].changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
         cards[i].flipCard(false);
     }
     selectesCards = [];
