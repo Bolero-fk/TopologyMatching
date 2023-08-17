@@ -5,10 +5,15 @@ const COLUMN = 5;
 const IMAGE_FOLDER_PATH = './TopologyCards/images/';
 const JSON_PATH = './TopologyCards/cards.json';
 const FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
+var FlipStatus;
+(function (FlipStatus) {
+    FlipStatus[FlipStatus["Front"] = 0] = "Front";
+    FlipStatus[FlipStatus["Back"] = 1] = "Back";
+})(FlipStatus || (FlipStatus = {}));
 class Card {
     constructor(element) {
         this.element = element;
-        this.isFlipped = false;
+        this.flipStatus = FlipStatus.Back;
         this.element.onclick = () => {
             this.onClick();
         };
@@ -22,15 +27,12 @@ class Card {
      * @param isFlipped どちらの面にするか(指定しない場合は現在と逆の状態にする)
      * @returns
      */
-    flipCard(isFlipped = undefined) {
+    flipCard(flipStatus) {
         // カードの面を指定されていない場合は反転させる。
         // 指定されている場合はその面に反転する
-        if (isFlipped === undefined)
-            this.isFlipped = !this.isFlipped;
-        else
-            this.isFlipped = isFlipped;
+        this.flipStatus = flipStatus;
         // カードの面ごとに色と画像を設定する
-        if (this.isFlipped) {
+        if (this.flipStatus == FlipStatus.Front) {
             this.element.style.backgroundColor = getComputedStyle(this.element).getPropertyValue("--front-background-color");
             this.element.style.backgroundImage = this.frontImageUrl;
         }
@@ -40,10 +42,10 @@ class Card {
         }
     }
     onClick() {
-        if (this.isFlipped || selectesCards.length == 2) {
+        if (this.flipStatus == FlipStatus.Front || selectesCards.length == 2) {
             return;
         }
-        this.flipCard();
+        this.flipCard(FlipStatus.Front);
         selectesCards.push(this);
         if (selectesCards.length == 2) {
             if (selectesCards[0].pairKey == selectesCards[1].pairKey) {
@@ -52,7 +54,7 @@ class Card {
             else {
                 setTimeout(() => {
                     for (let card of selectesCards) {
-                        card.flipCard();
+                        card.flipCard(FlipStatus.Back);
                     }
                     selectesCards = [];
                 }, FLIPPING_WAIT_TIME_MILLISECONDS);
@@ -76,7 +78,7 @@ window.onload = () => {
         cardElement.className = 'card';
         gameBoard.appendChild(cardElement);
         const card = new Card(cardElement);
-        card.isFlipped = false;
+        card.flipCard(FlipStatus.Back);
         card.changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
         cards.push(card);
     }
@@ -103,7 +105,7 @@ function RestartGame() {
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
     for (let i = 0; i < cardStatus.length; i++) {
         cards[i].changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
-        cards[i].flipCard(false);
+        cards[i].flipCard(FlipStatus.Back);
     }
     selectesCards = [];
 }

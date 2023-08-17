@@ -9,15 +9,20 @@ const JSON_PATH = './TopologyCards/cards.json';
 
 const FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
 
+enum FlipStatus {
+    Front,
+    Back,
+}
+
 class Card {
     element: HTMLElement;
-    isFlipped: boolean;
+    flipStatus: FlipStatus;
     pairKey: string;
     frontImageUrl: string;
 
     constructor(element: HTMLElement) {
         this.element = element;
-        this.isFlipped = false;
+        this.flipStatus = FlipStatus.Back;
         this.element.onclick = () => {
             this.onClick();
         };
@@ -29,20 +34,14 @@ class Card {
     }
 
     /**
-     * 入力されたカードを裏返します
-     * @param isFlipped どちらの面にするか(指定しない場合は現在と逆の状態にする)
+     * 入力されたカードを指定された方向に返します
      * @returns 
      */
-    flipCard(isFlipped: boolean = undefined): void {
-        // カードの面を指定されていない場合は反転させる。
-        // 指定されている場合はその面に反転する
-        if (isFlipped === undefined)
-            this.isFlipped = !this.isFlipped;
-        else
-            this.isFlipped = isFlipped;
+    flipCard(flipStatus: FlipStatus): void {
+        this.flipStatus = flipStatus;
 
         // カードの面ごとに色と画像を設定する
-        if (this.isFlipped) {
+        if (this.flipStatus == FlipStatus.Front) {
             this.element.style.backgroundColor = getComputedStyle(this.element).getPropertyValue("--front-background-color");
             this.element.style.backgroundImage = this.frontImageUrl;
         }
@@ -53,11 +52,11 @@ class Card {
     }
 
     onClick(): void {
-        if (this.isFlipped || selectesCards.length == 2) {
+        if (this.flipStatus == FlipStatus.Front || selectesCards.length == 2) {
             return;
         }
 
-        this.flipCard();
+        this.flipCard(FlipStatus.Front);
         selectesCards.push(this);
 
         if (selectesCards.length == 2) {
@@ -66,7 +65,7 @@ class Card {
             } else {
                 setTimeout(() => {
                     for (let card of selectesCards) {
-                        card.flipCard();
+                        card.flipCard(FlipStatus.Back);
                     }
 
                     selectesCards = [];
@@ -97,7 +96,7 @@ window.onload = () => {
         gameBoard.appendChild(cardElement);
 
         const card: Card = new Card(cardElement);
-        card.isFlipped = false;
+        card.flipCard(FlipStatus.Back);
         card.changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
 
         cards.push(card);
@@ -130,7 +129,7 @@ function RestartGame(): void {
 
     for (let i = 0; i < cardStatus.length; i++) {
         cards[i].changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
-        cards[i].flipCard(false);
+        cards[i].flipCard(FlipStatus.Back);
     }
 
     selectesCards = [];
