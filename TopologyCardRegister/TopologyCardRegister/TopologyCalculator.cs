@@ -34,6 +34,14 @@ namespace TopologyCardRegister
                     BLACK,
                     NONE
                 }
+
+                public void InvertColor()
+                {
+                    if (m_color == CellColor.WHITE)
+                        m_color = CellColor.BLACK;
+                    else if (m_color == CellColor.BLACK)
+                        m_color = CellColor.WHITE;
+                }
             }
 
             public int m_height;
@@ -197,14 +205,7 @@ namespace TopologyCardRegister
                 Pos checkPos = new Pos(h, w);
                 if (IsNoise(checkPos, grid))
                 {
-                    if (grid[checkPos].m_color == Grid.Cell.CellColor.BLACK)
-                    {
-                        grid[checkPos].m_color = Grid.Cell.CellColor.WHITE;
-                    }
-                    else if (grid[checkPos].m_color == Grid.Cell.CellColor.WHITE)
-                    {
-                        grid[checkPos].m_color = Grid.Cell.CellColor.BLACK;
-                    }
+                    grid[checkPos].InvertColor();
                 }
             });
         }
