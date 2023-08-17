@@ -2,10 +2,6 @@
 
 public class JsonSaver
 {
-    public JsonSaver()
-    {
-    }
-
     class TopologyCard
     {
         public string ImageName { get; set; }
