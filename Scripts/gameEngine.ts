@@ -1,13 +1,9 @@
 class CardStatus {
     imageName: string;
-    holeCount: number[];
-    complexityLevel: number;
     pairKey: string;
 
     constructor(imageName: string, holeCount: number[]) {
         this.imageName = imageName;
-        this.holeCount = holeCount;
-        this.complexityLevel = holeCount.reduce((sum, curr) => sum + curr, 0) + holeCount.length;
         this.pairKey = holeCount.toString();
     }
 };
@@ -88,10 +84,10 @@ export class GameEngine {
 
         // cardsをholeCountごとにまとめる
         this.cards.forEach(card => {
-            if (!this.cardGroups.has(card.holeCount.toString()))
-                this.cardGroups.set(card.holeCount.toString(), []);
+            if (!this.cardGroups.has(card.pairKey))
+                this.cardGroups.set(card.pairKey, []);
 
-            this.cardGroups.get(card.holeCount.toString()).push(card);
+            this.cardGroups.get(card.pairKey).push(card);
         });
 
         // それぞれのcardGroupをシャッフルする
