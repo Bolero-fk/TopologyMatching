@@ -1,31 +1,31 @@
 import { GameEngine } from './gameEngine.js';
 class Card {
+    /**
+     * 入力されたカードを裏返します
+     * @param card 裏返したいカード
+     * @param isFlipped どちらの面にするか
+     * @returns
+     */
+    flipCard(isFlipped = undefined) {
+        // カードの面を指定されていない場合は反転させる。
+        // 指定されている場合はその面に反転する
+        if (isFlipped === undefined)
+            this.isFlipped = !this.isFlipped;
+        else
+            this.isFlipped = isFlipped;
+        // カードの面ごとに色と画像を設定する
+        if (this.isFlipped) {
+            this.element.style.backgroundColor = getComputedStyle(this.element).getPropertyValue("--front-background-color");
+            this.element.style.backgroundImage = this.frontImageUrl;
+        }
+        else {
+            this.element.style.backgroundColor = getComputedStyle(this.element).getPropertyValue("--back-background-color");
+            this.element.style.backgroundImage = '';
+        }
+    }
 }
 let cards = [];
 let selectesCards = [];
-/**
- * 入力されたカードを裏返します
- * @param card 裏返したいカード
- * @param isFlipped どちらの面にするか
- * @returns
- */
-function flipCard(card, isFlipped = undefined) {
-    // カードの面を指定されていない場合は反転させる。
-    // 指定されている場合はその面に反転する
-    if (isFlipped === undefined)
-        card.isFlipped = !card.isFlipped;
-    else
-        card.isFlipped = isFlipped;
-    // カードの面ごとに色と画像を設定する
-    if (card.isFlipped) {
-        card.element.style.backgroundColor = getComputedStyle(card.element).getPropertyValue("--front-background-color");
-        card.element.style.backgroundImage = card.frontImageUrl;
-    }
-    else {
-        card.element.style.backgroundColor = getComputedStyle(card.element).getPropertyValue("--back-background-color");
-        card.element.style.backgroundImage = '';
-    }
-}
 // ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
 const ROW = 4;
 const COLUMN = 5;
@@ -42,17 +42,17 @@ window.onload = () => {
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
         gameBoard.appendChild(cardElement);
-        const card = {
-            element: cardElement,
-            isFlipped: false,
-            pairKey: cardStatus[i].pairKey,
-            frontImageUrl: 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')'
-        };
+        console.log("aaa");
+        const card = new Card();
+        card.element = cardElement;
+        card.isFlipped = false;
+        card.pairKey = cardStatus[i].pairKey;
+        card.frontImageUrl = 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')';
         card.element.onclick = () => {
             if (card.isFlipped || selectesCards.length == 2) {
                 return;
             }
-            flipCard(card);
+            card.flipCard();
             selectesCards.push(card);
             if (selectesCards.length == 2) {
                 if (selectesCards[0].pairKey == selectesCards[1].pairKey) {
@@ -61,7 +61,7 @@ window.onload = () => {
                 else {
                     setTimeout(() => {
                         for (let card of selectesCards) {
-                            flipCard(card);
+                            card.flipCard();
                         }
                         selectesCards = [];
                     }, 1000);
@@ -94,7 +94,7 @@ function RestartGame() {
     for (let i = 0; i < cardStatus.length; i++) {
         cards[i].pairKey = cardStatus[i].pairKey;
         cards[i].frontImageUrl = 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')';
-        flipCard(cards[i], false);
+        cards[i].flipCard(false);
     }
     selectesCards = [];
 }
