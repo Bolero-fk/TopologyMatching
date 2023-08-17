@@ -45,24 +45,24 @@ class Card {
             return;
         }
         this.flipCard(FlipStatus.Front);
-        selectesCards.push(this);
-        if (MAX_SELECTABLE_CARD <= selectesCards.length) {
-            if (selectesCards[0].pairKey == selectesCards[1].pairKey) {
-                selectesCards = [];
+        selectedCards.push(this);
+        if (MAX_SELECTABLE_CARD <= selectedCards.length) {
+            if (selectedCards[0].pairKey == selectedCards[1].pairKey) {
+                selectedCards = [];
             }
             else {
                 setTimeout(() => {
-                    for (let card of selectesCards) {
+                    for (let card of selectedCards) {
                         card.flipCard(FlipStatus.Back);
                     }
-                    selectesCards = [];
+                    selectedCards = [];
                 }, FLIPPING_WAIT_TIME_MILLISECONDS);
             }
         }
     }
 }
-let cards = [];
-let selectesCards = [];
+let cardsOnBoard = [];
+let selectedCards = [];
 window.onload = () => {
     const gameBoard = document.getElementById('game-board');
     const resetButton = document.getElementById('reset-button');
@@ -79,7 +79,7 @@ window.onload = () => {
         const card = new Card(cardElement);
         card.flipCard(FlipStatus.Back);
         card.changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
-        cards.push(card);
+        cardsOnBoard.push(card);
     }
     resetButton.onclick = RestartGame;
 };
@@ -103,8 +103,8 @@ function RestartGame() {
     const gameEngine = new GameEngine(LoadTopologyCardsJson(JSON_PATH));
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
     for (let i = 0; i < cardStatus.length; i++) {
-        cards[i].changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
-        cards[i].flipCard(FlipStatus.Back);
+        cardsOnBoard[i].changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
+        cardsOnBoard[i].flipCard(FlipStatus.Back);
     }
-    selectesCards = [];
+    selectedCards = [];
 }
