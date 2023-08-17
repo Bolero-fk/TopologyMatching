@@ -15,7 +15,7 @@ export class GameEngine {
     private cardGroups: Map<string, CardStatus[]> = new Map();
 
     // コンストラクター、初期化処理を行う
-    constructor(topologyCards) {
+    constructor(topologyCards: any[]) {
         topologyCards.forEach(topologyCard => {
             const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
             this.cards.push(card);

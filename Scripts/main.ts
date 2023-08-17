@@ -31,7 +31,7 @@ class Card {
         };
     }
 
-    changeCard(pairKey: string, imageName: string) {
+    changeCard(pairKey: string, imageName: string): void {
         this.matchingKey = pairKey;
         this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
     }
