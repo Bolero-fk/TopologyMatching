@@ -131,16 +131,16 @@ namespace TopologyCardRegister
             {
                 return new Pos(a.m_x - b.m_x, a.m_y - b.m_y);
             }
-        }
 
-        static readonly Pos UP = new Pos(0, 1);
-        static readonly Pos UP_RIGHT = new Pos(1, 1);
-        static readonly Pos RIGHT = new Pos(1, 0);
-        static readonly Pos DOWN_RIGHT = new Pos(1, -1);
-        static readonly Pos DOWN = new Pos(0, -1);
-        static readonly Pos DOWN_LEFT = new Pos(-1, -1);
-        static readonly Pos LEFT = new Pos(-1, 0);
-        static readonly Pos UP_LEFT = new Pos(-1, 1);
+            public static readonly Pos UP = new Pos(0, 1);
+            public static readonly Pos UP_RIGHT = new Pos(1, 1);
+            public static readonly Pos RIGHT = new Pos(1, 0);
+            public static readonly Pos DOWN_RIGHT = new Pos(1, -1);
+            public static readonly Pos DOWN = new Pos(0, -1);
+            public static readonly Pos DOWN_LEFT = new Pos(-1, -1);
+            public static readonly Pos LEFT = new Pos(-1, 0);
+            public static readonly Pos UP_LEFT = new Pos(-1, 1);
+        }
 
         /*
          * 以下の図の「.」を白、「#」を黒としたときに、黒のパーツの数が1、その穴の数が1となるように
@@ -153,8 +153,8 @@ namespace TopologyCardRegister
          * ..###..
          * .......
          */
-        static readonly Pos[] BLACK_NEXT_DIRECTIONS = new Pos[] { UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT };
-        static readonly Pos[] WHITE_NEXT_DIRECTIONS = new Pos[] { UP, RIGHT, DOWN, LEFT };
+        static readonly Pos[] BLACK_NEXT_DIRECTIONS = new Pos[] { Pos.UP, Pos.UP_RIGHT, Pos.RIGHT, Pos.DOWN_RIGHT, Pos.DOWN, Pos.DOWN_LEFT, Pos.LEFT, Pos.UP_LEFT };
+        static readonly Pos[] WHITE_NEXT_DIRECTIONS = new Pos[] { Pos.UP, Pos.RIGHT, Pos.DOWN, Pos.LEFT };
 
         /// <summary>
         /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
