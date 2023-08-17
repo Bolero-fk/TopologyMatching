@@ -1,5 +1,6 @@
 import { GameEngine } from './gameEngine.js';
 // ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
+// FIXME: jsonに記されたカードのペアがROW * COLUMN以下のときに落ちるので注意する
 const ROW = 4;
 const COLUMN = 5;
 const IMAGE_FOLDER_PATH = './TopologyCards/images/';
