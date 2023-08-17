@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.DirectoryServices.ActiveDirectory;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 namespace TopologyCardRegister
