@@ -4,7 +4,7 @@ namespace TopologyCardRegister
     {
         string[] m_imgFilePaths = Array.Empty<string>();
         int m_nowPage = 0;
-        int[] m_holeCounts = Array.Empty<int>();
+        int[] m_holeCount = Array.Empty<int>();
 
         const int DISPLAY_IMAGE_HEIGHT_IN_PIXELS = 1024;
         const int DISPLAY_IMAGE_WIDTH_IN_PIXELS = 1024;
@@ -41,8 +41,8 @@ namespace TopologyCardRegister
 
         void DisplayHoleCount(Bitmap bitmap)
         {
-            m_holeCounts = TopologyStatusCalculator.CalculateHoleCount(bitmap).ToArray();
-            holeCountLabel.Text = string.Join(',', m_holeCounts.Select(num => num.ToString()));
+            m_holeCount = TopologyStatusCalculator.CalculateHoleCount(bitmap).ToArray();
+            holeCountLabel.Text = string.Join(',', m_holeCount.Select(num => num.ToString()));
         }
 
         string[] RequestSvgFilePaths()
@@ -114,7 +114,7 @@ namespace TopologyCardRegister
             File.Copy(m_imgFilePaths[m_nowPage], Path.Combine(imgFolderPath, imgFileName), true);
 
             // json‚ð•Û‘¶‚·‚é
-            JsonSaver.SaveJson(jsonPath, imgFileName, m_holeCounts);
+            JsonSaver.SaveJson(jsonPath, imgFileName, m_holeCount);
         }
 
         void TryEnableSaveCardButton()

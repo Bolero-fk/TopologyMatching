@@ -12,7 +12,7 @@ public class JsonSaver
     /// <summary>
     /// 入力されたholeCountと画像名をjsonに保存します
     /// </summary>
-    static public void SaveJson(string jsonPath, string imageName, int[] holeCounts)
+    static public void SaveJson(string jsonPath, string imageName, int[] holeCount)
     {
         List<TopologyCard> topologyCards = new List<TopologyCard>();
         if (File.Exists(jsonPath))
@@ -26,7 +26,7 @@ public class JsonSaver
         topologyCards.Add(new TopologyCard
         {
             ImageName = imageName,
-            HoleCount = holeCounts,
+            HoleCount = holeCount,
         });
 
         File.WriteAllText(jsonPath, JsonConvert.SerializeObject(topologyCards));
