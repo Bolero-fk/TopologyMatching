@@ -44,6 +44,9 @@ class Card {
         if (this.flipStatus == FlipStatus.Front) {
             return;
         }
+        else if (MAX_SELECTABLE_CARD <= selectedCards.length) {
+            return;
+        }
         this.flipCard(FlipStatus.Front);
         selectedCards.push(this);
         if (MAX_SELECTABLE_CARD <= selectedCards.length) {
