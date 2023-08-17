@@ -69,9 +69,7 @@ export class GameEngine {
         const randomIndex = Math.floor(Math.random() * keysArray.length);
         const randomKey = keysArray[randomIndex];
 
-        const result = this.cardGroups.get(randomKey).splice(-2);
-
-        return result;
+        return this.cardGroups.get(randomKey).splice(-2);
     }
 
     /**
