@@ -21,7 +21,7 @@ export class GameEngine {
         const selectedCards = new Array();
         for (let i = 0; i < cardNum / 2; i++) {
             // カードをランダムに2枚追加する
-            selectedCards.push(...this.getAndDeleteRandomTwoCard());
+            selectedCards.push(...this.spliceRandomTwoCard());
         }
         // カードをシャッフルする
         return this.shuffleArray(selectedCards);
@@ -43,7 +43,7 @@ export class GameEngine {
      * cardGroupsからランダムに二枚取得し、それらをcardGroupsから削除します
      * @returns 取得したカード
      */
-    getAndDeleteRandomTwoCard() {
+    spliceRandomTwoCard() {
         const keysArray = new Array();
         for (const key of this.cardGroups.keys()) {
             const length = this.cardGroups.get(key).length;
