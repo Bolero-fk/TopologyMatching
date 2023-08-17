@@ -15,12 +15,12 @@ namespace TopologyCardRegister
         /// <summary>
         /// svg画像をbitmapのグリッドに変換したデータを管理するクラスです
         /// </summary>
-        public class Grid
+        class Grid
         {
             public class Cell
             {
-                public int m_segmentId;
-                public CellColor m_color;
+                public int m_segmentId { get; set; }
+                public CellColor m_color { get; set; }
 
                 public Cell()
                 {
@@ -44,10 +44,10 @@ namespace TopologyCardRegister
                 }
             }
 
-            public int m_height;
-            public int m_width;
+            int m_height;
+            int m_width;
 
-            public Cell[,] m_cells;
+            Cell[,] m_cells;
 
             Grid() { }
 
@@ -113,8 +113,8 @@ namespace TopologyCardRegister
         /// </summary>
         public class Pos
         {
-            public int m_x;
-            public int m_y;
+            public int m_x { get; }
+            public int m_y { get; }
 
             public Pos()
             {
