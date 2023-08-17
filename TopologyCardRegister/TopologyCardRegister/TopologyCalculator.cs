@@ -49,8 +49,6 @@ namespace TopologyCardRegister
 
             Cell[,] m_cells;
 
-            Grid() { }
-
             public Grid(int height, int width)
             {
                 m_height = height;
