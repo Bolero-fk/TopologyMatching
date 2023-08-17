@@ -18,10 +18,10 @@ enum FlipStatus {
 }
 
 class Card {
-    element: HTMLElement;
-    flipStatus: FlipStatus;
-    matchingKey: string;
-    frontImageUrl: string;
+    private element: HTMLElement;
+    private flipStatus: FlipStatus;
+    private matchingKey: string;
+    private frontImageUrl: string;
 
     constructor(element: HTMLElement) {
         this.element = element;
@@ -54,7 +54,7 @@ class Card {
         }
     }
 
-    onClick(): void {
+    private onClick(): void {
         if (this.flipStatus == FlipStatus.Front) {
             return;
         }
