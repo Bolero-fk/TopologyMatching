@@ -32,12 +32,12 @@ export class GameEngine {
      * @returns シャッフルされた配列
      */
     shuffleArray(array) {
-        const newArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
-        for (let i = newArray.length - 1; i > 0; i--) {
+        const shuffledArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // 要素の入れ替え
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // 要素の入れ替え
         }
-        return newArray;
+        return shuffledArray;
     }
     /**
      * cardGroupsからランダムに二枚取得し、それらをcardGroupsから削除します
