@@ -2,7 +2,7 @@ import { GameEngine } from './gameEngine.js';
 
 class Card {
     element: HTMLElement;
-    revealed: boolean;
+    isFlipped: boolean;
     pairKey: string;
     frontImageUrl: string;
 }
@@ -13,19 +13,19 @@ let selectesCards: Card[] = [];
 /**
  * 入力されたカードを裏返します
  * @param card 裏返したいカード
- * @param flipstatus どちらの面にするか
+ * @param isFlipped どちらの面にするか
  * @returns 
  */
-function flipCard(card: Card, flipstatus: boolean = undefined) {
+function flipCard(card: Card, isFlipped: boolean = undefined) {
     // カードの面を指定されていない場合は反転させる。
     // 指定されている場合はその面に反転する
-    if (flipstatus === undefined)
-        card.revealed = !card.revealed;
+    if (isFlipped === undefined)
+        card.isFlipped = !card.isFlipped;
     else
-        card.revealed = flipstatus;
+        card.isFlipped = isFlipped;
 
     // カードの面ごとに色と画像を設定する
-    if (card.revealed) {
+    if (card.isFlipped) {
         card.element.style.backgroundColor = getComputedStyle(card.element).getPropertyValue("--front-background-color");
         card.element.style.backgroundImage = card.frontImageUrl;
     }
@@ -58,13 +58,13 @@ window.onload = () => {
 
         const card: Card = {
             element: cardElement,
-            revealed: false,
+            isFlipped: false,
             pairKey: cardStatus[i].pairKey,
             frontImageUrl: 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')'
         };
 
         card.element.onclick = () => {
-            if (card.revealed || selectesCards.length == 2) {
+            if (card.isFlipped || selectesCards.length == 2) {
                 return;
             }
 
