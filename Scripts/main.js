@@ -9,6 +9,9 @@ class Card {
     constructor(element) {
         this.element = element;
         this.isFlipped = false;
+        this.element.onclick = () => {
+            this.onClick();
+        };
     }
     changeCard(pairKey, imageName) {
         this.pairKey = pairKey;
@@ -36,6 +39,26 @@ class Card {
             this.element.style.backgroundImage = '';
         }
     }
+    onClick() {
+        if (this.isFlipped || selectesCards.length == 2) {
+            return;
+        }
+        this.flipCard();
+        selectesCards.push(this);
+        if (selectesCards.length == 2) {
+            if (selectesCards[0].pairKey == selectesCards[1].pairKey) {
+                selectesCards = [];
+            }
+            else {
+                setTimeout(() => {
+                    for (let card of selectesCards) {
+                        card.flipCard();
+                    }
+                    selectesCards = [];
+                }, FLIPPING_WAIT_TIME_MILLISECONDS);
+            }
+        }
+    }
 }
 let cards = [];
 let selectesCards = [];
@@ -55,26 +78,6 @@ window.onload = () => {
         const card = new Card(cardElement);
         card.isFlipped = false;
         card.changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
-        card.element.onclick = () => {
-            if (card.isFlipped || selectesCards.length == 2) {
-                return;
-            }
-            card.flipCard();
-            selectesCards.push(card);
-            if (selectesCards.length == 2) {
-                if (selectesCards[0].pairKey == selectesCards[1].pairKey) {
-                    selectesCards = [];
-                }
-                else {
-                    setTimeout(() => {
-                        for (let card of selectesCards) {
-                            card.flipCard();
-                        }
-                        selectesCards = [];
-                    }, FLIPPING_WAIT_TIME_MILLISECONDS);
-                }
-            }
-        };
         cards.push(card);
     }
     resetButton.onclick = RestartGame;
