@@ -52,8 +52,6 @@ export class GameEngine {
         const randomIndex = Math.floor(Math.random() * keysArray.length);
         const randomKey = keysArray[randomIndex];
         const result = this.cardGroups.get(randomKey).splice(-2);
-        if (this.cardGroups.get(randomKey).length == 0)
-            this.cardGroups.delete(randomKey);
         return result;
     }
     /**
@@ -72,16 +70,10 @@ export class GameEngine {
             this.cardGroups.set(key, this.shuffleArray(cardGroup));
         });
         // holeCountごとに偶数になるように各groupの枚数を調整する
-        const deleteKeys = [];
         this.cardGroups.forEach((value, key) => {
             if (value.length % 2 == 1) {
                 value.pop();
             }
-            if (value.length == 0)
-                deleteKeys.push(key);
         });
-        for (const key of deleteKeys) {
-            this.cardGroups.delete(key);
-        }
     }
 }
