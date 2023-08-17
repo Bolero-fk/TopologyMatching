@@ -9,6 +9,9 @@ public class JsonSaver
     }
 
 
+    /// <summary>
+    /// 入力されたholeCountと画像名をjsonに保存します
+    /// </summary>
     static public void SaveJson(string jsonPath, string imageName, int[] holeCounts)
     {
         List<TopologyCard> topologyCards = new List<TopologyCard>();
@@ -17,6 +20,7 @@ public class JsonSaver
             topologyCards = LoadTopologyCardJson(jsonPath);
         }
 
+        // 読み込んだファイルに既に同名の画像が存在する場合、holeCountを上書きする
         topologyCards.RemoveAll(x => x.ImageName == imageName);
 
         topologyCards.Add(new TopologyCard
@@ -28,6 +32,9 @@ public class JsonSaver
         File.WriteAllText(jsonPath, JsonConvert.SerializeObject(topologyCards));
     }
 
+    /// <summary>
+    /// 指定されたjsonが既に存在する場合は内容を読み込みます。
+    /// </summary>
     static List<TopologyCard> LoadTopologyCardJson(string jsonPath)
     {
         try
