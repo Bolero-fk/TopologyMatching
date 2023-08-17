@@ -74,22 +74,22 @@ class Card {
 
         if (MAX_SELECTABLE_CARD <= selectedCards.length) {
             if (selectedCards[0].matchingKey == selectedCards[1].matchingKey) {
-                selectedCards = [];
+                selectedCards.length = 0;
             } else {
                 setTimeout(() => {
                     for (let card of selectedCards) {
                         card.flipCard(FlipStatus.Back);
                     }
 
-                    selectedCards = [];
+                    selectedCards.length = 0;
                 }, FLIPPING_WAIT_TIME_MILLISECONDS);
             }
         }
     }
 }
 
-let cardsOnBoard: Card[] = [];
-let selectedCards: Card[] = [];
+const cardsOnBoard: Card[] = [];
+const selectedCards: Card[] = [];
 
 window.onload = () => {
     initializeElements();
@@ -173,5 +173,5 @@ function RestartGame(): void {
         cardsOnBoard[i].flipCard(FlipStatus.Back);
     }
 
-    selectedCards = [];
+    selectedCards.length = 0;
 }
