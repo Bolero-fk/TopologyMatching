@@ -29,7 +29,11 @@ export class GameEngine {
         });
     }
 
-    // ゲーム開始時の初期化処理
+    /**
+     * 神経衰弱ゲームに使用するカードを取得します。
+     * @param cardNum - 神経衰弱ゲームにつかうカードの枚数
+     * @returns 神経衰弱ゲームに使用できるカードセット
+     */
     startGame(cardNum: number): CardStatus[] {
 
         const cardGroups: Map<string, CardStatus[]> = this.initializeCardGroups();
@@ -82,6 +86,7 @@ export class GameEngine {
 
     /**
      * cardGroupsを初期化します
+     * @returns 初期化されたcardGroups
      */
     private initializeCardGroups(): Map<string, CardStatus[]> {
         const cardGroups = new Map<string, CardStatus[]>;
