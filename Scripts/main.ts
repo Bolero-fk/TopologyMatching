@@ -1,5 +1,14 @@
 import { GameEngine } from './gameEngine.js';
 
+// ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
+const ROW = 4;
+const COLUMN = 5;
+
+const IMAGE_FOLDER_PATH = './TopologyCards/images/';
+const JSON_PATH = './TopologyCards/cards.json';
+
+const FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
+
 class Card {
     element: HTMLElement;
     isFlipped: boolean;
@@ -13,7 +22,7 @@ class Card {
 
     changeCard(pairKey: string, imageName: string) {
         this.pairKey = pairKey;
-        this.frontImageUrl = 'url(./TopologyCards/images/' + imageName + ')';
+        this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
     }
 
     /**
@@ -45,15 +54,11 @@ class Card {
 let cards: Card[] = [];
 let selectesCards: Card[] = [];
 
-// ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
-const ROW = 4;
-const COLUMN = 5;
-
 window.onload = () => {
     const gameBoard = document.getElementById('game-board');
     const resetButton = document.getElementById('reset-button');
 
-    const gameEngine = new GameEngine(LoadTopologyCardsJson("./TopologyCards/cards.json"));
+    const gameEngine = new GameEngine(LoadTopologyCardsJson(JSON_PATH));
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
 
     // カードの行と列の枚数を指定する
@@ -88,7 +93,7 @@ window.onload = () => {
                         }
 
                         selectesCards = [];
-                    }, 1000);
+                    }, FLIPPING_WAIT_TIME_MILLISECONDS);
                 }
             }
         };
@@ -118,7 +123,7 @@ function LoadTopologyCardsJson(url: string): any {
  * カードセットを新しく読み込んでゲームを再スタートします。
  */
 function RestartGame(): void {
-    const gameEngine = new GameEngine(LoadTopologyCardsJson("./TopologyCards/cards.json"));
+    const gameEngine = new GameEngine(LoadTopologyCardsJson(JSON_PATH));
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
 
     for (let i = 0; i < cardStatus.length; i++) {

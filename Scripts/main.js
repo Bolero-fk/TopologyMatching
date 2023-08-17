@@ -1,4 +1,10 @@
 import { GameEngine } from './gameEngine.js';
+// ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
+const ROW = 4;
+const COLUMN = 5;
+const IMAGE_FOLDER_PATH = './TopologyCards/images/';
+const JSON_PATH = './TopologyCards/cards.json';
+const FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
 class Card {
     constructor(element) {
         this.element = element;
@@ -6,7 +12,7 @@ class Card {
     }
     changeCard(pairKey, imageName) {
         this.pairKey = pairKey;
-        this.frontImageUrl = 'url(./TopologyCards/images/' + imageName + ')';
+        this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
     }
     /**
      * 入力されたカードを裏返します
@@ -33,13 +39,10 @@ class Card {
 }
 let cards = [];
 let selectesCards = [];
-// ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
-const ROW = 4;
-const COLUMN = 5;
 window.onload = () => {
     const gameBoard = document.getElementById('game-board');
     const resetButton = document.getElementById('reset-button');
-    const gameEngine = new GameEngine(LoadTopologyCardsJson("./TopologyCards/cards.json"));
+    const gameEngine = new GameEngine(LoadTopologyCardsJson(JSON_PATH));
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
     // カードの行と列の枚数を指定する
     gameBoard.style.setProperty('--cols', String(COLUMN));
@@ -68,7 +71,7 @@ window.onload = () => {
                             card.flipCard();
                         }
                         selectesCards = [];
-                    }, 1000);
+                    }, FLIPPING_WAIT_TIME_MILLISECONDS);
                 }
             }
         };
@@ -93,7 +96,7 @@ function LoadTopologyCardsJson(url) {
  * カードセットを新しく読み込んでゲームを再スタートします。
  */
 function RestartGame() {
-    const gameEngine = new GameEngine(LoadTopologyCardsJson("./TopologyCards/cards.json"));
+    const gameEngine = new GameEngine(LoadTopologyCardsJson(JSON_PATH));
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
     for (let i = 0; i < cardStatus.length; i++) {
         cards[i].changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
