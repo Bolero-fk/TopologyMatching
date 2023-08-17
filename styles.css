@@ -42,7 +42,7 @@ body {
     --back-background-color: #0099ff;
 }
 
-#reset-button {
+#restart-button {
     display: block;
     margin: 30px auto;
     padding: 10px 20px;
@@ -53,6 +53,6 @@ body {
     cursor: pointer;
 }
 
-#reset-button:hover {
+#restart-button:hover {
     background-color: #e33e2b;
 }

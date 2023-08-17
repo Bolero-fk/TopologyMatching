@@ -82,15 +82,27 @@ let cardsOnBoard: Card[] = [];
 let selectedCards: Card[] = [];
 
 window.onload = () => {
-    const gameBoard = document.getElementById('game-board');
-    const resetButton = document.getElementById('reset-button');
+    initializeElements();
+};
 
-    const gameEngine = new GameEngine(LoadTopologyCardsJson(JSON_PATH));
-    const cardStatus = gameEngine.startGame(ROW * COLUMN);
+function initializeElements(): void {
+    initializeGameBoardElement();
+    initializeRestartGemeButtonElement();
+}
+
+function initializeGameBoardElement(): void {
+    const gameBoard = document.getElementById('game-board');
 
     // カードの行と列の枚数を指定する
     gameBoard.style.setProperty('--cols', String(COLUMN));
     gameBoard.style.setProperty('--rows', String(ROW));
+
+    initializeCardsOnBoardElement(gameBoard);
+}
+
+function initializeCardsOnBoardElement(gameBoard: HTMLElement): void {
+    const gameEngine = new GameEngine(LoadTopologyCardsJson(JSON_PATH));
+    const cardStatus = gameEngine.startGame(ROW * COLUMN);
 
     for (let i = 0; i < ROW * COLUMN; i++) {
         // カードを追加していく
@@ -104,9 +116,11 @@ window.onload = () => {
 
         cardsOnBoard.push(card);
     }
+}
 
-    resetButton.onclick = RestartGame;
-};
+function initializeRestartGemeButtonElement(): void {
+    document.getElementById('restart-button').onclick = RestartGame;
+}
 
 // トポロジーカードを読み込む
 function LoadTopologyCardsJson(url: string): any {
