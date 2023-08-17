@@ -31,6 +31,10 @@ namespace TopologyCardRegister
                     NONE
                 }
 
+                /// <summary>
+                /// セルに設定されている色を反転します。
+                /// 設定されている色がNONEになっている場合はなにも実行されません
+                /// </summary>
                 public void InvertColor()
                 {
                     if (m_color == CellColor.NONE)
@@ -164,10 +168,10 @@ namespace TopologyCardRegister
         /// <summary>
         /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
         /// </summary>
-        public static List<int> CalculateHoleCount(Bitmap _bitmap)
+        public static List<int> CalculateHoleCount(Bitmap bitmap)
         {
             // 入力された画像を二値化したグラフに変換します
-            Grid grid = ConvertToBinaryGrid(_bitmap);
+            Grid grid = ConvertToBinaryGrid(bitmap);
 
             ChangeNoiseCellColor(grid);
 
@@ -270,6 +274,7 @@ namespace TopologyCardRegister
 
             grid[startPos].m_segmentId = id;
 
+            // bfsによりstartPosと同色の領域を全て探索する
             while (segmentPos.Count > 0)
             {
                 Pos nowPos = segmentPos.Dequeue();
@@ -290,7 +295,7 @@ namespace TopologyCardRegister
                         continue;
                     }
 
-                    // 隣接マスの色が異なる場合は飛ばす
+                    // 同色の色を探すために隣接マスの色が異なる場合は飛ばす
                     if (grid[nextPos].m_color != grid[nowPos].m_color)
                     {
                         continue;
@@ -351,8 +356,8 @@ namespace TopologyCardRegister
 
         /// <summary>
         /// 各黒色成分の隣にある白成分を返します
-        /// result[黒色成分のセグメントId] := キーに使われているセグメントに隣接する白色セグメントのId
         /// </summary>
+        /// <returns>result[黒色成分のセグメントId]: キーに使われているセグメントに隣接する白色セグメントのId</returns>
         static Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid grid)
         {
             Dictionary<int, HashSet<int>> whiteSegmentIds = new Dictionary<int, HashSet<int>>();
@@ -362,7 +367,7 @@ namespace TopologyCardRegister
             {
                 Pos pos = new Pos(h, w);
 
-                //　白色は飛ばす
+                //　posが黒色の座標を探す
                 if (grid[pos].m_color == Grid.Cell.CellColor.WHITE)
                 {
                     return;
@@ -379,7 +384,7 @@ namespace TopologyCardRegister
                         continue;
                     }
 
-                    // 隣接マスが黒色の場合は飛ばす
+                    // 黒色に隣接する白色マスを探すために、そうでない場合は飛ばす
                     if (grid[nextPos].m_color == Grid.Cell.CellColor.BLACK)
                     {
                         continue;
@@ -391,7 +396,6 @@ namespace TopologyCardRegister
                         whiteSegmentIds.Add(blackSegmentId, new HashSet<int>());
                     }
 
-                    // 白色のidを追加する
                     whiteSegmentIds[blackSegmentId].Add(/* 白色セグメントのid */ grid[nextPos].m_segmentId);
                 }
             });
