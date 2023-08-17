@@ -62,9 +62,9 @@ class Card {
             }
             else {
                 setTimeout(() => {
-                    for (let card of selectedCards) {
-                        card.flipCard(FlipStatus.Back);
-                    }
+                    selectedCards.forEach(selectedCard => {
+                        selectedCard.flipCard(FlipStatus.Back);
+                    });
                     selectedCards.length = 0;
                 }, FLIPPING_WAIT_TIME_MILLISECONDS);
             }
