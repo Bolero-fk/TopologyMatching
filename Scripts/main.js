@@ -1,4 +1,6 @@
 import { GameEngine } from './gameEngine.js';
+class Card {
+}
 let cards = [];
 let selectesCards = [];
 /**

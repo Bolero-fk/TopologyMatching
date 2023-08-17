@@ -1,6 +1,6 @@
 import { GameEngine } from './gameEngine.js';
 
-interface Card {
+class Card {
     element: HTMLElement;
     revealed: boolean;
     pairKey: string;
