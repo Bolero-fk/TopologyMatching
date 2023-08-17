@@ -173,7 +173,9 @@ namespace TopologyCardRegister
             // 黒色成分の数が連結成分の数に、それに隣接する白の数-1が穴の数になる
             List<int> holeCount = new List<int>();
             foreach (HashSet<int> whiteSegmentId in whiteSegmentIds.Values)
+            {
                 holeCount.Add(whiteSegmentId.Count - 1);
+            }
 
             // 穴の数を昇順になるように並び変える
             holeCount.Sort();
@@ -196,9 +198,13 @@ namespace TopologyCardRegister
                 if (IsNoise(checkPos, grid))
                 {
                     if (grid[checkPos].m_color == Grid.Cell.CellColor.BLACK)
+                    {
                         grid[checkPos].m_color = Grid.Cell.CellColor.WHITE;
+                    }
                     else if (grid[checkPos].m_color == Grid.Cell.CellColor.WHITE)
+                    {
                         grid[checkPos].m_color = Grid.Cell.CellColor.BLACK;
+                    }
                 }
             });
         }
@@ -216,11 +222,15 @@ namespace TopologyCardRegister
 
                 // 隣接マスが図形外の場合は飛ばす
                 if (!grid.IsIn(nextPos))
+                {
                     continue;
+                }
 
                 // 周囲のセルが同色ならノイズでない
                 if (grid[pos].m_color == grid[nextPos].m_color)
+                {
                     return false;
+                }
             }
 
             return true;
@@ -239,7 +249,9 @@ namespace TopologyCardRegister
 
                 // 割り振られていないマスが見つかったらそのマスと同じ色で連結している部分にidを割り振る
                 if (grid[checkPos].m_segmentId != -1)
+                {
                     return;
+                }
 
                 AssignSegmentIdToSameSegmentCell(checkPos, segmentCount, grid);
                 segmentCount++;
@@ -268,15 +280,21 @@ namespace TopologyCardRegister
 
                     // 隣接マスが図形外の場合は飛ばす
                     if (!grid.IsIn(nextPos))
+                    {
                         continue;
+                    }
 
                     // 隣接マスが既にidを振られている場合は飛ばす
                     if (grid[nextPos].m_segmentId != -1)
+                    {
                         continue;
+                    }
 
                     // 隣接マスの色が異なる場合は飛ばす
                     if (grid[nextPos].m_color != grid[nowPos].m_color)
+                    {
                         continue;
+                    }
 
                     grid[nextPos].m_segmentId = id;
                     segmentPos.Enqueue(nextPos);
@@ -307,9 +325,13 @@ namespace TopologyCardRegister
 
                 // 閾値に基づいてピクセルを白または黒に分類します
                 if (brightness < threshold)
+                {
                     grid[x, y].m_color = Grid.Cell.CellColor.BLACK;
+                }
                 else
+                {
                     grid[x, y].m_color = Grid.Cell.CellColor.WHITE;
+                }
             }
 
             return grid;
@@ -349,7 +371,9 @@ namespace TopologyCardRegister
 
                 //　白色は飛ばす
                 if (grid[pos].m_color == Grid.Cell.CellColor.WHITE)
+                {
                     return;
+                }
 
                 int blackSegmentId = grid[pos].m_segmentId;
                 foreach (Pos nextDirection in nextDirections)
@@ -358,15 +382,21 @@ namespace TopologyCardRegister
 
                     // 隣接マスが図形外の場合は飛ばす
                     if (!grid.IsIn(nextPos))
+                    {
                         continue;
+                    }
 
                     // 隣接マスが黒色の場合は飛ばす
                     if (grid[nextPos].m_color == Grid.Cell.CellColor.BLACK)
+                    {
                         continue;
+                    }
 
                     // whiteSegmentIdsがblackSegmentIdをキーとして持たない場合はキーを追加する
                     if (!whiteSegmentIds.ContainsKey(blackSegmentId))
+                    {
                         whiteSegmentIds.Add(blackSegmentId, new HashSet<int>());
+                    }
 
                     // 白色のidを追加する
                     whiteSegmentIds[blackSegmentId].Add(/* 白色セグメントのid */ grid[nextPos].m_segmentId);

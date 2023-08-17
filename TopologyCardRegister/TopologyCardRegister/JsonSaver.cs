@@ -40,7 +40,9 @@ public class JsonSaver
             List<TopologyCard>? readData = JsonConvert.DeserializeObject<List<TopologyCard>>(File.ReadAllText(jsonPath));
 
             if (readData != null)
+            {
                 return readData;
+            }
         }
         catch (Newtonsoft.Json.JsonSerializationException)
         {

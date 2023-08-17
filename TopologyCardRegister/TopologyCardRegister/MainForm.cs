@@ -125,17 +125,25 @@ namespace TopologyCardRegister
         void TryEnableSaveCardButton()
         {
             if (CanSaveCard())
+            {
                 saveCardButton.Enabled = true;
+            }
         }
 
         bool CanSaveCard()
         {
             if (outputSvgPathTextBox.Text == string.Empty)
+            {
                 return false;
+            }
             if (outputHoleCountPathBox.Text == string.Empty)
+            {
                 return false;
+            }
             if (holeCountLabel.Text == string.Empty)
+            {
                 return false;
+            }
 
             return true;
         }
