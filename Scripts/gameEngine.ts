@@ -1,18 +1,18 @@
 class CardStatus {
     private _imageName: string;
-    private _pairKey: string;
+    private _matchingKey: string;
 
     get imageName(): string {
         return this._imageName;
     }
 
-    get pairKey(): string {
-        return this._pairKey;
+    get matchingKey(): string {
+        return this._matchingKey;
     }
 
     constructor(imageName: string, holeCount: number[]) {
         this._imageName = imageName;
-        this._pairKey = holeCount.toString();
+        this._matchingKey = holeCount.toString();
     }
 };
 
@@ -88,10 +88,10 @@ export class GameEngine {
 
         // cardsをholeCountごとにまとめる
         this.cards.forEach(card => {
-            if (!cardGroups.has(card.pairKey))
-                cardGroups.set(card.pairKey, []);
+            if (!cardGroups.has(card.matchingKey))
+                cardGroups.set(card.matchingKey, []);
 
-            cardGroups.get(card.pairKey).push(card);
+            cardGroups.get(card.matchingKey).push(card);
         });
 
         // それぞれのcardGroupをシャッフルする

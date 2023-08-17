@@ -2,12 +2,12 @@ class CardStatus {
     get imageName() {
         return this._imageName;
     }
-    get pairKey() {
-        return this._pairKey;
+    get matchingKey() {
+        return this._matchingKey;
     }
     constructor(imageName, holeCount) {
         this._imageName = imageName;
-        this._pairKey = holeCount.toString();
+        this._matchingKey = holeCount.toString();
     }
 }
 ;
@@ -66,9 +66,9 @@ export class GameEngine {
         const cardGroups = new Map;
         // cardsをholeCountごとにまとめる
         this.cards.forEach(card => {
-            if (!cardGroups.has(card.pairKey))
-                cardGroups.set(card.pairKey, []);
-            cardGroups.get(card.pairKey).push(card);
+            if (!cardGroups.has(card.matchingKey))
+                cardGroups.set(card.matchingKey, []);
+            cardGroups.get(card.matchingKey).push(card);
         });
         // それぞれのcardGroupをシャッフルする
         cardGroups.forEach((cardGroup, key) => {

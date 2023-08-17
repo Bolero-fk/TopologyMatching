@@ -90,7 +90,7 @@ function initializeCardsOnBoardElement(gameBoard) {
         gameBoard.appendChild(cardElement);
         const card = new Card(cardElement);
         card.flipCard(FlipStatus.Back);
-        card.changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
+        card.changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
         cardsOnBoard.push(card);
     }
 }
@@ -117,7 +117,7 @@ function RestartGame() {
     const gameEngine = new GameEngine(LoadTopologyCardsJson());
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
     for (let i = 0; i < cardStatus.length; i++) {
-        cardsOnBoard[i].changeCard(cardStatus[i].pairKey, cardStatus[i].imageName);
+        cardsOnBoard[i].changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
         cardsOnBoard[i].flipCard(FlipStatus.Back);
     }
     selectedCards = [];
