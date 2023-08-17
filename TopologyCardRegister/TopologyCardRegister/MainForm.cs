@@ -1,4 +1,4 @@
-namespace TopologyCardRegister
+﻿namespace TopologyCardRegister
 {
     public partial class MainForm : Form
     {
@@ -16,6 +16,9 @@ namespace TopologyCardRegister
             holeCountLabel.Text = string.Empty;
         }
 
+        /// <summary>
+        /// svgLoadボタンが押された際の挙動を定義します
+        /// </summary>
         void OnClickLoadSvgButton(object sender, EventArgs e)
         {
             m_imgFilePaths = RequestSvgFilePaths();
@@ -29,6 +32,9 @@ namespace TopologyCardRegister
             TryEnableSaveCardButton();
         }
 
+        /// <summary>
+        /// 入力された画像のパスを読み込み画面に表示します
+        /// </summary>
         void DisplaySvg(string svgFilePath)
         {
             Bitmap bitmap = LoadSvg(svgFilePath);
@@ -39,12 +45,18 @@ namespace TopologyCardRegister
             DisplayHoleCount(bitmap);
         }
 
+        /// <summary>
+        /// 入力された画像のholeCountを画面に表示します
+        /// </summary>
         void DisplayHoleCount(Bitmap bitmap)
         {
             m_holeCount = TopologyStatusCalculator.CalculateHoleCount(bitmap).ToArray();
             holeCountLabel.Text = string.Join(',', m_holeCount.Select(num => num.ToString()));
         }
 
+        /// <summary>
+        /// svg画像のファイルパスの入力をユーザーにリクエストします。
+        /// </summary>
         string[] RequestSvgFilePaths()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -61,9 +73,12 @@ namespace TopologyCardRegister
             return Array.Empty<string>();
         }
 
-        Bitmap LoadSvg(string _filePath)
+        /// <summary>
+        /// svg画像を読み込みます
+        /// </summary>
+        Bitmap LoadSvg(string filePath)
         {
-            var svgDocument = Svg.SvgDocument.Open(_filePath);
+            var svgDocument = Svg.SvgDocument.Open(filePath);
             svgDocument.Children.Insert(0, new Svg.SvgRectangle
             {
                 Width = new Svg.SvgUnit(svgDocument.Width.Type, svgDocument.Width.Value),
@@ -77,6 +92,9 @@ namespace TopologyCardRegister
             return svgDocument.Draw();
         }
 
+        /// <summary>
+        /// outputSvgボタンを押した際の挙動を定義します
+        /// </summary>
         void OnClickOutputSvgButton(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
@@ -89,6 +107,9 @@ namespace TopologyCardRegister
             TryEnableSaveCardButton();
         }
 
+        /// <summary>
+        /// OutputHoleCountボタンを押した際の挙動を定義します
+        /// </summary>
         void OnClickOutputHoleCountbutton(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
@@ -104,19 +125,25 @@ namespace TopologyCardRegister
             TryEnableSaveCardButton();
         }
 
+        /// <summary>
+        /// saveCarボタンを押した際の挙動を定義します
+        /// </summary>
         void OnClickSaveCardButton(object sender, EventArgs e)
         {
             string imgFileName = Path.GetFileName(m_imgFilePaths[m_nowPage]);
             string jsonPath = outputHoleCountPathBox.Text;
             string imgFolderPath = outputSvgPathTextBox.Text;
 
-            // �摜��ۑ�����
+            // 画像を保存する
             File.Copy(m_imgFilePaths[m_nowPage], Path.Combine(imgFolderPath, imgFileName), true);
 
-            // json��ۑ�����
+            // jsonを保存する
             JsonSaver.SaveJson(jsonPath, imgFileName, m_holeCount);
         }
 
+        /// <summary>
+        /// 条件を満たしている場合にsaveCardボタンをアクティブにします。
+        /// </summary>
         void TryEnableSaveCardButton()
         {
             if (CanSaveCard())
@@ -125,6 +152,9 @@ namespace TopologyCardRegister
             }
         }
 
+        /// <summary>
+        /// 保存に必要な情報が入力されているかどうかを判定します。
+        /// </summary>
         bool CanSaveCard()
         {
             if (outputSvgPathTextBox.Text == string.Empty)
@@ -143,12 +173,18 @@ namespace TopologyCardRegister
             return true;
         }
 
+        /// <summary>
+        /// ページを切り替えるボタンの状態を切り替える必要がある場合は切り替えます。
+        /// </summary>
         void TryTogglePaginationButton()
         {
             prevButton.Enabled = m_nowPage > 0;
             nextButton.Enabled = m_nowPage < m_imgFilePaths.Length - 1;
         }
 
+        /// <summary>
+        /// prevButtonを押した際の挙動を定義します
+        /// </summary>
         void OnClickPrevButton(object sender, EventArgs e)
         {
             m_nowPage--;
@@ -156,6 +192,9 @@ namespace TopologyCardRegister
             TryTogglePaginationButton();
         }
 
+        /// <summary>
+        /// nextButtonを押した際の挙動を定義します
+        /// </summary>
         void OnClickNextButton(object sender, EventArgs e)
         {
             m_nowPage++;
