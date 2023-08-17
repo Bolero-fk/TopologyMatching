@@ -21,7 +21,7 @@ class Card {
         };
     }
     changeCard(pairKey, imageName) {
-        this.pairKey = pairKey;
+        this.matchingKey = pairKey;
         this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
     }
     /**
@@ -47,7 +47,7 @@ class Card {
         this.flipCard(FlipStatus.Front);
         selectedCards.push(this);
         if (MAX_SELECTABLE_CARD <= selectedCards.length) {
-            if (selectedCards[0].pairKey == selectedCards[1].pairKey) {
+            if (selectedCards[0].matchingKey == selectedCards[1].matchingKey) {
                 selectedCards = [];
             }
             else {

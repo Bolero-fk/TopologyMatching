@@ -20,7 +20,7 @@ enum FlipStatus {
 class Card {
     element: HTMLElement;
     flipStatus: FlipStatus;
-    pairKey: string;
+    matchingKey: string;
     frontImageUrl: string;
 
     constructor(element: HTMLElement) {
@@ -32,7 +32,7 @@ class Card {
     }
 
     changeCard(pairKey: string, imageName: string) {
-        this.pairKey = pairKey;
+        this.matchingKey = pairKey;
         this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
     }
 
@@ -63,7 +63,7 @@ class Card {
         selectedCards.push(this);
 
         if (MAX_SELECTABLE_CARD <= selectedCards.length) {
-            if (selectedCards[0].pairKey == selectedCards[1].pairKey) {
+            if (selectedCards[0].matchingKey == selectedCards[1].matchingKey) {
                 selectedCards = [];
             } else {
                 setTimeout(() => {
