@@ -8,10 +8,6 @@ namespace TopologyCardRegister
 {
     public class TopologyStatusCalculator
     {
-        public TopologyStatusCalculator()
-        {
-        }
-
         /// <summary>
         /// svg画像をbitmapのグリッドに変換したデータを管理するクラスです
         /// </summary>
@@ -163,7 +159,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
         /// </summary>
-        public List<int> CalculateHoleCount(Bitmap _bitmap)
+        public static List<int> CalculateHoleCount(Bitmap _bitmap)
         {
             // 入力された画像を二値化したグラフに変換します
             Grid grid = ConvertToBinaryGrid(_bitmap);
@@ -196,7 +192,7 @@ namespace TopologyCardRegister
         /// .#.
         /// ...
         /// </summary>
-        void ChangeNoiseCellColor(Grid grid)
+        static void ChangeNoiseCellColor(Grid grid)
         {
             grid.For((h, w) =>
             {
@@ -211,7 +207,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// posの位置にあるセルがノイズかどうかを判定します
         /// </summary>
-        bool IsNoise(Pos pos, Grid grid)
+        static bool IsNoise(Pos pos, Grid grid)
         {
             Pos[] nextDirections = grid[pos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
 
@@ -238,7 +234,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// セグメントIdをグリッドのセルに割り当てます
         /// </summary>
-        void AssignSegmentIdToGridCell(Grid grid)
+        static void AssignSegmentIdToGridCell(Grid grid)
         {
             int segmentCount = 0;
 
@@ -260,7 +256,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// startPosの位置にあるセルと連結しているセグメントにidを割り当てます
         /// </summary>
-        void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid grid)
+        static void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid grid)
         {
             Queue<Pos> segmentPos = new Queue<Pos>();
             segmentPos.Enqueue(startPos);
@@ -304,7 +300,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
-        Grid ConvertToBinaryGrid(Bitmap bitmap, float threshold = 0.5f)
+        static Grid ConvertToBinaryGrid(Bitmap bitmap, float threshold = 0.5f)
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
@@ -339,7 +335,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// bitmapデータをbyte配列をコピーしたものを返します
         /// </summary>
-        byte[] CopyBitmap(Bitmap bitmap)
+        static byte[] CopyBitmap(Bitmap bitmap)
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
@@ -359,7 +355,7 @@ namespace TopologyCardRegister
         /// 各黒色成分の隣にある白成分を返します
         /// result[黒色成分のセグメントId] := キーに使われているセグメントに隣接する白色セグメントのId
         /// </summary>
-        Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid grid)
+        static Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid grid)
         {
             Dictionary<int, HashSet<int>> whiteSegmentIds = new Dictionary<int, HashSet<int>>();
             Pos[] nextDirections = BLACK_NEXT_DIRECTIONS;
