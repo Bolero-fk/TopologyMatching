@@ -66,8 +66,9 @@ export class GameEngine {
         const cardGroups = new Map;
         // cardsをholeCountごとにまとめる
         this.cards.forEach(card => {
-            if (!cardGroups.has(card.matchingKey))
+            if (!cardGroups.has(card.matchingKey)) {
                 cardGroups.set(card.matchingKey, []);
+            }
             cardGroups.get(card.matchingKey).push(card);
         });
         // それぞれのcardGroupをシャッフルする
