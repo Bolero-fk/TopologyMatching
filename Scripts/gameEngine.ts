@@ -1,10 +1,18 @@
 class CardStatus {
-    imageName: string;
-    pairKey: string;
+    private _imageName: string;
+    private _pairKey: string;
+
+    get imageName(): string {
+        return this._imageName;
+    }
+
+    get pairKey(): string {
+        return this._pairKey;
+    }
 
     constructor(imageName: string, holeCount: number[]) {
-        this.imageName = imageName;
-        this.pairKey = holeCount.toString();
+        this._imageName = imageName;
+        this._pairKey = holeCount.toString();
     }
 };
 
@@ -42,7 +50,7 @@ export class GameEngine {
      * @param array - シャッフルしたい配列
      * @returns シャッフルされた配列
      */
-    shuffleArray<T>(array: T[]): T[] {
+    private shuffleArray<T>(array: T[]): T[] {
         const shuffledArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
 
         for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -57,7 +65,7 @@ export class GameEngine {
      * cardGroupsからランダムに二枚取得し、それらをcardGroupsから削除します
      * @returns 取得したカード
      */
-    spliceRandomTwoCard(cardGroups: Map<string, CardStatus[]>): CardStatus[] {
+    private spliceRandomTwoCard(cardGroups: Map<string, CardStatus[]>): CardStatus[] {
         // cardGroupsから各グループのカードの数の分だけキーを抜き出す
         const keysArray = new Array<string>();
 
@@ -75,7 +83,7 @@ export class GameEngine {
     /**
      * cardGroupsを初期化します
      */
-    initializeCardGroups(): Map<string, CardStatus[]> {
+    private initializeCardGroups(): Map<string, CardStatus[]> {
         const cardGroups = new Map<string, CardStatus[]>;
 
         // cardsをholeCountごとにまとめる

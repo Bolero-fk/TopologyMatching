@@ -1,7 +1,13 @@
 class CardStatus {
+    get imageName() {
+        return this._imageName;
+    }
+    get pairKey() {
+        return this._pairKey;
+    }
     constructor(imageName, holeCount) {
-        this.imageName = imageName;
-        this.pairKey = holeCount.toString();
+        this._imageName = imageName;
+        this._pairKey = holeCount.toString();
     }
 }
 ;
