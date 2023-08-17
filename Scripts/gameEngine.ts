@@ -59,6 +59,7 @@ export class GameEngine {
      * @returns 取得したカード
      */
     spliceRandomTwoCard(): CardStatus[] {
+        // cardGroupsから各グループのカードの数の分だけキーを抜き出す
         const keysArray = new Array<string>();
 
         for (const key of this.cardGroups.keys()) {
