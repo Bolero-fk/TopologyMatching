@@ -33,10 +33,12 @@ namespace TopologyCardRegister
 
                 public void InvertColor()
                 {
-                    if (m_color == CellColor.WHITE)
-                        m_color = CellColor.BLACK;
-                    else if (m_color == CellColor.BLACK)
-                        m_color = CellColor.WHITE;
+                    if (m_color == CellColor.NONE)
+                    {
+                        return;
+                    }
+
+                    m_color = m_color == CellColor.WHITE ? CellColor.BLACK : CellColor.WHITE;
                 }
             }
 
@@ -322,14 +324,7 @@ namespace TopologyCardRegister
                 float brightness = pixelColor.GetBrightness();
 
                 // 閾値に基づいてピクセルを白または黒に分類します
-                if (brightness < BRIGHTNESS_THREHOLD)
-                {
-                    grid[x, y].m_color = Grid.Cell.CellColor.BLACK;
-                }
-                else
-                {
-                    grid[x, y].m_color = Grid.Cell.CellColor.WHITE;
-                }
+                grid[x, y].m_color = brightness < BRIGHTNESS_THREHOLD ? Grid.Cell.CellColor.BLACK : Grid.Cell.CellColor.WHITE;
             }
 
             return grid;
