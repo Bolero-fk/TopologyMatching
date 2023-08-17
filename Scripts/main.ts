@@ -9,6 +9,9 @@ const JSON_PATH = './TopologyCards/cards.json';
 
 const FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
 
+// FIXME: 現状の実装では選択可能枚数が2枚の時のみ実装されている
+const MAX_SELECTABLE_CARD = 2;
+
 enum FlipStatus {
     Front,
     Back,
@@ -52,14 +55,14 @@ class Card {
     }
 
     onClick(): void {
-        if (this.flipStatus == FlipStatus.Front || selectesCards.length == 2) {
+        if (this.flipStatus == FlipStatus.Front) {
             return;
         }
 
         this.flipCard(FlipStatus.Front);
         selectesCards.push(this);
 
-        if (selectesCards.length == 2) {
+        if (MAX_SELECTABLE_CARD <= selectesCards.length) {
             if (selectesCards[0].pairKey == selectesCards[1].pairKey) {
                 selectesCards = [];
             } else {

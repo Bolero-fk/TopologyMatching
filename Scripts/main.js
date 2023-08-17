@@ -5,6 +5,8 @@ const COLUMN = 5;
 const IMAGE_FOLDER_PATH = './TopologyCards/images/';
 const JSON_PATH = './TopologyCards/cards.json';
 const FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
+// FIXME: 現状の実装では選択可能枚数が2枚の時のみ実装されている
+const MAX_SELECTABLE_CARD = 2;
 var FlipStatus;
 (function (FlipStatus) {
     FlipStatus[FlipStatus["Front"] = 0] = "Front";
@@ -23,13 +25,10 @@ class Card {
         this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
     }
     /**
-     * 入力されたカードを裏返します
-     * @param isFlipped どちらの面にするか(指定しない場合は現在と逆の状態にする)
+     * 入力されたカードを指定された方向に返します
      * @returns
      */
     flipCard(flipStatus) {
-        // カードの面を指定されていない場合は反転させる。
-        // 指定されている場合はその面に反転する
         this.flipStatus = flipStatus;
         // カードの面ごとに色と画像を設定する
         if (this.flipStatus == FlipStatus.Front) {
@@ -42,12 +41,12 @@ class Card {
         }
     }
     onClick() {
-        if (this.flipStatus == FlipStatus.Front || selectesCards.length == 2) {
+        if (this.flipStatus == FlipStatus.Front) {
             return;
         }
         this.flipCard(FlipStatus.Front);
         selectesCards.push(this);
-        if (selectesCards.length == 2) {
+        if (MAX_SELECTABLE_CARD <= selectesCards.length) {
             if (selectesCards[0].pairKey == selectesCards[1].pairKey) {
                 selectesCards = [];
             }
