@@ -10,12 +10,13 @@ class CardStatus {
 
 export class GameEngine {
 
-    private cards: CardStatus[] = new Array();
-
-    private cardGroups: Map<string, CardStatus[]> = new Map();
+    private cards: CardStatus[];
+    private cardGroups: Map<string, CardStatus[]>;
 
     // コンストラクター、初期化処理を行う
     constructor(topologyCards: any[]) {
+        this.cards = new Array();
+        this.cardGroups = new Map();
         topologyCards.forEach(topologyCard => {
             const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
             this.cards.push(card);
