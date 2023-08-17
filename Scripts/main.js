@@ -1,9 +1,12 @@
 import { GameEngine } from './gameEngine.js';
 class Card {
+    constructor(element) {
+        this.element = element;
+        this.isFlipped = false;
+    }
     /**
      * 入力されたカードを裏返します
-     * @param card 裏返したいカード
-     * @param isFlipped どちらの面にするか
+     * @param isFlipped どちらの面にするか(指定しない場合は現在と逆の状態にする)
      * @returns
      */
     flipCard(isFlipped = undefined) {
@@ -42,9 +45,7 @@ window.onload = () => {
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
         gameBoard.appendChild(cardElement);
-        console.log("aaa");
-        const card = new Card();
-        card.element = cardElement;
+        const card = new Card(cardElement);
         card.isFlipped = false;
         card.pairKey = cardStatus[i].pairKey;
         card.frontImageUrl = 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')';

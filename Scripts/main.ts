@@ -6,6 +6,11 @@ class Card {
     pairKey: string;
     frontImageUrl: string;
 
+    constructor(element: HTMLElement) {
+        this.element = element;
+        this.isFlipped = false;
+    }
+
     /**
      * 入力されたカードを裏返します
      * @param isFlipped どちらの面にするか(指定しない場合は現在と逆の状態にする)
@@ -56,8 +61,7 @@ window.onload = () => {
         cardElement.className = 'card';
         gameBoard.appendChild(cardElement);
 
-        const card: Card = new Card();
-        card.element = cardElement;
+        const card: Card = new Card(cardElement);
         card.isFlipped = false;
         card.pairKey = cardStatus[i].pairKey;
         card.frontImageUrl = 'url(./TopologyCards/images/' + cardStatus[i].imageName + ')';
