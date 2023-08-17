@@ -156,6 +156,9 @@ namespace TopologyCardRegister
         static readonly Pos[] BLACK_NEXT_DIRECTIONS = new Pos[] { Pos.UP, Pos.UP_RIGHT, Pos.RIGHT, Pos.DOWN_RIGHT, Pos.DOWN, Pos.DOWN_LEFT, Pos.LEFT, Pos.UP_LEFT };
         static readonly Pos[] WHITE_NEXT_DIRECTIONS = new Pos[] { Pos.UP, Pos.RIGHT, Pos.DOWN, Pos.LEFT };
 
+        // 画素の白黒を判定する際の輝度の閾値 (0に近いほど黒、1に近いほど白となる)
+        const float BRIGHTNESS_THREHOLD = 0.5f;
+
         /// <summary>
         /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
         /// </summary>
@@ -300,7 +303,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
-        static Grid ConvertToBinaryGrid(Bitmap bitmap, float threshold = 0.5f)
+        static Grid ConvertToBinaryGrid(Bitmap bitmap)
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
@@ -319,7 +322,7 @@ namespace TopologyCardRegister
                 float brightness = pixelColor.GetBrightness();
 
                 // 閾値に基づいてピクセルを白または黒に分類します
-                if (brightness < threshold)
+                if (brightness < BRIGHTNESS_THREHOLD)
                 {
                     grid[x, y].m_color = Grid.Cell.CellColor.BLACK;
                 }
