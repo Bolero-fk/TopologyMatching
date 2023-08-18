@@ -4,29 +4,29 @@
 
 ## ファイル構造
 ```
-TopologyCardRegistrar
-│- TopologyCardRegistrar.sln
+TopologyCardRegister
+│- TopologyCardRegister.sln
 │
 └───TopologyCardRegistrar
-    │- Form1.Designer.cs
-    │- Form1.cs
-    │- Form1.resx
+    │- MainForm.Designer.cs
+    │- MainForm.cs
+    │- MainForm.resx
     │- JsonSaver.cs
     │- Program.cs
     │- TopologyCalculator.cs
-    │- TopologyCardRegistrar.csproj
+    │- TopologyCardRegister.csproj
 ```
 
 ## ファイル説明
-TopologyCardRegistrar.sln: ソリューションファイル。Visual Studio で開きます。
-TopologyCardRegistrar.csproj: プロジェクト設定ファイル。
-Form1.cs, Form1.Designer.cs, Form1.resx: メインフォームのソースコードと設定。
+TopologyCardRegister.sln: ソリューションファイル。Visual Studio で開きます。
+TopologyCardRegister.csproj: プロジェクト設定ファイル。
+MainForm.cs, MainForm.Designer.cs, MainForm.resx: メインフォームのソースコードと設定。
 JsonSaver.cs: JSON 形式でデータを保存するためのクラスが定義されています。
 Program.cs: アプリケーションのエントリーポイントです。メインフォームを起動します。
 TopologyCalculator.cs: トポロジー計算のためのクラスが定義されています。
 
 ## ビルド方法
-Visual Studioを使用してビルドしてください。ビルドはTopologyCardRegistrar.sln ファイルを開いてビルド/ソリューションのビルドを押下すると実行できます。
+Visual Studioを使用してビルドしてください。ビルドはTopologyCardRegister.sln ファイルを開いてビルドタブからソリューションのビルドを押下すると実行できます。
 
 ## 使用方法
 ビルドして生成された実行可能ファイル（.exe）を実行すると以下の画面が表示されます。
