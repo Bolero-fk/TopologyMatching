@@ -1,9 +1,13 @@
 class CardStatus {
+    get imageName() {
+        return this._imageName;
+    }
+    get matchingKey() {
+        return this._matchingKey;
+    }
     constructor(imageName, holeCount) {
-        this.imageName = imageName;
-        this.holeCount = holeCount;
-        this.complexityLevel = holeCount.reduce((sum, curr) => sum + curr, 0) + holeCount.length;
-        this.pairKey = holeCount.toString();
+        this._imageName = imageName;
+        this._matchingKey = holeCount.toString();
     }
 }
 ;
@@ -11,19 +15,22 @@ export class GameEngine {
     // コンストラクター、初期化処理を行う
     constructor(topologyCards) {
         this.cards = new Array();
-        this.cardGroups = new Map();
         topologyCards.forEach(topologyCard => {
             const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);
             this.cards.push(card);
         });
     }
-    // ゲーム開始時の初期化処理
+    /**
+     * 神経衰弱ゲームに使用するカードを取得します。
+     * @param cardNum - 神経衰弱ゲームにつかうカードの枚数
+     * @returns 神経衰弱ゲームに使用できるカードセット
+     */
     startGame(cardNum) {
-        this.initializeCardGroups();
+        const cardGroups = this.initializeCardGroups();
         const selectedCards = new Array();
         for (let i = 0; i < cardNum / 2; i++) {
             // カードをランダムに2枚追加する
-            selectedCards.push(...this.getAndDeleteRandomTwoCard());
+            selectedCards.push(...this.spliceRandomTwoCard(cardGroups));
         }
         // カードをシャッフルする
         return this.shuffleArray(selectedCards);
@@ -34,56 +41,51 @@ export class GameEngine {
      * @returns シャッフルされた配列
      */
     shuffleArray(array) {
-        const newArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
-        for (let i = newArray.length - 1; i > 0; i--) {
+        const shuffledArray = array.slice(); // 元の配列を破壊しないためにコピーを作成
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // 要素の入れ替え
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // 要素の入れ替え
         }
-        return newArray;
+        return shuffledArray;
     }
     /**
      * cardGroupsからランダムに二枚取得し、それらをcardGroupsから削除します
      * @returns 取得したカード
      */
-    getAndDeleteRandomTwoCard() {
+    spliceRandomTwoCard(cardGroups) {
+        // cardGroupsから各グループのカードの数の分だけキーを抜き出す
         const keysArray = new Array();
-        for (const key of this.cardGroups.keys()) {
-            const length = this.cardGroups.get(key).length;
+        for (const key of cardGroups.keys()) {
+            const length = cardGroups.get(key).length;
             keysArray.push(...new Array(length).fill(key));
         }
         const randomIndex = Math.floor(Math.random() * keysArray.length);
         const randomKey = keysArray[randomIndex];
-        const result = this.cardGroups.get(randomKey).splice(-2);
-        if (this.cardGroups.get(randomKey).length == 0)
-            this.cardGroups.delete(randomKey);
-        return result;
+        return cardGroups.get(randomKey).splice(-2);
     }
     /**
      * cardGroupsを初期化します
+     * @returns 初期化されたcardGroups
      */
     initializeCardGroups() {
-        this.cardGroups = new Map;
+        const cardGroups = new Map;
         // cardsをholeCountごとにまとめる
         this.cards.forEach(card => {
-            if (!this.cardGroups.has(card.holeCount.toString()))
-                this.cardGroups.set(card.holeCount.toString(), []);
-            this.cardGroups.get(card.holeCount.toString()).push(card);
+            if (!cardGroups.has(card.matchingKey)) {
+                cardGroups.set(card.matchingKey, []);
+            }
+            cardGroups.get(card.matchingKey).push(card);
         });
         // それぞれのcardGroupをシャッフルする
-        this.cardGroups.forEach((cardGroup, key) => {
-            this.cardGroups.set(key, this.shuffleArray(cardGroup));
+        cardGroups.forEach((cardGroup, key) => {
+            cardGroups.set(key, this.shuffleArray(cardGroup));
         });
         // holeCountごとに偶数になるように各groupの枚数を調整する
-        const deleteKeys = [];
-        this.cardGroups.forEach((value, key) => {
+        cardGroups.forEach((value, key) => {
             if (value.length % 2 == 1) {
                 value.pop();
             }
-            if (value.length == 0)
-                deleteKeys.push(key);
         });
-        for (const key of deleteKeys) {
-            this.cardGroups.delete(key);
-        }
+        return cardGroups;
     }
 }
