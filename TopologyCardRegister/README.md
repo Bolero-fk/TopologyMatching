@@ -7,7 +7,7 @@
 TopologyCardRegister
 │- TopologyCardRegister.sln
 │
-└───TopologyCardRegistrar
+└───TopologyCardRegister
     │- MainForm.Designer.cs
     │- MainForm.cs
     │- MainForm.resx
