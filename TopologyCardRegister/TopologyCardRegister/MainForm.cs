@@ -2,9 +2,9 @@
 {
     public partial class MainForm : Form
     {
-        string[] m_svgFilePaths = Array.Empty<string>();
-        int m_nowPage = 0;
-        int[] m_holeCount = Array.Empty<int>();
+        string[] m_svgFilePaths;
+        int m_nowPage;
+        int[] m_holeCount;
 
         const int DISPLAY_IMAGE_HEIGHT_IN_PIXELS = 1024;
         const int DISPLAY_IMAGE_WIDTH_IN_PIXELS = 1024;
@@ -12,6 +12,10 @@
 
         public MainForm()
         {
+            m_svgFilePaths = Array.Empty<string>();
+            m_nowPage = 0;
+            m_holeCount = Array.Empty<int>();
+
             InitializeComponent();
             holeCountLabel.Text = string.Empty;
         }
