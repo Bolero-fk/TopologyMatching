@@ -1,156 +1,341 @@
-﻿using System;
-using System.Diagnostics;
-using System.DirectoryServices.ActiveDirectory;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 namespace TopologyCardRegister
 {
     public class TopologyStatusCalculator
     {
-        public TopologyStatusCalculator()
+        /// <summary>
+        /// svg画像をbitmapのグリッドに変換したデータを管理するクラスです
+        /// </summary>
+        class Grid
         {
+            public class Cell
+            {
+                public int m_segmentId { get; set; }
+                public CellColor m_color { get; set; }
+
+                public Cell()
+                {
+                    m_segmentId = -1;
+                    m_color = CellColor.NONE;
+                }
+
+                public enum CellColor
+                {
+                    WHITE,
+                    BLACK,
+                    NONE
+                }
+
+                /// <summary>
+                /// セルに設定されている色を反転します。
+                /// 設定されている色がNONEになっている場合はなにも実行されません
+                /// </summary>
+                public void InvertColor()
+                {
+                    if (m_color == CellColor.NONE)
+                    {
+                        return;
+                    }
+
+                    m_color = m_color == CellColor.WHITE ? CellColor.BLACK : CellColor.WHITE;
+                }
+            }
+
+            int m_height;
+            int m_width;
+
+            Cell[,] m_cells;
+
+            public Grid(int height, int width)
+            {
+                m_height = height;
+                m_width = width;
+                m_cells = new Cell[height, width];
+                for (int h = 0; h < height; h++)
+                {
+                    for (int w = 0; w < width; w++)
+                    {
+                        m_cells[h, w] = new Cell();
+                    }
+                }
+            }
+
+            public Cell this[Pos pos]
+            {
+                get => this.m_cells[pos.m_x, pos.m_y];
+                set => this.m_cells[pos.m_x, pos.m_y] = value;
+            }
+
+            public Cell this[int h, int w]
+            {
+                get => this.m_cells[h, w];
+                set => this.m_cells[h, w] = value;
+            }
+
+            /// <summary>
+            /// 入力されたposがグリッド内かどうかを判定します
+            /// </summary>
+            public bool IsIn(Pos pos)
+            {
+                return IsIn(pos.m_x, pos.m_y);
+            }
+
+            /// <summary>
+            /// 入力された座標(h, w)がグリッド内かどうかを判定します
+            /// </summary>
+            public bool IsIn(int h, int w)
+            {
+                return 0 <= h && h <= m_height - 1 && 0 <= w && w <= m_width - 1;
+            }
+
+            /// <summary>
+            /// グリッド内の全セルに対して入力されたfunctionを適用します
+            /// </summary>
+            public void For(Action<int, int> function)
+            {
+                for (int h = 0; h < m_height; h++)
+                {
+                    for (int w = 0; w < m_width; w++)
+                    {
+                        function(h, w);
+                    }
+                }
+            }
         }
 
         /// <summary>
-        /// 入力された図形から各連結成分の穴の数を数えて昇順にして返します。
+        /// グリッドの座標を管理するクラスです
         /// </summary>
-        /// <param name="_bitmap"></param>
-        /// <returns></returns>
-        public List<int> CalculateToPologyStatus(Bitmap _bitmap)
+        public class Pos
         {
-            // 入力された画像を二値化します。
-            bool[,] binary = ConvertToBinary(_bitmap);
+            public int m_x { get; }
+            public int m_y { get; }
 
-            // 各白黒成分にidを割り振る
-            int[,] topologyId = new int[binary.GetLength(0), binary.GetLength(1)];
+            public Pos()
+            {
+                m_x = 0;
+                m_y = 0;
+            }
 
-            // 初期化
-            for (int i = 0; i < binary.GetLength(0); i++)
-                for (int j = 0; j < binary.GetLength(1); j++)
-                {
-                    topologyId[i, j] = -1;
-                }
+            public Pos(int x, int y)
+            {
+                m_x = x;
+                m_y = y;
+            }
 
-            for (int i = 0; i < binary.GetLength(0); i++)
-                for (int j = 0; j < binary.GetLength(1); j++)
-                {
-                    if (IsNoise(i, j, binary))
-                        binary[i, j] = !binary[i, j];
-                }
+            public static Pos operator +(Pos a, Pos b)
+            {
+                return new Pos(a.m_x + b.m_x, a.m_y + b.m_y);
+            }
 
-            // 割り振られていないマスが見つかったらそのマスと同じ色で連結している部分にidを割り振る
-            int topologyCount = 0;
-            for (int i = 0; i < binary.GetLength(0); i++)
-                for (int j = 0; j < binary.GetLength(1); j++)
-                {
-                    if (topologyId[i, j] != -1)
-                        continue;
+            public static Pos operator -(Pos a, Pos b)
+            {
+                return new Pos(a.m_x - b.m_x, a.m_y - b.m_y);
+            }
 
-                    Dfs(i, j, topologyCount, ref binary, ref topologyId);
-                    topologyCount++;
-                }
+            public static readonly Pos UP = new Pos(0, 1);
+            public static readonly Pos UP_RIGHT = new Pos(1, 1);
+            public static readonly Pos RIGHT = new Pos(1, 0);
+            public static readonly Pos DOWN_RIGHT = new Pos(1, -1);
+            public static readonly Pos DOWN = new Pos(0, -1);
+            public static readonly Pos DOWN_LEFT = new Pos(-1, -1);
+            public static readonly Pos LEFT = new Pos(-1, 0);
+            public static readonly Pos UP_LEFT = new Pos(-1, 1);
+        }
+
+        /*
+         * 以下の図の「.」を白、「#」を黒としたときに、黒のパーツの数が1、その穴の数が1となるように
+         * 黒の隣接判定は8方向、白の隣接判定は4方向にする
+         * .......
+         * ..###..
+         * .#...#.
+         * ..#.#..
+         * .#...#.
+         * ..###..
+         * .......
+         */
+        static readonly Pos[] BLACK_NEXT_DIRECTIONS = new Pos[] { Pos.UP, Pos.UP_RIGHT, Pos.RIGHT, Pos.DOWN_RIGHT, Pos.DOWN, Pos.DOWN_LEFT, Pos.LEFT, Pos.UP_LEFT };
+        static readonly Pos[] WHITE_NEXT_DIRECTIONS = new Pos[] { Pos.UP, Pos.RIGHT, Pos.DOWN, Pos.LEFT };
+
+        // 画素の白黒を判定する際の輝度の閾値 (0に近いほど黒、1に近いほど白となる)
+        const float BRIGHTNESS_THREHOLD = 0.5f;
+
+        /// <summary>
+        /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
+        /// </summary>
+        public static List<int> CalculateHoleCount(Bitmap bitmap)
+        {
+            // 入力された画像を二値化したグラフに変換します
+            Grid grid = ConvertToBinaryGrid(bitmap);
+
+            ChangeNoiseCellColor(grid);
+
+            AssignSegmentIdToGridCell(grid);
 
             // 各黒成分の隣にある白成分の数を数える
-            var nextIds = CalculateNextIds(binary, topologyId);
+            // whiteSegmentIds[黒色成分のセグメントId]: キーに使われているセグメントに隣接する白色セグメントのId
+            var whiteSegmentIds = CalculateWhiteSegmentIdNextToBlackSegment(grid);
 
-            List<int> topologyStatus = new List<int>();
-            foreach (HashSet<int> nextId in nextIds.Values)
-                topologyStatus.Add(nextId.Count - 1);
-
-            // 穴の数を昇順になるように並び変える
-            topologyStatus.Sort();
-
-            return topologyStatus;
-        }
-
-        bool IsNoise(int x, int y, bool[,] binary)
-        {
-            // 黒色は8方向、白色は4方向に移動させる。
-            int[] black_dir_x = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
-            int[] black_dir_y = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 };
-            int[] white_dir_x = new int[] { 0, 0, -1, 1 };
-            int[] white_dir_y = new int[] { -1, 1, 0, 0 };
-
-            int[] dir_x = binary[x, y] ? black_dir_x : white_dir_x;
-            int[] dir_y = binary[x, y] ? black_dir_y : white_dir_y;
-
-            int sameColorCount = 0;
-
-            for (int d = 0; d < dir_x.Length; d++)
+            // 黒色成分の数が連結成分の数に、それに隣接する白の数-1が穴の数になる
+            List<int> holeCount = new List<int>();
+            foreach (HashSet<int> whiteSegmentId in whiteSegmentIds.Values)
             {
-                int next_x = x + dir_x[d];
-                int next_y = y + dir_y[d];
-
-                // 隣接マスが図形外の場合は飛ばす
-                if (next_x < 0 || next_x > binary.GetLength(0) - 1 || next_y < 0 || next_y > binary.GetLength(1) - 1)
-                    continue;
-
-                if (binary[x, y] == binary[next_x, next_y])
-                    sameColorCount++;
+                holeCount.Add(whiteSegmentId.Count - 1);
             }
 
-            return sameColorCount == 0;
+            // 穴の数を昇順になるように並び変える
+            holeCount.Sort();
+
+            return holeCount;
         }
 
         /// <summary>
-        /// [startX, startY]と連結している成分にidを割り振ります。
+        /// 隣接するセルの色が全て別の色になっているようなセルはノイズとみなして色を変えます
+        /// 以下の図の#はノイズと認識されます
+        /// ...
+        /// .#.
+        /// ...
         /// </summary>
-        /// <param name="startX"></param>
-        /// <param name="startY"></param>
-        /// <param name="id"></param>
-        /// <param name="binary"></param>
-        /// <param name="topologyId"></param>
-        void Dfs(int startX, int startY, int id, ref bool[,] binary, ref int[,] topologyId)
+        static void ChangeNoiseCellColor(Grid grid)
         {
-            // 黒色は8方向、白色は4方向に移動させる。
-            int[] black_dir_x = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
-            int[] black_dir_y = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 };
-            int[] white_dir_x = new int[] { 0, 0, -1, 1 };
-            int[] white_dir_y = new int[] { -1, 1, 0, 0 };
-
-            Queue<(int, int)> queue = new Queue<(int, int)>();
-            queue.Enqueue((startX, startY));
-
-            int[] dir_x = binary[startX, startY] ? black_dir_x : white_dir_x;
-            int[] dir_y = binary[startX, startY] ? black_dir_y : white_dir_y;
-
-            topologyId[startX, startY] = id;
-
-            while (queue.Count > 0)
+            grid.For((h, w) =>
             {
-                (int now_x, int now_y) = queue.Dequeue();
-
-                for (int d = 0; d < dir_x.Length; d++)
+                Pos checkPos = new Pos(h, w);
+                if (IsNoise(checkPos, grid))
                 {
-                    int next_x = now_x + dir_x[d];
-                    int next_y = now_y + dir_y[d];
+                    grid[checkPos].InvertColor();
+                }
+            });
+        }
+
+        /// <summary>
+        /// posの位置にあるセルがノイズかどうかを判定します
+        /// </summary>
+        static bool IsNoise(Pos pos, Grid grid)
+        {
+            Pos[] nextDirections = grid[pos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
+
+            foreach (Pos nextDirection in nextDirections)
+            {
+                Pos nextPos = pos + nextDirection;
+
+                // 隣接マスが図形外の場合は飛ばす
+                if (!grid.IsIn(nextPos))
+                {
+                    continue;
+                }
+
+                // 周囲のセルが同色ならノイズでない
+                if (grid[pos].m_color == grid[nextPos].m_color)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// セグメントIdをグリッドのセルに割り当てます
+        /// </summary>
+        static void AssignSegmentIdToGridCell(Grid grid)
+        {
+            int segmentCount = 0;
+
+            grid.For((h, w) =>
+            {
+                Pos checkPos = new Pos(h, w);
+
+                // 割り振られていないマスが見つかったらそのマスと同じ色で連結している部分にidを割り振る
+                if (grid[checkPos].m_segmentId != -1)
+                {
+                    return;
+                }
+
+                AssignSegmentIdToSameSegmentCell(checkPos, segmentCount, grid);
+                segmentCount++;
+            });
+        }
+
+        /// <summary>
+        /// startPosの位置にあるセルと連結しているセグメントにidを割り当てます
+        /// </summary>
+        static void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid grid)
+        {
+            Queue<Pos> segmentPos = new Queue<Pos>();
+            segmentPos.Enqueue(startPos);
+
+            Pos[] nextDirections = grid[startPos].m_color == Grid.Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
+
+            grid[startPos].m_segmentId = id;
+
+            // bfsによりstartPosと同色の領域を全て探索する
+            while (segmentPos.Count > 0)
+            {
+                Pos nowPos = segmentPos.Dequeue();
+
+                foreach (Pos nextDirection in nextDirections)
+                {
+                    Pos nextPos = nowPos + nextDirection;
 
                     // 隣接マスが図形外の場合は飛ばす
-                    if (next_x < 0 || next_x > binary.GetLength(0) - 1 || next_y < 0 || next_y > binary.GetLength(1) - 1)
+                    if (!grid.IsIn(nextPos))
+                    {
                         continue;
+                    }
 
                     // 隣接マスが既にidを振られている場合は飛ばす
-                    if (topologyId[next_x, next_y] != -1)
+                    if (grid[nextPos].m_segmentId != -1)
+                    {
                         continue;
+                    }
 
-                    // 隣接マスの色が異なる場合は飛ばす
-                    if (binary[next_x, next_y] != binary[now_x, now_y])
+                    // 同色の色を探すために隣接マスの色が異なる場合は飛ばす
+                    if (grid[nextPos].m_color != grid[nowPos].m_color)
+                    {
                         continue;
+                    }
 
-                    topologyId[next_x, next_y] = id;
-                    queue.Enqueue((next_x, next_y));
+                    grid[nextPos].m_segmentId = id;
+                    segmentPos.Enqueue(nextPos);
                 }
             }
         }
 
         /// <summary>
-        /// 入力されたbitmapデータを二値化して返します。
+        /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
-        /// <param name="bitmap"></param>
-        /// <param name="threshold"></param>
-        /// <returns></returns>
-        public bool[,] ConvertToBinary(Bitmap bitmap, float threshold = 0.5f)
+        static Grid ConvertToBinaryGrid(Bitmap bitmap)
+        {
+            int width = bitmap.Width;
+            int height = bitmap.Height;
+
+            // bitmapの各ピクセルを取得する処理が遅いので配列に各ピクセルのRGBAを転写してそれを処理に使う
+            byte[] pixelValues = CopyBitmap(bitmap);
+
+            Grid grid = new Grid(height, width);
+
+            for (int i = 0; i < pixelValues.Length; i += 4)
+            {
+                int x = (i / 4) % width;
+                int y = (i / 4) / width;
+
+                Color pixelColor = Color.FromArgb(pixelValues[i + 3], pixelValues[i + 2], pixelValues[i + 1], pixelValues[i]);
+                float brightness = pixelColor.GetBrightness();
+
+                // 閾値に基づいてピクセルを白または黒に分類します
+                grid[x, y].m_color = brightness < BRIGHTNESS_THREHOLD ? Grid.Cell.CellColor.BLACK : Grid.Cell.CellColor.WHITE;
+            }
+
+            return grid;
+        }
+
+        /// <summary>
+        /// bitmapデータをbyte配列をコピーしたものを返します
+        /// </summary>
+        static byte[] CopyBitmap(Bitmap bitmap)
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
@@ -163,66 +348,56 @@ namespace TopologyCardRegister
 
             bitmap.UnlockBits(data);
 
-            bool[,] result = new bool[height, width];
-
-            for (int i = 0; i < pixelValues.Length; i += 4)
-            {
-                int x = (i / 4) % width;
-                int y = (i / 4) / width;
-
-                Color pixelColor = Color.FromArgb(pixelValues[i + 3], pixelValues[i + 2], pixelValues[i + 1], pixelValues[i]);
-                float brightness = pixelColor.GetBrightness();
-
-                // 閾値に基づいてピクセルを白または黒に分類します。
-                result[x, y] = brightness < threshold; // 白:false, 黒:true
-            }
-
-            return result;
+            return pixelValues;
         }
 
         /// <summary>
-        /// 各黒色成分の隣にある白成分を返します。
+        /// 各黒色成分の隣にある白成分を返します
         /// </summary>
-        /// <param name="binary"></param>
-        /// <param name="topologyId"></param>
-        /// <returns></returns>
-        private Dictionary<int, HashSet<int>> CalculateNextIds(bool[,] binary, int[,] topologyId)
+        /// <returns>result[黒色成分のセグメントId]: キーに使われているセグメントに隣接する白色セグメントのId</returns>
+        static Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid grid)
         {
-            Dictionary<int, HashSet<int>> nextIds = new Dictionary<int, HashSet<int>>();
-            int[] black_dir_x = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
-            int[] black_dir_y = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 };
+            Dictionary<int, HashSet<int>> whiteSegmentIds = new Dictionary<int, HashSet<int>>();
+            Pos[] nextDirections = BLACK_NEXT_DIRECTIONS;
 
-            for (int x = 0; x < binary.GetLength(0); x++)
-                for (int y = 0; y < binary.GetLength(1); y++)
+            grid.For((h, w) =>
+            {
+                Pos pos = new Pos(h, w);
+
+                //　posが黒色の座標を探す
+                if (grid[pos].m_color == Grid.Cell.CellColor.WHITE)
                 {
-                    //　白色は飛ばす
-                    if (!binary[x, y])
-                        continue;
-
-                    for (int d = 0; d < black_dir_x.Length; d++)
-                    {
-                        int next_x = x + black_dir_x[d];
-                        int next_y = y + black_dir_y[d];
-
-                        // 隣接マスが図形外の場合は飛ばす
-                        if (next_x < 0 || next_x > binary.GetLength(0) - 1 || next_y < 0 || next_y > binary.GetLength(1) - 1)
-                            continue;
-
-                        // 隣接マスが黒色の場合は飛ばす
-                        if (binary[next_x, next_y])
-                            continue;
-
-                        // nextIdsの初期化
-                        if (!nextIds.ContainsKey(topologyId[x, y]))
-                            nextIds.Add(topologyId[x, y], new HashSet<int>());
-
-                        // 白色のidを追加する
-                        nextIds[topologyId[x, y]].Add(topologyId[next_x, next_y]);
-                    }
-
+                    return;
                 }
 
-            return nextIds;
+                int blackSegmentId = grid[pos].m_segmentId;
+                foreach (Pos nextDirection in nextDirections)
+                {
+                    Pos nextPos = pos + nextDirection;
+
+                    // 隣接マスが図形外の場合は飛ばす
+                    if (!grid.IsIn(nextPos))
+                    {
+                        continue;
+                    }
+
+                    // 黒色に隣接する白色マスを探すために、そうでない場合は飛ばす
+                    if (grid[nextPos].m_color == Grid.Cell.CellColor.BLACK)
+                    {
+                        continue;
+                    }
+
+                    // whiteSegmentIdsがblackSegmentIdをキーとして持たない場合はキーを追加する
+                    if (!whiteSegmentIds.ContainsKey(blackSegmentId))
+                    {
+                        whiteSegmentIds.Add(blackSegmentId, new HashSet<int>());
+                    }
+
+                    whiteSegmentIds[blackSegmentId].Add(/* 白色セグメントのid */ grid[nextPos].m_segmentId);
+                }
+            });
+
+            return whiteSegmentIds;
         }
     }
 }

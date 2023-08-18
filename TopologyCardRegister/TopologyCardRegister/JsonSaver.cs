@@ -1,12 +1,7 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 public class JsonSaver
 {
-    public JsonSaver()
-    {
-    }
-
     class TopologyCard
     {
         public string ImageName { get; set; }
@@ -14,29 +9,48 @@ public class JsonSaver
     }
 
 
-    static public void SaveJson(string jsonPath, string imgName, int[] holeCounts)
+    /// <summary>
+    /// 入力されたholeCountと画像名をjsonに保存します
+    /// </summary>
+    static public void SaveJson(string jsonPath, string imageName, int[] holeCount)
     {
         List<TopologyCard> topologyCards = new List<TopologyCard>();
         if (File.Exists(jsonPath))
         {
-            string existingJson = File.ReadAllText(jsonPath);
-            List<TopologyCard>? readData = JsonConvert.DeserializeObject<List<TopologyCard>>(existingJson);
-
-            if (readData != null)
-                topologyCards = readData;
+            topologyCards = LoadTopologyCardJson(jsonPath);
         }
 
-        topologyCards.RemoveAll(x => x.ImageName == imgName);
+        // 読み込んだファイルに既に同名の画像が存在する場合、holeCountを上書きする
+        topologyCards.RemoveAll(x => x.ImageName == imageName);
 
-        var topologyCard = new TopologyCard
+        topologyCards.Add(new TopologyCard
         {
-            ImageName = imgName,
-            HoleCount = holeCounts,
-        };
-        topologyCards.Add(topologyCard);
+            ImageName = imageName,
+            HoleCount = holeCount,
+        });
 
-        string jsonOutput = JsonConvert.SerializeObject(topologyCards);
+        File.WriteAllText(jsonPath, JsonConvert.SerializeObject(topologyCards));
+    }
 
-        File.WriteAllText(jsonPath, jsonOutput);
+    /// <summary>
+    /// 指定されたjsonが既に存在する場合は内容を読み込みます。
+    /// </summary>
+    static List<TopologyCard> LoadTopologyCardJson(string jsonPath)
+    {
+        try
+        {
+            List<TopologyCard>? readData = JsonConvert.DeserializeObject<List<TopologyCard>>(File.ReadAllText(jsonPath));
+
+            if (readData != null)
+            {
+                return readData;
+            }
+        }
+        catch (Newtonsoft.Json.JsonSerializationException)
+        {
+            return new List<TopologyCard>();
+        }
+
+        return new List<TopologyCard>();
     }
 }
