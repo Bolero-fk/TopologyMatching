@@ -78,10 +78,7 @@ class Card {
                 selectedCards.length = 0;
             } else {
                 setTimeout(() => {
-                    selectedCards.forEach(selectedCard => {
-                        selectedCard.flipCard(FlipStatus.Back);
-                    });
-
+                    flipSelectedCards();
                     selectedCards.length = 0;
                 }, FLIPPING_WAIT_TIME_MILLISECONDS);
             }
@@ -91,6 +88,12 @@ class Card {
 
 const cardsOnBoard: Card[] = [];
 const selectedCards: Card[] = [];
+
+function flipSelectedCards() {
+    selectedCards.forEach(selectedCard => {
+        selectedCard.flipCard(FlipStatus.Back);
+    });
+};
 
 window.onload = () => {
     initializeElements();
