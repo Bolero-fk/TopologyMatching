@@ -2,7 +2,7 @@
 {
     public partial class MainForm : Form
     {
-        string[] m_imgFilePaths = Array.Empty<string>();
+        string[] m_svgFilePaths = Array.Empty<string>();
         int m_nowPage = 0;
         int[] m_holeCount = Array.Empty<int>();
 
@@ -21,12 +21,12 @@
         /// </summary>
         void OnClickLoadSvgButton(object sender, EventArgs e)
         {
-            m_imgFilePaths = RequestSvgFilePaths();
+            m_svgFilePaths = RequestSvgFilePaths();
 
-            if (m_imgFilePaths.Length != 0)
+            if (m_svgFilePaths.Length != 0)
             {
                 m_nowPage = 0;
-                DisplaySvg(m_imgFilePaths[m_nowPage]);
+                DisplaySvg(m_svgFilePaths[m_nowPage]);
                 TryTogglePaginationButton();
             }
             TryEnableSaveCardButton();
@@ -130,15 +130,15 @@
         /// </summary>
         void OnClickSaveCardButton(object sender, EventArgs e)
         {
-            string imgFileName = Path.GetFileName(m_imgFilePaths[m_nowPage]);
+            string svgFileName = Path.GetFileName(m_svgFilePaths[m_nowPage]);
             string jsonPath = outputHoleCountPathBox.Text;
-            string imgFolderPath = outputSvgPathTextBox.Text;
+            string svgFolderPath = outputSvgPathTextBox.Text;
 
             // 画像を保存する
-            File.Copy(m_imgFilePaths[m_nowPage], Path.Combine(imgFolderPath, imgFileName), true);
+            File.Copy(m_svgFilePaths[m_nowPage], Path.Combine(svgFolderPath, svgFileName), true);
 
             // jsonを保存する
-            JsonSaver.SaveJson(jsonPath, imgFileName, m_holeCount);
+            JsonSaver.SaveJson(jsonPath, svgFileName, m_holeCount);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@
         void TryTogglePaginationButton()
         {
             prevButton.Enabled = m_nowPage > 0;
-            nextButton.Enabled = m_nowPage < m_imgFilePaths.Length - 1;
+            nextButton.Enabled = m_nowPage < m_svgFilePaths.Length - 1;
         }
 
         /// <summary>
@@ -188,7 +188,7 @@
         void OnClickPrevButton(object sender, EventArgs e)
         {
             m_nowPage--;
-            DisplaySvg(m_imgFilePaths[m_nowPage]);
+            DisplaySvg(m_svgFilePaths[m_nowPage]);
             TryTogglePaginationButton();
         }
 
@@ -198,7 +198,7 @@
         void OnClickNextButton(object sender, EventArgs e)
         {
             m_nowPage++;
-            DisplaySvg(m_imgFilePaths[m_nowPage]);
+            DisplaySvg(m_svgFilePaths[m_nowPage]);
             TryTogglePaginationButton();
         }
     }
