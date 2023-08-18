@@ -11,20 +11,17 @@ body {
 #game-board {
     display: flex;
     justify-content: flex-start;
-    /* Align items at the start */
     align-items: center;
     flex-wrap: wrap;
+    /* ボードの幅は 外側の余白(40px) + 外側の縁(4px) + (カードの幅(100px) + カード間の余白(20px)) * カードの数 */
     width: calc(44px + 120px * var(--cols));
-    /* Each card's width (100px) + margin (10px) * 2 + padding (20px) */
     height: calc(44px + 120px * var(--rows));
     padding: 20px;
     background-color: #def2ff;
     border: 2px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
-    /* Make sure the padding and border are included in the element's total width and height */
     margin: 0 auto;
-    /* Horizontally center the game board */
 }
 
 .card {
@@ -32,13 +29,16 @@ body {
     width: 100px;
     height: 100px;
     margin: 10px;
+    /* カードの背景色の初期値 */
     background-color: #0099ff;
     color: #fff;
     font-size: 24px;
     border-radius: 5px;
     cursor: pointer;
     background-size: cover;
+    /* カードの表面の背景色 */
     --front-background-color: #ffffff;
+    /* カードの裏面の背景色 */
     --back-background-color: #0099ff;
 }
 
