@@ -1,56 +1,61 @@
-﻿using Newtonsoft.Json;
-
-public class JsonSaver
+﻿namespace TopologyCardRegister
 {
-    class TopologyCard
+    using Newtonsoft.Json;
+
+    public class JsonSaver
     {
-        public string ImageName { get; set; }
-        public int[] HoleCount { get; set; }
-    }
-
-
-    /// <summary>
-    /// 入力されたholeCountと画像名をjsonに保存します
-    /// </summary>
-    static public void SaveJson(string jsonPath, string imageName, int[] holeCount)
-    {
-        List<TopologyCard> topologyCards = new List<TopologyCard>();
-        if (File.Exists(jsonPath))
+        private class TopologyCard
         {
-            topologyCards = LoadTopologyCardJson(jsonPath);
-        }
+            public string ImageName { get; set; }
+            public int[] HoleCount { get; set; }
 
-        // 読み込んだファイルに既に同名の画像が存在する場合、holeCountを上書きする
-        topologyCards.RemoveAll(x => x.ImageName == imageName);
-
-        topologyCards.Add(new TopologyCard
-        {
-            ImageName = imageName,
-            HoleCount = holeCount,
-        });
-
-        File.WriteAllText(jsonPath, JsonConvert.SerializeObject(topologyCards));
-    }
-
-    /// <summary>
-    /// 指定されたjsonが既に存在する場合は内容を読み込みます。
-    /// </summary>
-    static List<TopologyCard> LoadTopologyCardJson(string jsonPath)
-    {
-        try
-        {
-            List<TopologyCard>? readData = JsonConvert.DeserializeObject<List<TopologyCard>>(File.ReadAllText(jsonPath));
-
-            if (readData != null)
+            public TopologyCard(string imageNamem, int[] holeCount)
             {
-                return readData;
+                this.ImageName = imageNamem;
+                this.HoleCount = holeCount;
             }
         }
-        catch (Newtonsoft.Json.JsonSerializationException)
+
+
+        /// <summary>
+        /// 入力されたholeCountと画像名をjsonに保存します
+        /// </summary>
+        public static void SaveJson(string jsonPath, string imageName, int[] holeCount)
         {
-            return new List<TopologyCard>();
+            var topologyCards = new List<TopologyCard>();
+            if (File.Exists(jsonPath))
+            {
+                topologyCards = LoadTopologyCardJson(jsonPath);
+            }
+
+            // 読み込んだファイルに既に同名の画像が存在する場合、holeCountを上書きする
+            topologyCards.RemoveAll(x => x.ImageName == imageName);
+
+            topologyCards.Add(new TopologyCard(imageName, holeCount));
+
+            File.WriteAllText(jsonPath, JsonConvert.SerializeObject(topologyCards));
         }
 
-        return new List<TopologyCard>();
+        /// <summary>
+        /// 指定されたjsonが既に存在する場合は内容を読み込みます。
+        /// </summary>
+        private static List<TopologyCard> LoadTopologyCardJson(string jsonPath)
+        {
+            try
+            {
+                var readData = JsonConvert.DeserializeObject<List<TopologyCard>>(File.ReadAllText(jsonPath));
+
+                if (readData != null)
+                {
+                    return readData;
+                }
+            }
+            catch (JsonSerializationException)
+            {
+                return new List<TopologyCard>();
+            }
+
+            return new List<TopologyCard>();
+        }
     }
 }

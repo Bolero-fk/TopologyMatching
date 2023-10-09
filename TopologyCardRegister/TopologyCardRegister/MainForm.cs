@@ -2,68 +2,67 @@
 {
     public partial class MainForm : Form
     {
-        string[] m_svgFilePaths;
-        int m_nowPage;
-        int[] m_holeCount;
-
-        const int DISPLAY_IMAGE_HEIGHT_IN_PIXELS = 1024;
-        const int DISPLAY_IMAGE_WIDTH_IN_PIXELS = 1024;
-        static readonly Color DISPLAY_IMAGE_BACKGROUND_COLOR = Color.White;
+        private string[] svgFilePaths;
+        private int nowPage;
+        private int[] holeCount;
+        private const int DISPLAY_IMAGE_HEIGHT_IN_PIXELS = 1024;
+        private const int DISPLAY_IMAGE_WIDTH_IN_PIXELS = 1024;
+        private static readonly Color DISPLAY_IMAGE_BACKGROUND_COLOR = Color.White;
 
         public MainForm()
         {
-            m_svgFilePaths = Array.Empty<string>();
-            m_nowPage = 0;
-            m_holeCount = Array.Empty<int>();
+            this.svgFilePaths = Array.Empty<string>();
+            this.nowPage = 0;
+            this.holeCount = Array.Empty<int>();
 
-            InitializeComponent();
-            holeCountLabel.Text = string.Empty;
+            this.InitializeComponent();
+            this.holeCountLabel.Text = string.Empty;
         }
 
         /// <summary>
         /// svgLoadボタンが押された際の挙動を定義します
         /// </summary>
-        void OnClickLoadSvgButton(object sender, EventArgs e)
+        private void OnClickLoadSvgButton(object sender, EventArgs e)
         {
-            m_svgFilePaths = RequestSvgFilePaths();
+            this.svgFilePaths = RequestSvgFilePaths();
 
-            if (m_svgFilePaths.Length != 0)
+            if (this.svgFilePaths.Length != 0)
             {
-                m_nowPage = 0;
-                DisplaySvg(m_svgFilePaths[m_nowPage]);
-                TryTogglePaginationButton();
+                this.nowPage = 0;
+                this.DisplaySvg(this.svgFilePaths[this.nowPage]);
+                this.TryTogglePaginationButton();
             }
-            TryEnableSaveCardButton();
+            this.TryEnableSaveCardButton();
         }
 
         /// <summary>
         /// 入力された画像のパスを読み込み画面に表示します
         /// </summary>
-        void DisplaySvg(string svgFilePath)
+        private void DisplaySvg(string svgFilePath)
         {
-            Bitmap bitmap = LoadSvg(svgFilePath);
+            var bitmap = LoadSvg(svgFilePath);
 
-            svgDisplayBox.Size = bitmap.Size;
-            svgDisplayBox.Image = bitmap;
+            this.svgDisplayBox.Size = bitmap.Size;
+            this.svgDisplayBox.Image = bitmap;
 
-            DisplayHoleCount(bitmap);
+            this.DisplayHoleCount(bitmap);
         }
 
         /// <summary>
         /// 入力された画像のholeCountを画面に表示します
         /// </summary>
-        void DisplayHoleCount(Bitmap bitmap)
+        private void DisplayHoleCount(Bitmap bitmap)
         {
-            m_holeCount = TopologyStatusCalculator.CalculateHoleCount(bitmap).ToArray();
-            holeCountLabel.Text = string.Join(',', m_holeCount.Select(num => num.ToString()));
+            this.holeCount = TopologyStatusCalculator.CalculateHoleCount(bitmap).ToArray();
+            this.holeCountLabel.Text = string.Join(',', this.holeCount.Select(num => num));
         }
 
         /// <summary>
         /// svg画像のファイルパスの入力をユーザーにリクエストします。
         /// </summary>
-        string[] RequestSvgFilePaths()
+        private static string[] RequestSvgFilePaths()
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            using (var openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "svg files (*.svg)|*.svg";
                 openFileDialog.Multiselect = true;
@@ -80,7 +79,7 @@
         /// <summary>
         /// svg画像を読み込みます
         /// </summary>
-        Bitmap LoadSvg(string filePath)
+        private static Bitmap LoadSvg(string filePath)
         {
             var svgDocument = Svg.SvgDocument.Open(filePath);
             svgDocument.Children.Insert(0, new Svg.SvgRectangle
@@ -99,77 +98,77 @@
         /// <summary>
         /// outputSvgボタンを押した際の挙動を定義します
         /// </summary>
-        void OnClickOutputSvgButton(object sender, EventArgs e)
+        private void OnClickOutputSvgButton(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            using (var folderBrowserDialog = new FolderBrowserDialog())
             {
                 if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
-                    outputSvgPathTextBox.Text = folderBrowserDialog.SelectedPath;
+                    this.outputSvgPathTextBox.Text = folderBrowserDialog.SelectedPath;
                 }
             }
-            TryEnableSaveCardButton();
+            this.TryEnableSaveCardButton();
         }
 
         /// <summary>
         /// OutputHoleCountボタンを押した際の挙動を定義します
         /// </summary>
-        void OnClickOutputHoleCountbutton(object sender, EventArgs e)
+        private void OnClickOutputHoleCountbutton(object sender, EventArgs e)
         {
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            using (var saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.Filter = "json files (*.json)|*.json";
                 saveFileDialog.OverwritePrompt = false;
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    outputHoleCountPathBox.Text = saveFileDialog.FileName;
+                    this.outputHoleCountPathBox.Text = saveFileDialog.FileName;
                 }
             }
-            TryEnableSaveCardButton();
+            this.TryEnableSaveCardButton();
         }
 
         /// <summary>
         /// saveCarボタンを押した際の挙動を定義します
         /// </summary>
-        void OnClickSaveCardButton(object sender, EventArgs e)
+        private void OnClickSaveCardButton(object sender, EventArgs e)
         {
-            string svgFileName = Path.GetFileName(m_svgFilePaths[m_nowPage]);
-            string jsonPath = outputHoleCountPathBox.Text;
-            string svgFolderPath = outputSvgPathTextBox.Text;
+            var svgFileName = Path.GetFileName(this.svgFilePaths[this.nowPage]);
+            var jsonPath = this.outputHoleCountPathBox.Text;
+            var svgFolderPath = this.outputSvgPathTextBox.Text;
 
             // 画像を保存する
-            File.Copy(m_svgFilePaths[m_nowPage], Path.Combine(svgFolderPath, svgFileName), true);
+            File.Copy(this.svgFilePaths[this.nowPage], Path.Combine(svgFolderPath, svgFileName), true);
 
             // jsonを保存する
-            JsonSaver.SaveJson(jsonPath, svgFileName, m_holeCount);
+            JsonSaver.SaveJson(jsonPath, svgFileName, this.holeCount);
         }
 
         /// <summary>
         /// 条件を満たしている場合にsaveCardボタンをアクティブにします。
         /// </summary>
-        void TryEnableSaveCardButton()
+        private void TryEnableSaveCardButton()
         {
-            if (CanSaveCard())
+            if (this.CanSaveCard())
             {
-                saveCardButton.Enabled = true;
+                this.saveCardButton.Enabled = true;
             }
         }
 
         /// <summary>
         /// 保存に必要な情報が入力されているかどうかを判定します。
         /// </summary>
-        bool CanSaveCard()
+        private bool CanSaveCard()
         {
-            if (outputSvgPathTextBox.Text == string.Empty)
+            if (this.outputSvgPathTextBox.Text == string.Empty)
             {
                 return false;
             }
-            if (outputHoleCountPathBox.Text == string.Empty)
+            if (this.outputHoleCountPathBox.Text == string.Empty)
             {
                 return false;
             }
-            if (holeCountLabel.Text == string.Empty)
+            if (this.holeCountLabel.Text == string.Empty)
             {
                 return false;
             }
@@ -180,30 +179,30 @@
         /// <summary>
         /// ページを切り替えるボタンの状態を切り替える必要がある場合は切り替えます。
         /// </summary>
-        void TryTogglePaginationButton()
+        private void TryTogglePaginationButton()
         {
-            prevButton.Enabled = m_nowPage > 0;
-            nextButton.Enabled = m_nowPage < m_svgFilePaths.Length - 1;
+            this.prevButton.Enabled = this.nowPage > 0;
+            this.nextButton.Enabled = this.nowPage < this.svgFilePaths.Length - 1;
         }
 
         /// <summary>
         /// prevButtonを押した際の挙動を定義します
         /// </summary>
-        void OnClickPrevButton(object sender, EventArgs e)
+        private void OnClickPrevButton(object sender, EventArgs e)
         {
-            m_nowPage--;
-            DisplaySvg(m_svgFilePaths[m_nowPage]);
-            TryTogglePaginationButton();
+            this.nowPage--;
+            this.DisplaySvg(this.svgFilePaths[this.nowPage]);
+            this.TryTogglePaginationButton();
         }
 
         /// <summary>
         /// nextButtonを押した際の挙動を定義します
         /// </summary>
-        void OnClickNextButton(object sender, EventArgs e)
+        private void OnClickNextButton(object sender, EventArgs e)
         {
-            m_nowPage++;
-            DisplaySvg(m_svgFilePaths[m_nowPage]);
-            TryTogglePaginationButton();
+            this.nowPage++;
+            this.DisplaySvg(this.svgFilePaths[this.nowPage]);
+            this.TryTogglePaginationButton();
         }
     }
 }
