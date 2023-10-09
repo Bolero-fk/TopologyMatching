@@ -1,68 +1,35 @@
-﻿namespace TopologyCardRegister
+namespace TopologyCardRegister
 {
     /// <summary>
     /// svg画像をbitmapのグリッドに変換したデータを管理するクラスです
     /// </summary>
-    public class Grid
+    public class Grid<TCell> where TCell : new()
     {
-        public class Cell
-        {
-            public int SegmentId { get; set; }
-            public CellColor Color { get; set; }
-
-            public Cell()
-            {
-                this.SegmentId = -1;
-                this.Color = CellColor.NONE;
-            }
-
-            public enum CellColor
-            {
-                WHITE,
-                BLACK,
-                NONE
-            }
-
-            /// <summary>
-            /// セルに設定されている色を反転します。
-            /// 設定されている色がNONEになっている場合はなにも実行されません
-            /// </summary>
-            public void InvertColor()
-            {
-                if (this.Color == CellColor.NONE)
-                {
-                    return;
-                }
-
-                this.Color = this.Color == CellColor.WHITE ? CellColor.BLACK : CellColor.WHITE;
-            }
-        }
-
         private readonly int height;
         private readonly int width;
-        private readonly Cell[,] cells;
+        private readonly TCell[,] cells;
 
         public Grid(int height, int width)
         {
             this.height = height;
             this.width = width;
-            this.cells = new Cell[height, width];
+            this.cells = new TCell[height, width];
             for (var h = 0; h < height; h++)
             {
                 for (var w = 0; w < width; w++)
                 {
-                    this.cells[h, w] = new Cell();
+                    this.cells[h, w] = new TCell();
                 }
             }
         }
 
-        public Cell this[Pos pos]
+        public TCell this[Pos pos]
         {
             get => this.cells[pos.X, pos.Y];
             set => this.cells[pos.X, pos.Y] = value;
         }
 
-        public Cell this[int h, int w]
+        public TCell this[int h, int w]
         {
             get => this.cells[h, w];
             set => this.cells[h, w] = value;

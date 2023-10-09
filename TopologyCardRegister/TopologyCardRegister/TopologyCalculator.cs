@@ -5,6 +5,39 @@
 
     public class TopologyStatusCalculator
     {
+        private class Cell
+        {
+            public int SegmentId { get; set; }
+            public CellColor Color { get; set; }
+
+            public Cell()
+            {
+                this.SegmentId = -1;
+                this.Color = CellColor.NONE;
+            }
+
+            public enum CellColor
+            {
+                WHITE,
+                BLACK,
+                NONE
+            }
+
+            /// <summary>
+            /// セルに設定されている色を反転します。
+            /// 設定されている色がNONEになっている場合はなにも実行されません
+            /// </summary>
+            public void InvertColor()
+            {
+                if (this.Color == CellColor.NONE)
+                {
+                    return;
+                }
+
+                this.Color = this.Color == CellColor.WHITE ? CellColor.BLACK : CellColor.WHITE;
+            }
+        }
+
         /*
          * 以下の図の「.」を白、「#」を黒としたときに、黒のパーツの数が1、その穴の数が1となるように
          * 黒の隣接判定は8方向、白の隣接判定は4方向にする
@@ -58,7 +91,7 @@
         /// .#.
         /// ...
         /// </summary>
-        private static void ChangeNoiseCellColor(Grid grid)
+        private static void ChangeNoiseCellColor(Grid<Cell> grid)
         {
             grid.For((h, w) =>
             {
@@ -73,9 +106,9 @@
         /// <summary>
         /// posの位置にあるセルがノイズかどうかを判定します
         /// </summary>
-        private static bool IsNoise(Pos pos, Grid grid)
+        private static bool IsNoise(Pos pos, Grid<Cell> grid)
         {
-            var nextDirections = grid[pos].Color == Grid.Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
+            var nextDirections = grid[pos].Color == Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
 
             foreach (var nextDirection in nextDirections)
             {
@@ -100,7 +133,7 @@
         /// <summary>
         /// セグメントIdをグリッドのセルに割り当てます
         /// </summary>
-        private static void AssignSegmentIdToGridCell(Grid grid)
+        private static void AssignSegmentIdToGridCell(Grid<Cell> grid)
         {
             var segmentCount = 0;
 
@@ -122,12 +155,12 @@
         /// <summary>
         /// startPosの位置にあるセルと連結しているセグメントにidを割り当てます
         /// </summary>
-        private static void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid grid)
+        private static void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid<Cell> grid)
         {
             var segmentPos = new Queue<Pos>();
             segmentPos.Enqueue(startPos);
 
-            var nextDirections = grid[startPos].Color == Grid.Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
+            var nextDirections = grid[startPos].Color == Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
 
             grid[startPos].SegmentId = id;
 
@@ -167,7 +200,7 @@
         /// <summary>
         /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
-        private static Grid ConvertToBinaryGrid(Bitmap bitmap)
+        private static Grid<Cell> ConvertToBinaryGrid(Bitmap bitmap)
         {
             var width = bitmap.Width;
             var height = bitmap.Height;
@@ -175,7 +208,7 @@
             // bitmapの各ピクセルを取得する処理が遅いので配列に各ピクセルのRGBAを転写してそれを処理に使う
             var pixelValues = CopyBitmap(bitmap);
 
-            var grid = new Grid(height, width);
+            var grid = new Grid<Cell>(height, width);
 
             for (var i = 0; i < pixelValues.Length; i += 4)
             {
@@ -186,7 +219,7 @@
                 var brightness = pixelColor.GetBrightness();
 
                 // 閾値に基づいてピクセルを白または黒に分類します
-                grid[x, y].Color = brightness < BRIGHTNESS_THREHOLD ? Grid.Cell.CellColor.BLACK : Grid.Cell.CellColor.WHITE;
+                grid[x, y].Color = brightness < BRIGHTNESS_THREHOLD ? Cell.CellColor.BLACK : Cell.CellColor.WHITE;
             }
 
             return grid;
@@ -215,7 +248,7 @@
         /// 各黒色成分の隣にある白成分を返します
         /// </summary>
         /// <returns>result[黒色成分のセグメントId]: キーに使われているセグメントに隣接する白色セグメントのId</returns>
-        private static Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid grid)
+        private static Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid<Cell> grid)
         {
             var whiteSegmentIds = new Dictionary<int, HashSet<int>>();
             var nextDirections = BLACK_NEXT_DIRECTIONS;
@@ -225,7 +258,7 @@
                 var pos = new Pos(h, w);
 
                 //　posが黒色の座標を探す
-                if (grid[pos].Color == Grid.Cell.CellColor.WHITE)
+                if (grid[pos].Color == Cell.CellColor.WHITE)
                 {
                     return;
                 }
@@ -242,7 +275,7 @@
                     }
 
                     // 黒色に隣接する白色マスを探すために、そうでない場合は飛ばす
-                    if (grid[nextPos].Color == Grid.Cell.CellColor.BLACK)
+                    if (grid[nextPos].Color == Cell.CellColor.BLACK)
                     {
                         continue;
                     }
