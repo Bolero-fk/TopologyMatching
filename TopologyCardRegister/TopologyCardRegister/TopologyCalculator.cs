@@ -55,6 +55,9 @@ namespace TopologyCardRegister
         // 画素の白黒を判定する際の輝度の閾値 (0に近いほど黒、1に近いほど白となる)
         private const float BRIGHTNESS_THREHOLD = 0.5f;
 
+        /// <summary> 黒画素が画像の端にあると正しく穴の判定ができないので入力画像の余白を設定する </summary>
+        private const int INPUT_IMAGE_PADDING_SIZE = 1;
+
         /// <summary>
         /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
         /// </summary>
@@ -202,11 +205,12 @@ namespace TopologyCardRegister
         /// </summary>
         private static Grid<Cell> ConvertToBinaryGrid(Bitmap bitmap)
         {
-            var width = bitmap.Width;
-            var height = bitmap.Height;
+            var bitmapWithPadding = AddPadding(bitmap, INPUT_IMAGE_PADDING_SIZE);
+            var width = bitmapWithPadding.Width;
+            var height = bitmapWithPadding.Height;
 
             // bitmapの各ピクセルを取得する処理が遅いので配列に各ピクセルのRGBAを転写してそれを処理に使う
-            var pixelValues = CopyBitmap(bitmap);
+            var pixelValues = CopyBitmap(bitmapWithPadding);
 
             var grid = new Grid<Cell>(height, width);
 
@@ -223,6 +227,30 @@ namespace TopologyCardRegister
             }
 
             return grid;
+        }
+
+        /// <summary>
+        /// 入力されたbitmapの周囲にpaddingSizeの余白を追加します
+        /// </summary>
+        private static Bitmap AddPadding(Bitmap original, int paddingSize)
+        {
+            // 新しいBitmapのサイズを計算
+            var newWidth = original.Width + (2 * paddingSize);
+            var newHeight = original.Height + (2 * paddingSize);
+
+            // 新しいBitmapを作成
+            var paddedBitmap = new Bitmap(newWidth, newHeight);
+
+            using (var g = Graphics.FromImage(paddedBitmap))
+            {
+                // 背景を白色で塗りつぶす
+                g.Clear(Color.White);
+
+                // 元のBitmapを新しい位置に描画
+                g.DrawImage(original, paddingSize, paddingSize);
+            }
+
+            return paddedBitmap;
         }
 
         /// <summary>
