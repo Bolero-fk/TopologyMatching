@@ -1,4 +1,4 @@
-﻿namespace TopologyCardRegister
+namespace TopologyCardRegister
 {
     using System.Drawing.Imaging;
     using System.Runtime.InteropServices;
@@ -212,14 +212,14 @@
 
             for (var i = 0; i < pixelValues.Length; i += 4)
             {
-                var x = i / 4 % width;
-                var y = i / 4 / width;
+                var w = i / 4 % width;
+                var h = i / 4 / width;
 
                 var pixelColor = Color.FromArgb(pixelValues[i + 3], pixelValues[i + 2], pixelValues[i + 1], pixelValues[i]);
                 var brightness = pixelColor.GetBrightness();
 
                 // 閾値に基づいてピクセルを白または黒に分類します
-                grid[x, y].Color = brightness < BRIGHTNESS_THREHOLD ? Cell.CellColor.BLACK : Cell.CellColor.WHITE;
+                grid[h, w].Color = brightness < BRIGHTNESS_THREHOLD ? Cell.CellColor.BLACK : Cell.CellColor.WHITE;
             }
 
             return grid;
