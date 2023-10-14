@@ -1,0 +1,57 @@
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      working-directory: ./TopologyCardRegister
+      run: dotnet restore
+      
+    - name: Build
+      working-directory: ./TopologyCardRegister
+      run: dotnet build --no-restore
+      
+    - name: Test
+      working-directory: ./TopologyCardRegister
+      id: test
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+
+    - name: Install ReportGenerator
+      run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
+    - name: Generate Coverage Report
+      working-directory: ./TopologyCardRegister/TopologyCardRegister.Tests/
+      run: |
+        reportgenerator "-reports:./TestResults/*/coverage.cobertura.xml" "-targetdir:coverage_report" "-reporttypes:Html;TextSummary"
+        cat coverage_report/Summary.txt
+      shell: pwsh
+
+    - name: Upload coverage report as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-report
+        path: ./TopologyCardRegister/TopologyCardRegister.Tests/coverage_report/
+
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: coverage_report/Summary.txt
+
