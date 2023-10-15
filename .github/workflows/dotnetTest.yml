@@ -2,8 +2,12 @@ name: .NET
 
 on:
   push:
+    paths:
+    - 'TopologyCardRegister/**'
     branches: [ "main" ]
   pull_request:
+    paths:
+    - 'TopologyCardRegister/**'
     branches: [ "main" ]
 
 jobs:
