@@ -1,19 +1,16 @@
-﻿namespace TopologyCardRegister
+namespace TopologyCardRegister
 {
     public partial class MainForm : Form
     {
         private string[] svgFilePaths;
         private int nowPage;
-        private int[] holeCount;
-        private const int DISPLAY_IMAGE_HEIGHT_IN_PIXELS = 1024;
-        private const int DISPLAY_IMAGE_WIDTH_IN_PIXELS = 1024;
-        private static readonly Color DISPLAY_IMAGE_BACKGROUND_COLOR = Color.White;
+        private TopologyCard currentTopologyCard;
 
         public MainForm()
         {
             this.svgFilePaths = Array.Empty<string>();
             this.nowPage = 0;
-            this.holeCount = Array.Empty<int>();
+            this.currentTopologyCard = new TopologyCard();
 
             this.InitializeComponent();
             this.holeCountLabel.Text = string.Empty;
@@ -40,21 +37,22 @@
         /// </summary>
         private void DisplaySvg(string svgFilePath)
         {
-            var bitmap = LoadSvg(svgFilePath);
+            this.currentTopologyCard = new TopologyCard(svgFilePath);
+            var bitmap = this.currentTopologyCard.SvgImage;
 
             this.svgDisplayBox.Size = bitmap.Size;
             this.svgDisplayBox.Image = bitmap;
 
-            this.DisplayHoleCount(bitmap);
+            this.DisplayHoleCount();
         }
 
         /// <summary>
         /// 入力された画像のholeCountを画面に表示します
         /// </summary>
-        private void DisplayHoleCount(Bitmap bitmap)
+        private void DisplayHoleCount()
         {
-            this.holeCount = TopologyStatusCalculator.CalculateHoleCount(bitmap).ToArray();
-            this.holeCountLabel.Text = string.Join(',', this.holeCount.Select(num => num));
+            var holeCount = this.currentTopologyCard.HoleCounts;
+            this.holeCountLabel.Text = string.Join(',', holeCount.Select(num => num));
         }
 
         /// <summary>
@@ -74,25 +72,6 @@
             }
 
             return Array.Empty<string>();
-        }
-
-        /// <summary>
-        /// svg画像を読み込みます
-        /// </summary>
-        private static Bitmap LoadSvg(string filePath)
-        {
-            var svgDocument = Svg.SvgDocument.Open(filePath);
-            svgDocument.Children.Insert(0, new Svg.SvgRectangle
-            {
-                Width = new Svg.SvgUnit(svgDocument.Width.Type, svgDocument.Width.Value),
-                Height = new Svg.SvgUnit(svgDocument.Height.Type, svgDocument.Height.Value),
-                Fill = new Svg.SvgColourServer(DISPLAY_IMAGE_BACKGROUND_COLOR)
-            });
-
-            svgDocument.Height = DISPLAY_IMAGE_HEIGHT_IN_PIXELS;
-            svgDocument.Width = DISPLAY_IMAGE_WIDTH_IN_PIXELS;
-
-            return svgDocument.Draw();
         }
 
         /// <summary>
@@ -133,15 +112,10 @@
         /// </summary>
         private void OnClickSaveCardButton(object sender, EventArgs e)
         {
-            var svgFileName = Path.GetFileName(this.svgFilePaths[this.nowPage]);
             var jsonPath = this.outputHoleCountPathBox.Text;
             var svgFolderPath = this.outputSvgPathTextBox.Text;
 
-            // 画像を保存する
-            File.Copy(this.svgFilePaths[this.nowPage], Path.Combine(svgFolderPath, svgFileName), true);
-
-            // jsonを保存する
-            JsonSaver.SaveJson(jsonPath, svgFileName, this.holeCount);
+            this.currentTopologyCard.Save(svgFolderPath, jsonPath);
         }
 
         /// <summary>
