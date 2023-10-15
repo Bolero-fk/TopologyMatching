@@ -53,5 +53,5 @@ jobs:
       if: github.event_name == 'pull_request'
       with:
         recreate: true
-        path: coverage_report/Summary.txt
+        path: ./TopologyCardRegister/TopologyCardRegister.Tests/coverage_report/Summary.txt
 
