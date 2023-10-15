@@ -1,4 +1,4 @@
-name: .NET
+name: .NET Test with Coverage Report
 
 on:
   push:
