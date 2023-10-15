@@ -1,9 +1,13 @@
-name: .NET
+name: .NET Test with Coverage Report
 
 on:
   push:
+    paths:
+    - 'TopologyCardRegister/**'
     branches: [ "main" ]
   pull_request:
+    paths:
+    - 'TopologyCardRegister/**'
     branches: [ "main" ]
 
 jobs:
