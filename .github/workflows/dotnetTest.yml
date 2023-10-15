@@ -77,10 +77,4 @@ jobs:
         # Branch is created if it doesn't already exist'.
         diff-storage: _xml_coverage_reports
 
-#    - name: Add Coverage PR Comment
-#      uses: marocchino/sticky-pull-request-comment@v2
-#      if: github.event_name == 'pull_request'
-#      with:
-#        recreate: true
-#        path: ./TopologyCardRegister/TopologyCardRegister.Tests/coverage_report/Summary.txt
 
