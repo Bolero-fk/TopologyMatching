@@ -1,5 +1,7 @@
 namespace TopologyCardRegister.Tests
 {
+    using System.Diagnostics;
+
     public class PosTests
     {
         [Fact]
@@ -37,6 +39,15 @@ namespace TopologyCardRegister.Tests
             Assert.Equal(pos3.Y, y3);
         }
 
+        [Fact]
+        public void AddTestOverflowError()
+        {
+            var pos1 = new Pos(int.MaxValue, 0);
+            var pos2 = new Pos(1, 0);
+
+            Assert.Throws<OverflowException>(() => pos1 + pos2);
+        }
+
         [Theory]
         [InlineData(1, 2, 3, 4, -2, -2)]
         [InlineData(-1, -2, 3, 4, -4, -6)]
@@ -49,6 +60,15 @@ namespace TopologyCardRegister.Tests
 
             Assert.Equal(pos3.X, x3);
             Assert.Equal(pos3.Y, y3);
+        }
+
+        [Fact]
+        public void SubTestUnderflowError()
+        {
+            var pos1 = new Pos(int.MinValue, 0);
+            var pos2 = new Pos(1, 0);
+
+            Assert.Throws<OverflowException>(() => pos1 - pos2);
         }
 
         [Fact]
