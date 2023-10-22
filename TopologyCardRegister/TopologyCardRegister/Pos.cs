@@ -1,4 +1,4 @@
-﻿namespace TopologyCardRegister
+namespace TopologyCardRegister
 {
     /// <summary>
     /// グリッドの座標を管理するクラスです
@@ -22,12 +22,18 @@
 
         public static Pos operator +(Pos a, Pos b)
         {
-            return new Pos(a.X + b.X, a.Y + b.Y);
+            checked
+            {
+                return new Pos(a.X + b.X, a.Y + b.Y);
+            }
         }
 
         public static Pos operator -(Pos a, Pos b)
         {
-            return new Pos(a.X - b.X, a.Y - b.Y);
+            checked
+            {
+                return new Pos(a.X - b.X, a.Y - b.Y);
+            }
         }
 
         public static readonly Pos UP = new Pos(0, 1);
