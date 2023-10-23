@@ -63,6 +63,8 @@ namespace TopologyCardRegister
         /// </summary>
         public static List<int> CalculateHoleCount(Bitmap bitmap)
         {
+            ValidateBitmap(bitmap);
+
             // 入力された画像を二値化したグラフに変換します
             var grid = ConvertToBinaryGrid(bitmap);
 
@@ -85,6 +87,19 @@ namespace TopologyCardRegister
             holeCount.Sort();
 
             return holeCount;
+        }
+
+        private static void CheckBitmapNotNull(Bitmap bitmap)
+        {
+            if (bitmap == null)
+            {
+                throw new ArgumentNullException(nameof(bitmap), "Bitmap object should not be null.");
+            }
+        }
+
+        private static void ValidateBitmap(Bitmap bitmap)
+        {
+            CheckBitmapNotNull(bitmap);
         }
 
         /// <summary>
