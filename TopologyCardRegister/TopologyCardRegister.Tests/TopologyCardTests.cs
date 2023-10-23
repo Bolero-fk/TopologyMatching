@@ -45,6 +45,13 @@ namespace TopologyCardRegister.Tests
             Assert.NotNull(card.SvgImage);
         }
 
+        [Fact]
+        public void ParameterizedConstructorTestInvalidFilePathError()
+        {
+            var svgFilePath = Path.Combine(TESTCASE_DIRECTORY, "");
+            Assert.Throws<FileNotFoundException>(() => new TopologyCard(svgFilePath));
+        }
+
         [Theory]
         [InlineData("TestCase1.in")]
         public void SaveCardTest(string inputFileName)
@@ -68,6 +75,13 @@ namespace TopologyCardRegister.Tests
 
             Assert.True(File.Exists(expectedSvgPath));
             Assert.True(File.Exists(this.testJsonPath));
+        }
+
+        [Fact]
+        public void SaveEmptySvgFilePathError()
+        {
+            var card = new TopologyCard();
+            Assert.Throws<TopologyCard.NotSetSvgFilePathException>(() => card.Save(this.outputSvgFolderPath, this.testJsonPath));
         }
 
         [Theory]

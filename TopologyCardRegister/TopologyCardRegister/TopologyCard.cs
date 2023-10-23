@@ -2,6 +2,13 @@ namespace TopologyCardRegister
 {
     public class TopologyCard
     {
+        public class NotSetSvgFilePathException : Exception
+        {
+            public NotSetSvgFilePathException(string message) : base(message)
+            {
+            }
+        }
+
         /// <summary> 表示する画像の縦幅 </summary>
         private const int DISPLAY_IMAGE_HEIGHT_IN_PIXELS = 1024;
 
@@ -68,6 +75,11 @@ namespace TopologyCardRegister
         /// <param name="jsonPath">JSONデータを保存するファイルのパス</param>
         public void Save(string svgFolderPath, string jsonPath)
         {
+            if (this.SvgFilePath == string.Empty)
+            {
+                throw new NotSetSvgFilePathException("SvgFilePath has not been set.");
+            }
+
             var svgFileName = Path.GetFileName(this.SvgFilePath);
 
             // 画像を保存する

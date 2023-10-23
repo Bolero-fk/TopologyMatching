@@ -45,6 +45,12 @@ namespace TopologyCardRegister.Tests
         }
 
         [Fact]
+        public void SaveJsonTestInvalidPathError()
+        {
+            Assert.Throws<ArgumentException>(() => JsonSaver.SaveJson(string.Empty, "image1", new int[] { 1, 2, 3 }));
+        }
+
+        [Fact]
         public void OverwriteSaveJsonTest()
         {
             var imageName = "test_image.svg";
@@ -65,6 +71,51 @@ namespace TopologyCardRegister.Tests
             var holeCountFromCard = topologyCard["HoleCount"];
             Assert.NotNull(holeCountFromCard);
             Assert.Equal(updatedHoleCount, holeCountFromCard.ToObject<int[]>());
+        }
+
+        [Fact]
+        public void OverwriteSaveToInvalidJsonTest()
+        {
+            var invalidSampleJson = /*lang=json*/ @"{'user': 'Alice', 'age': 29}";
+            File.WriteAllText(this.testJsonPath, invalidSampleJson);
+
+            var imageName = "test_image.svg";
+            var holeCount = new int[] { 1, 2, 3 };
+            JsonSaver.SaveJson(this.testJsonPath, imageName, holeCount);
+
+            var savedDataJson = File.ReadAllText(this.testJsonPath);
+            var savedData = JsonConvert.DeserializeObject<List<object>>(savedDataJson);
+
+            Assert.NotNull(savedData);
+            Assert.Single(savedData);
+
+            var topologyCard = (Newtonsoft.Json.Linq.JObject)savedData[0];
+
+            var holeCountFromCard = topologyCard["HoleCount"];
+            Assert.NotNull(holeCountFromCard);
+            Assert.Equal(holeCount, holeCountFromCard.ToObject<int[]>());
+        }
+
+        [Fact]
+        public void OverwriteSaveToEmptyJsonTest()
+        {
+            File.WriteAllText(this.testJsonPath, "");
+
+            var imageName = "test_image.svg";
+            var holeCount = new int[] { 1, 2, 3 };
+            JsonSaver.SaveJson(this.testJsonPath, imageName, holeCount);
+
+            var savedDataJson = File.ReadAllText(this.testJsonPath);
+            var savedData = JsonConvert.DeserializeObject<List<object>>(savedDataJson);
+
+            Assert.NotNull(savedData);
+            Assert.Single(savedData);
+
+            var topologyCard = (Newtonsoft.Json.Linq.JObject)savedData[0];
+
+            var holeCountFromCard = topologyCard["HoleCount"];
+            Assert.NotNull(holeCountFromCard);
+            Assert.Equal(holeCount, holeCountFromCard.ToObject<int[]>());
         }
 
         [Fact]

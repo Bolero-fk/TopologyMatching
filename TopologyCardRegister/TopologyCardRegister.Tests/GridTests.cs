@@ -18,6 +18,14 @@ namespace TopologyCardRegister.Tests
             }
         }
 
+        [Theory]
+        [InlineData(-1, 1)]
+        [InlineData(100, -100)]
+        public void ConstructorTestNegativeDimensionsError(int h, int w)
+        {
+            Assert.Throws<OverflowException>(() => new Grid<int>(h, w));
+        }
+
         [Fact]
         public void PosGetAndSetUsingPosTest()
         {
@@ -29,6 +37,19 @@ namespace TopologyCardRegister.Tests
             Assert.Equal(1, grid[pos]);
         }
 
+        [Theory]
+        [InlineData(10, 10, 9, 10)]
+        [InlineData(10, 10, -1, 0)]
+        public void PosGetAndSetUsingPosTestOutOfRangeError(int gridHeight, int gridWidth, int h, int w)
+        {
+            var grid = new Grid<int>(gridHeight, gridWidth);
+            var pos = new Pos(h, w);
+
+            Assert.Throws<IndexOutOfRangeException>(() => { var temp = grid[new Pos(h, w)]; });
+            Assert.Throws<IndexOutOfRangeException>(() => grid[new Pos(h, w)] = 1);
+        }
+
+
         [Fact]
         public void PosGetAndSetUsingCoordinatesTest()
         {
@@ -38,6 +59,19 @@ namespace TopologyCardRegister.Tests
 
             Assert.Equal(42, grid[1, 1]);
         }
+
+        [Theory]
+        [InlineData(10, 10, 9, 10)]
+        [InlineData(10, 10, -1, 0)]
+        public void PosGetAndSetUsingCoordinatesTestOutOfRangeError(int gridHeight, int gridWidth, int h, int w)
+        {
+            var grid = new Grid<int>(gridHeight, gridWidth);
+            var pos = new Pos(h, w);
+
+            Assert.Throws<IndexOutOfRangeException>(() => { var temp = grid[h, w]; });
+            Assert.Throws<IndexOutOfRangeException>(() => grid[h, w] = 1);
+        }
+
 
         [Theory]
         [InlineData(2, 2, 0, 0, true)]

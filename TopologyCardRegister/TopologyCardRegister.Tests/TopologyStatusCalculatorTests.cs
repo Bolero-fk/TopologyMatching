@@ -9,6 +9,14 @@ namespace TopologyCardRegister.Tests
         private static readonly string ProjectDirectory = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", ".."));
         private static readonly string TestcaseDirectory = ProjectDirectory + "/TopologyStatusCalculatorTestCase";
 
+        [Fact]
+        public void InputNullBitmapError()
+        {
+            Bitmap nullBitmap = null;
+
+            Assert.Throws<ArgumentNullException>(() => TopologyStatusCalculator.CalculateHoleCount(nullBitmap));
+        }
+
         [Theory]
         [InlineData("/TestCase1.in", "/TestCase1.out")] // 全て白色
         [InlineData("/TestCase2.in", "/TestCase2.out")] // 全て黒色
