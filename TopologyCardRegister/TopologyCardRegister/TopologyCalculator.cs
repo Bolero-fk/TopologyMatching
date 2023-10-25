@@ -168,19 +168,11 @@ namespace TopologyCardRegister
         {
             var whiteSegmentIds = FindBlackSegmentIds(grid).ToDictionary(blackSegmentId => blackSegmentId, _ => new HashSet<int>());
 
-            grid.For((h, w) =>
+            foreach (var blackPosition in FindBlackPositions(grid))
             {
-                var pos = new Pos(h, w);
+                var blackSegmentId = grid[blackPosition].SegmentId;
 
-                //　posが黒色の座標を探す
-                if (grid[pos].IsWhite())
-                {
-                    return;
-                }
-
-                var blackSegmentId = grid[pos].SegmentId;
-
-                foreach (var nextPos in FindNextPos(pos, grid))
+                foreach (var nextPos in FindNextPos(blackPosition, grid))
                 {
                     // 黒色に隣接する白色マスを探すために、そうでない場合は飛ばす
                     if (grid[nextPos].IsBlack())
@@ -190,9 +182,25 @@ namespace TopologyCardRegister
 
                     whiteSegmentIds[blackSegmentId].Add(/* 白色セグメントのid */ grid[nextPos].SegmentId);
                 }
-            });
+            }
 
             return whiteSegmentIds;
+        }
+
+        private static List<Pos> FindBlackPositions(Grid<MonochromeCell> grid)
+        {
+            var blackPositions = new List<Pos>();
+            grid.For((h, w) =>
+            {
+                var pos = new Pos(h, w);
+
+                if (grid[pos].IsBlack())
+                {
+                    blackPositions.Add(pos);
+                }
+            });
+
+            return blackPositions;
         }
 
         private static List<int> FindBlackSegmentIds(Grid<MonochromeCell> grid)
