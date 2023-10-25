@@ -5,18 +5,12 @@ namespace TopologyCardRegister
 
     public class BitmapToMonochromeGridConverter
     {
-        // 画素の白黒を判定する際の輝度の閾値 (0に近いほど黒、1に近いほど白となる)
-        private const float BRIGHTNESS_THREHOLD = 0.5f;
-
-        /// <summary> 黒画素が画像の端にあると正しく穴の判定ができないので入力画像の余白を設定する </summary>
-        private const int INPUT_IMAGE_PADDING_SIZE = 1;
-
         /// <summary>
         /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
-        public static Grid<MonochromeCell> ConvertToBinaryGrid(Bitmap bitmap)
+        public static Grid<MonochromeCell> Execute(Bitmap bitmap, int paddingSize, float brightnessThrethold)
         {
-            var bitmapWithPadding = AddPadding(bitmap, INPUT_IMAGE_PADDING_SIZE);
+            var bitmapWithPadding = AddPadding(bitmap, paddingSize);
             var width = bitmapWithPadding.Width;
             var height = bitmapWithPadding.Height;
 
@@ -34,7 +28,7 @@ namespace TopologyCardRegister
                 var brightness = pixelColor.GetBrightness();
 
                 // 閾値に基づいてピクセルを白または黒に分類します
-                grid[h, w].Color = brightness < BRIGHTNESS_THREHOLD ? MonochromeCell.CellColor.BLACK : MonochromeCell.CellColor.WHITE;
+                grid[h, w].Color = brightness < brightnessThrethold ? MonochromeCell.CellColor.BLACK : MonochromeCell.CellColor.WHITE;
             }
 
             return grid;
