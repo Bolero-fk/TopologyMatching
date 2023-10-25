@@ -12,6 +12,16 @@ namespace TopologyCardRegister
         /// </summary>
         public static Grid<MonochromeCell> Execute(Bitmap bitmap, int paddingSize, float brightnessThreshold)
         {
+            if (paddingSize < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(paddingSize), "Padding size must be non-negative.");
+            }
+
+            if (brightnessThreshold < 0 || brightnessThreshold > 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(brightnessThreshold), "Brightness threshold must be between 0 and 1, inclusive.");
+            }
+
             var bitmapWithPadding = AddPadding(bitmap, paddingSize);
             var width = bitmapWithPadding.Width;
             var height = bitmapWithPadding.Height;
