@@ -1,16 +1,152 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.8158" branch-rate="0.779" version="1.9" timestamp="1698066780" lines-covered="474" lines-valid="581" branches-covered="67" branches-valid="86">
+<coverage line-rate="0.8284999999999999" branch-rate="0.8061" version="1.9" timestamp="1698239764" lines-covered="517" lines-valid="624" branches-covered="79" branches-valid="98">
   <sources>
     <source>D:\a\TopologyMatching\TopologyMatching\TopologyCardRegister\TopologyCardRegister\</source>
   </sources>
   <packages>
-    <package name="TopologyCardRegister" line-rate="0.8158" branch-rate="0.779" complexity="127">
+    <package name="TopologyCardRegister" line-rate="0.8284999999999999" branch-rate="0.8061" complexity="143">
       <classes>
+        <class name="TopologyCardRegister.BitmapToMonochromeGridConverter" filename="BitmapToMonochromeGridConverter.cs" line-rate="1" branch-rate="1" complexity="12">
+          <methods>
+            <method name="Execute" signature="(System.Drawing.Bitmap,System.Int32,System.Single)" line-rate="1" branch-rate="1" complexity="10">
+              <lines>
+                <line number="14" hits="23" branch="False" />
+                <line number="15" hits="23" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="9" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="16" hits="2" branch="False" />
+                <line number="17" hits="2" branch="False" />
+                <line number="20" hits="21" branch="True" condition-coverage="100% (4/4)">
+                  <conditions>
+                    <condition number="34" type="jump" coverage="100%" />
+                    <condition number="51" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="21" hits="2" branch="False" />
+                <line number="22" hits="2" branch="False" />
+                <line number="25" hits="19" branch="False" />
+                <line number="26" hits="19" branch="False" />
+                <line number="27" hits="19" branch="False" />
+                <line number="30" hits="19" branch="False" />
+                <line number="32" hits="19" branch="False" />
+                <line number="34" hits="10533498" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="212" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="35" hits="5266730" branch="False" />
+                <line number="36" hits="5266730" branch="False" />
+                <line number="37" hits="5266730" branch="False" />
+                <line number="39" hits="5266730" branch="False" />
+                <line number="40" hits="5266730" branch="False" />
+                <line number="43" hits="5266730" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="182" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="44" hits="5266730" branch="False" />
+                <line number="46" hits="19" branch="False" />
+                <line number="47" hits="19" branch="False" />
+              </lines>
+            </method>
+            <method name="AddPadding" signature="(System.Drawing.Bitmap,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="53" hits="19" branch="False" />
+                <line number="55" hits="19" branch="False" />
+                <line number="56" hits="19" branch="False" />
+                <line number="59" hits="19" branch="False" />
+                <line number="61" hits="19" branch="False" />
+                <line number="62" hits="19" branch="False" />
+                <line number="64" hits="19" branch="False" />
+                <line number="67" hits="19" branch="False" />
+                <line number="68" hits="19" branch="False" />
+                <line number="70" hits="19" branch="False" />
+                <line number="71" hits="19" branch="False" />
+              </lines>
+            </method>
+            <method name="CopyBitmap" signature="(System.Drawing.Bitmap)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="77" hits="19" branch="False" />
+                <line number="78" hits="19" branch="False" />
+                <line number="79" hits="19" branch="False" />
+                <line number="81" hits="19" branch="False" />
+                <line number="83" hits="19" branch="False" />
+                <line number="84" hits="19" branch="False" />
+                <line number="86" hits="19" branch="False" />
+                <line number="88" hits="19" branch="False" />
+                <line number="89" hits="19" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="14" hits="23" branch="False" />
+            <line number="15" hits="23" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="9" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="16" hits="2" branch="False" />
+            <line number="17" hits="2" branch="False" />
+            <line number="20" hits="21" branch="True" condition-coverage="100% (4/4)">
+              <conditions>
+                <condition number="34" type="jump" coverage="100%" />
+                <condition number="51" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="21" hits="2" branch="False" />
+            <line number="22" hits="2" branch="False" />
+            <line number="25" hits="19" branch="False" />
+            <line number="26" hits="19" branch="False" />
+            <line number="27" hits="19" branch="False" />
+            <line number="30" hits="19" branch="False" />
+            <line number="32" hits="19" branch="False" />
+            <line number="34" hits="10533498" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="212" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="35" hits="5266730" branch="False" />
+            <line number="36" hits="5266730" branch="False" />
+            <line number="37" hits="5266730" branch="False" />
+            <line number="39" hits="5266730" branch="False" />
+            <line number="40" hits="5266730" branch="False" />
+            <line number="43" hits="5266730" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="182" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="44" hits="5266730" branch="False" />
+            <line number="46" hits="19" branch="False" />
+            <line number="47" hits="19" branch="False" />
+            <line number="53" hits="19" branch="False" />
+            <line number="55" hits="19" branch="False" />
+            <line number="56" hits="19" branch="False" />
+            <line number="59" hits="19" branch="False" />
+            <line number="61" hits="19" branch="False" />
+            <line number="62" hits="19" branch="False" />
+            <line number="64" hits="19" branch="False" />
+            <line number="67" hits="19" branch="False" />
+            <line number="68" hits="19" branch="False" />
+            <line number="70" hits="19" branch="False" />
+            <line number="71" hits="19" branch="False" />
+            <line number="77" hits="19" branch="False" />
+            <line number="78" hits="19" branch="False" />
+            <line number="79" hits="19" branch="False" />
+            <line number="81" hits="19" branch="False" />
+            <line number="83" hits="19" branch="False" />
+            <line number="84" hits="19" branch="False" />
+            <line number="86" hits="19" branch="False" />
+            <line number="88" hits="19" branch="False" />
+            <line number="89" hits="19" branch="False" />
+          </lines>
+        </class>
         <class name="TopologyCardRegister.Grid`1" filename="Grid.cs" line-rate="1" branch-rate="1" complexity="19">
           <methods>
             <method name="get_Item" signature="(TopologyCardRegister.Pos)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="28" hits="77799234" branch="False" />
+                <line number="28" hits="99056857" branch="False" />
               </lines>
             </method>
             <method name="set_Item" signature="(TopologyCardRegister.Pos,TCell)" line-rate="1" branch-rate="1" complexity="1">
@@ -20,7 +156,7 @@
             </method>
             <method name="get_Item" signature="(System.Int32,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="34" hits="5264139" branch="False" />
+                <line number="34" hits="11644846" branch="False" />
               </lines>
             </method>
             <method name="set_Item" signature="(System.Int32,System.Int32,TCell)" line-rate="1" branch-rate="1" complexity="1">
@@ -30,126 +166,126 @@
             </method>
             <method name="IsIn" signature="(TopologyCardRegister.Pos)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="42" hits="39688696" branch="False" />
-                <line number="43" hits="39688696" branch="False" />
-                <line number="44" hits="39688696" branch="False" />
+                <line number="42" hits="65185693" branch="False" />
+                <line number="43" hits="65185693" branch="False" />
+                <line number="44" hits="65185693" branch="False" />
               </lines>
             </method>
             <method name="IsIn" signature="(System.Int32,System.Int32)" line-rate="1" branch-rate="1" complexity="6">
               <lines>
-                <line number="50" hits="39688701" branch="False" />
-                <line number="51" hits="39688701" branch="True" condition-coverage="100% (6/6)">
+                <line number="50" hits="65185698" branch="False" />
+                <line number="51" hits="65185698" branch="True" condition-coverage="100% (6/6)">
                   <conditions>
                     <condition number="3" type="jump" coverage="100%" />
                     <condition number="14" type="jump" coverage="100%" />
                     <condition number="18" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="52" hits="39688701" branch="False" />
+                <line number="52" hits="65185698" branch="False" />
               </lines>
             </method>
             <method name="For" signature="(System.Action`2&lt;System.Int32,System.Int32&gt;)" line-rate="1" branch-rate="1" complexity="4">
               <lines>
-                <line number="58" hits="40" branch="False" />
-                <line number="59" hits="31344" branch="True" condition-coverage="100% (2/2)">
+                <line number="58" hits="59" branch="False" />
+                <line number="59" hits="42022" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="54" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="60" hits="15632" branch="False" />
-                <line number="61" hits="31616056" branch="True" condition-coverage="100% (2/2)">
+                <line number="60" hits="20952" branch="False" />
+                <line number="61" hits="42160156" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="36" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="62" hits="15792396" branch="False" />
-                <line number="63" hits="15792396" branch="False" />
-                <line number="64" hits="15792396" branch="False" />
-                <line number="65" hits="15632" branch="False" />
-                <line number="66" hits="40" branch="False" />
+                <line number="62" hits="21059126" branch="False" />
+                <line number="63" hits="21059126" branch="False" />
+                <line number="64" hits="21059126" branch="False" />
+                <line number="65" hits="20952" branch="False" />
+                <line number="66" hits="59" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Int32,System.Int32)" line-rate="1" branch-rate="1" complexity="4">
               <lines>
-                <line number="12" hits="33" branch="False" />
-                <line number="13" hits="33" branch="False" />
-                <line number="14" hits="33" branch="False" />
-                <line number="15" hits="33" branch="False" />
-                <line number="16" hits="33" branch="False" />
-                <line number="17" hits="10618" branch="True" condition-coverage="100% (2/2)">
+                <line number="12" hits="39" branch="False" />
+                <line number="13" hits="39" branch="False" />
+                <line number="14" hits="39" branch="False" />
+                <line number="15" hits="39" branch="False" />
+                <line number="16" hits="39" branch="False" />
+                <line number="17" hits="10850" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="87" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="18" hits="5278" branch="False" />
-                <line number="19" hits="10539736" branch="True" condition-coverage="100% (2/2)">
+                <line number="18" hits="5388" branch="False" />
+                <line number="19" hits="10545156" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="74" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="20" hits="5264590" branch="False" />
-                <line number="21" hits="5264590" branch="False" />
-                <line number="22" hits="5264590" branch="False" />
-                <line number="23" hits="5278" branch="False" />
-                <line number="24" hits="31" branch="False" />
+                <line number="20" hits="5267190" branch="False" />
+                <line number="21" hits="5267190" branch="False" />
+                <line number="22" hits="5267190" branch="False" />
+                <line number="23" hits="5388" branch="False" />
+                <line number="24" hits="37" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="28" hits="77799234" branch="False" />
+            <line number="28" hits="99056857" branch="False" />
             <line number="29" hits="3" branch="False" />
-            <line number="34" hits="5264139" branch="False" />
+            <line number="34" hits="11644846" branch="False" />
             <line number="35" hits="3" branch="False" />
-            <line number="42" hits="39688696" branch="False" />
-            <line number="43" hits="39688696" branch="False" />
-            <line number="44" hits="39688696" branch="False" />
-            <line number="50" hits="39688701" branch="False" />
-            <line number="51" hits="39688701" branch="True" condition-coverage="100% (6/6)">
+            <line number="42" hits="65185693" branch="False" />
+            <line number="43" hits="65185693" branch="False" />
+            <line number="44" hits="65185693" branch="False" />
+            <line number="50" hits="65185698" branch="False" />
+            <line number="51" hits="65185698" branch="True" condition-coverage="100% (6/6)">
               <conditions>
                 <condition number="3" type="jump" coverage="100%" />
                 <condition number="14" type="jump" coverage="100%" />
                 <condition number="18" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="52" hits="39688701" branch="False" />
-            <line number="58" hits="40" branch="False" />
-            <line number="59" hits="31344" branch="True" condition-coverage="100% (2/2)">
+            <line number="52" hits="65185698" branch="False" />
+            <line number="58" hits="59" branch="False" />
+            <line number="59" hits="42022" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="54" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="60" hits="15632" branch="False" />
-            <line number="61" hits="31616056" branch="True" condition-coverage="100% (2/2)">
+            <line number="60" hits="20952" branch="False" />
+            <line number="61" hits="42160156" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="36" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="62" hits="15792396" branch="False" />
-            <line number="63" hits="15792396" branch="False" />
-            <line number="64" hits="15792396" branch="False" />
-            <line number="65" hits="15632" branch="False" />
-            <line number="66" hits="40" branch="False" />
-            <line number="12" hits="33" branch="False" />
-            <line number="13" hits="33" branch="False" />
-            <line number="14" hits="33" branch="False" />
-            <line number="15" hits="33" branch="False" />
-            <line number="16" hits="33" branch="False" />
-            <line number="17" hits="10618" branch="True" condition-coverage="100% (2/2)">
+            <line number="62" hits="21059126" branch="False" />
+            <line number="63" hits="21059126" branch="False" />
+            <line number="64" hits="21059126" branch="False" />
+            <line number="65" hits="20952" branch="False" />
+            <line number="66" hits="59" branch="False" />
+            <line number="12" hits="39" branch="False" />
+            <line number="13" hits="39" branch="False" />
+            <line number="14" hits="39" branch="False" />
+            <line number="15" hits="39" branch="False" />
+            <line number="16" hits="39" branch="False" />
+            <line number="17" hits="10850" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="87" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="18" hits="5278" branch="False" />
-            <line number="19" hits="10539736" branch="True" condition-coverage="100% (2/2)">
+            <line number="18" hits="5388" branch="False" />
+            <line number="19" hits="10545156" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="74" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="20" hits="5264590" branch="False" />
-            <line number="21" hits="5264590" branch="False" />
-            <line number="22" hits="5264590" branch="False" />
-            <line number="23" hits="5278" branch="False" />
-            <line number="24" hits="31" branch="False" />
+            <line number="20" hits="5267190" branch="False" />
+            <line number="21" hits="5267190" branch="False" />
+            <line number="22" hits="5267190" branch="False" />
+            <line number="23" hits="5388" branch="False" />
+            <line number="24" hits="37" branch="False" />
           </lines>
         </class>
         <class name="TopologyCardRegister.JsonSaver" filename="JsonSaver.cs" line-rate="1" branch-rate="1" complexity="4">
@@ -946,24 +1082,118 @@
             <line number="8" hits="2" branch="False" />
           </lines>
         </class>
-        <class name="TopologyCardRegister.Pos" filename="Pos.cs" line-rate="1" branch-rate="1" complexity="7">
+        <class name="TopologyCardRegister.MonochromeCell" filename="MonochromeCell.cs" line-rate="1" branch-rate="1" complexity="10">
+          <methods>
+            <method name="get_SegmentId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="18096560" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Color" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="103138641" branch="False" />
+              </lines>
+            </method>
+            <method name="InvertColor" signature="()" line-rate="1" branch-rate="1" complexity="4">
+              <lines>
+                <line number="28" hits="5" branch="False" />
+                <line number="29" hits="5" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="12" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="30" hits="1" branch="False" />
+                <line number="31" hits="1" branch="False" />
+                <line number="34" hits="4" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="24" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="35" hits="5" branch="False" />
+              </lines>
+            </method>
+            <method name="IsSegmentIdAssigned" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="38" hits="5264133" branch="False" />
+                <line number="39" hits="5264133" branch="False" />
+                <line number="40" hits="5264133" branch="False" />
+              </lines>
+            </method>
+            <method name="IsBlack" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="43" hits="31058949" branch="False" />
+                <line number="44" hits="31058949" branch="False" />
+                <line number="45" hits="31058949" branch="False" />
+              </lines>
+            </method>
+            <method name="IsWhite" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="48" hits="2" branch="False" />
+                <line number="49" hits="2" branch="False" />
+                <line number="50" hits="2" branch="False" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="10" hits="5266740" branch="False" />
+                <line number="11" hits="5266740" branch="False" />
+                <line number="12" hits="5266740" branch="False" />
+                <line number="13" hits="5266740" branch="False" />
+                <line number="14" hits="5266740" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="7" hits="18096560" branch="False" />
+            <line number="8" hits="103138641" branch="False" />
+            <line number="28" hits="5" branch="False" />
+            <line number="29" hits="5" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="12" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="30" hits="1" branch="False" />
+            <line number="31" hits="1" branch="False" />
+            <line number="34" hits="4" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="24" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="35" hits="5" branch="False" />
+            <line number="38" hits="5264133" branch="False" />
+            <line number="39" hits="5264133" branch="False" />
+            <line number="40" hits="5264133" branch="False" />
+            <line number="43" hits="31058949" branch="False" />
+            <line number="44" hits="31058949" branch="False" />
+            <line number="45" hits="31058949" branch="False" />
+            <line number="48" hits="2" branch="False" />
+            <line number="49" hits="2" branch="False" />
+            <line number="50" hits="2" branch="False" />
+            <line number="10" hits="5266740" branch="False" />
+            <line number="11" hits="5266740" branch="False" />
+            <line number="12" hits="5266740" branch="False" />
+            <line number="13" hits="5266740" branch="False" />
+            <line number="14" hits="5266740" branch="False" />
+          </lines>
+        </class>
+        <class name="TopologyCardRegister.Pos" filename="Pos.cs" line-rate="0.9393" branch-rate="0.75" complexity="12">
           <methods>
             <method name="get_X" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="196865353" branch="False" />
+                <line number="8" hits="584607027" branch="False" />
               </lines>
             </method>
             <method name="get_Y" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="196865349" branch="False" />
+                <line number="9" hits="354991967" branch="False" />
               </lines>
             </method>
             <method name="op_Addition" signature="(TopologyCardRegister.Pos,TopologyCardRegister.Pos)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="24" hits="39688699" branch="False" />
-                <line number="26" hits="39688699" branch="False" />
-                <line number="27" hits="39688699" branch="False" />
-                <line number="29" hits="39688698" branch="False" />
+                <line number="24" hits="59895272" branch="False" />
+                <line number="26" hits="59895272" branch="False" />
+                <line number="27" hits="59895272" branch="False" />
+                <line number="29" hits="59895271" branch="False" />
               </lines>
             </method>
             <method name="op_Subtraction" signature="(TopologyCardRegister.Pos,TopologyCardRegister.Pos)" line-rate="1" branch-rate="1" complexity="1">
@@ -972,6 +1202,31 @@
                 <line number="34" hits="4" branch="False" />
                 <line number="35" hits="4" branch="False" />
                 <line number="37" hits="3" branch="False" />
+              </lines>
+            </method>
+            <method name="GetHashCode" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="45" hits="30745470" branch="False" />
+                <line number="46" hits="30745470" branch="False" />
+                <line number="47" hits="30745470" branch="False" />
+              </lines>
+            </method>
+            <method name="Equals" signature="(System.Object)" line-rate="0.6666" branch-rate="0.75" complexity="4">
+              <lines>
+                <line number="50" hits="134914219" branch="False" />
+                <line number="51" hits="134914219" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="17" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="52" hits="0" branch="False" />
+                <line number="53" hits="0" branch="False" />
+                <line number="56" hits="134914219" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="36" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="57" hits="134914219" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -985,11 +1240,11 @@
             </method>
             <method name=".ctor" signature="(System.Int32,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="17" hits="55481128" branch="False" />
-                <line number="18" hits="55481128" branch="False" />
-                <line number="19" hits="55481128" branch="False" />
-                <line number="20" hits="55481128" branch="False" />
-                <line number="21" hits="55481128" branch="False" />
+                <line number="17" hits="75687701" branch="False" />
+                <line number="18" hits="75687701" branch="False" />
+                <line number="19" hits="75687701" branch="False" />
+                <line number="20" hits="75687701" branch="False" />
+                <line number="21" hits="75687701" branch="False" />
               </lines>
             </method>
             <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -1002,26 +1257,43 @@
             </method>
           </methods>
           <lines>
-            <line number="8" hits="196865353" branch="False" />
-            <line number="9" hits="196865349" branch="False" />
-            <line number="24" hits="39688699" branch="False" />
-            <line number="26" hits="39688699" branch="False" />
-            <line number="27" hits="39688699" branch="False" />
-            <line number="29" hits="39688698" branch="False" />
+            <line number="8" hits="584607027" branch="False" />
+            <line number="9" hits="354991967" branch="False" />
+            <line number="24" hits="59895272" branch="False" />
+            <line number="26" hits="59895272" branch="False" />
+            <line number="27" hits="59895272" branch="False" />
+            <line number="29" hits="59895271" branch="False" />
             <line number="32" hits="4" branch="False" />
             <line number="34" hits="4" branch="False" />
             <line number="35" hits="4" branch="False" />
             <line number="37" hits="3" branch="False" />
+            <line number="45" hits="30745470" branch="False" />
+            <line number="46" hits="30745470" branch="False" />
+            <line number="47" hits="30745470" branch="False" />
+            <line number="50" hits="134914219" branch="False" />
+            <line number="51" hits="134914219" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="17" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="52" hits="0" branch="False" />
+            <line number="53" hits="0" branch="False" />
+            <line number="56" hits="134914219" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="36" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="57" hits="134914219" branch="False" />
             <line number="11" hits="1" branch="False" />
             <line number="12" hits="1" branch="False" />
             <line number="13" hits="1" branch="False" />
             <line number="14" hits="1" branch="False" />
             <line number="15" hits="1" branch="False" />
-            <line number="17" hits="55481128" branch="False" />
-            <line number="18" hits="55481128" branch="False" />
-            <line number="19" hits="55481128" branch="False" />
-            <line number="20" hits="55481128" branch="False" />
-            <line number="21" hits="55481128" branch="False" />
+            <line number="17" hits="75687701" branch="False" />
+            <line number="18" hits="75687701" branch="False" />
+            <line number="19" hits="75687701" branch="False" />
+            <line number="20" hits="75687701" branch="False" />
+            <line number="21" hits="75687701" branch="False" />
             <line number="39" hits="1" branch="False" />
             <line number="40" hits="1" branch="False" />
             <line number="41" hits="1" branch="False" />
@@ -1046,622 +1318,524 @@
             <line number="15" hits="0" branch="False" />
           </lines>
         </class>
-        <class name="TopologyCardRegister.TopologyStatusCalculator" filename="TopologyCalculator.cs" line-rate="0.9879000000000001" branch-rate="0.9761" complexity="46">
+        <class name="TopologyCardRegister.TopologyStatusCalculator" filename="TopologyCalculator.cs" line-rate="0.9865" branch-rate="0.975" complexity="42">
           <methods>
-            <method name="CalculateHoleCount" signature="(System.Drawing.Bitmap)" line-rate="1" branch-rate="1" complexity="2">
+            <method name="Execute" signature="(System.Drawing.Bitmap)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="65" hits="14" branch="False" />
-                <line number="66" hits="14" branch="False" />
-                <line number="69" hits="13" branch="False" />
-                <line number="71" hits="13" branch="False" />
-                <line number="73" hits="13" branch="False" />
-                <line number="77" hits="13" branch="False" />
-                <line number="80" hits="13" branch="False" />
-                <line number="81" hits="67" branch="True" condition-coverage="100% (2/2)">
+                <line number="28" hits="14" branch="False" />
+                <line number="29" hits="14" branch="False" />
+                <line number="32" hits="13" branch="False" />
+                <line number="34" hits="13" branch="False" />
+                <line number="36" hits="13" branch="False" />
+                <line number="38" hits="13" branch="False" />
+                <line number="40" hits="13" branch="False" />
+                <line number="41" hits="13" branch="False" />
+              </lines>
+            </method>
+            <method name="CalculateHoleCounts" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="44" hits="13" branch="False" />
+                <line number="47" hits="13" branch="False" />
+                <line number="50" hits="13" branch="False" />
+                <line number="51" hits="67" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="91" type="jump" coverage="100%" />
+                    <condition number="61" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="82" hits="14" branch="False" />
-                <line number="83" hits="14" branch="False" />
-                <line number="84" hits="14" branch="False" />
-                <line number="87" hits="13" branch="False" />
-                <line number="89" hits="13" branch="False" />
-                <line number="90" hits="13" branch="False" />
+                <line number="52" hits="14" branch="False" />
+                <line number="53" hits="14" branch="False" />
+                <line number="54" hits="14" branch="False" />
+                <line number="57" hits="13" branch="False" />
+                <line number="59" hits="13" branch="False" />
+                <line number="60" hits="13" branch="False" />
               </lines>
             </method>
             <method name="CheckBitmapNotNull" signature="(System.Drawing.Bitmap)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="93" hits="14" branch="False" />
-                <line number="94" hits="14" branch="True" condition-coverage="100% (2/2)">
+                <line number="63" hits="14" branch="False" />
+                <line number="64" hits="14" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="7" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="95" hits="1" branch="False" />
-                <line number="96" hits="1" branch="False" />
-                <line number="98" hits="13" branch="False" />
+                <line number="65" hits="1" branch="False" />
+                <line number="66" hits="1" branch="False" />
+                <line number="68" hits="13" branch="False" />
               </lines>
             </method>
-            <method name="ValidateBitmap" signature="(System.Drawing.Bitmap)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="ChangeNoiseCellColor" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="101" hits="14" branch="False" />
-                <line number="102" hits="14" branch="False" />
-                <line number="103" hits="13" branch="False" />
+                <line number="78" hits="13" branch="False" />
+                <line number="79" hits="43" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="40" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="80" hits="2" branch="False" />
+                <line number="81" hits="2" branch="False" />
+                <line number="82" hits="2" branch="False" />
+                <line number="83" hits="13" branch="False" />
               </lines>
             </method>
-            <method name="ChangeNoiseCellColor" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.TopologyStatusCalculator/Cell&gt;)" line-rate="1" branch-rate="1" complexity="2">
+            <method name="FindNoiseCell" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="113" hits="13" branch="False" />
-                <line number="114" hits="13" branch="False" />
-                <line number="115" hits="5264130" branch="False" />
-                <line number="116" hits="5264130" branch="False" />
-                <line number="117" hits="5264130" branch="True" condition-coverage="100% (2/2)">
+                <line number="86" hits="13" branch="False" />
+                <line number="87" hits="13" branch="False" />
+                <line number="89" hits="13" branch="False" />
+                <line number="90" hits="5264130" branch="False" />
+                <line number="91" hits="5264130" branch="False" />
+                <line number="92" hits="5264130" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="23" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="118" hits="2" branch="False" />
-                <line number="119" hits="2" branch="False" />
-                <line number="120" hits="2" branch="False" />
-                <line number="121" hits="5264143" branch="False" />
-                <line number="122" hits="13" branch="False" />
+                <line number="93" hits="2" branch="False" />
+                <line number="94" hits="2" branch="False" />
+                <line number="95" hits="2" branch="False" />
+                <line number="96" hits="5264143" branch="False" />
+                <line number="98" hits="13" branch="False" />
+                <line number="99" hits="13" branch="False" />
               </lines>
             </method>
-            <method name="IsNoise" signature="(TopologyCardRegister.Pos,TopologyCardRegister.Grid`1&lt;TopologyCardRegister.TopologyStatusCalculator/Cell&gt;)" line-rate="1" branch-rate="1" complexity="8">
+            <method name="IsNoise" signature="(TopologyCardRegister.Pos,TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="0.8332999999999999" branch-rate="0.8332999999999999" complexity="6">
               <lines>
-                <line number="128" hits="5264130" branch="False" />
-                <line number="129" hits="5264130" branch="True" condition-coverage="100% (2/2)">
+                <line number="105" hits="5264130" branch="False" />
+                <line number="106" hits="21109110" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="14" type="jump" coverage="100%" />
+                    <condition number="87" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="131" hits="21119556" branch="True" condition-coverage="100% (2/2)">
+                <line number="107" hits="5290424" branch="False" />
+                <line number="109" hits="5290424" branch="True" condition-coverage="50% (1/2)">
                   <conditions>
-                    <condition number="118" type="jump" coverage="100%" />
+                    <condition number="38" type="jump" coverage="50%" />
                   </conditions>
                 </line>
-                <line number="132" hits="5295647" branch="False" />
-                <line number="133" hits="5295647" branch="False" />
-                <line number="136" hits="5295647" branch="True" condition-coverage="100% (2/2)">
+                <line number="110" hits="0" branch="False" />
+                <line number="111" hits="0" branch="False" />
+                <line number="115" hits="5290424" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="65" type="jump" coverage="100%" />
+                    <condition number="71" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="137" hits="5223" branch="False" />
-                <line number="138" hits="5223" branch="False" />
-                <line number="142" hits="5290424" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="101" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="143" hits="5264128" branch="False" />
-                <line number="144" hits="5264128" branch="False" />
-                <line number="146" hits="26296" branch="False" />
-                <line number="148" hits="2" branch="False" />
-                <line number="149" hits="5264130" branch="False" />
+                <line number="116" hits="5264128" branch="False" />
+                <line number="117" hits="5264128" branch="False" />
+                <line number="120" hits="26296" branch="False" />
+                <line number="122" hits="2" branch="False" />
+                <line number="123" hits="5264130" branch="False" />
               </lines>
             </method>
-            <method name="AssignSegmentIdToGridCell" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.TopologyStatusCalculator/Cell&gt;)" line-rate="1" branch-rate="1" complexity="2">
+            <method name="AssignSegmentIdToGridCell" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="155" hits="13" branch="False" />
-                <line number="156" hits="13" branch="False" />
-                <line number="158" hits="13" branch="False" />
-                <line number="159" hits="5264130" branch="False" />
-                <line number="160" hits="5264130" branch="False" />
-                <line number="161" hits="13" branch="False" />
-                <line number="162" hits="13" branch="False" />
-                <line number="163" hits="5264130" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="34" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="164" hits="5264096" branch="False" />
-                <line number="165" hits="5264096" branch="False" />
-                <line number="166" hits="13" branch="False" />
-                <line number="167" hits="13" branch="False" />
-                <line number="168" hits="34" branch="False" />
-                <line number="169" hits="34" branch="False" />
-                <line number="170" hits="5264143" branch="False" />
-                <line number="171" hits="13" branch="False" />
-              </lines>
-            </method>
-            <method name="AssignSegmentIdToSameSegmentCell" signature="(TopologyCardRegister.Pos,System.Int32,TopologyCardRegister.Grid`1&lt;TopologyCardRegister.TopologyStatusCalculator/Cell&gt;)" line-rate="1" branch-rate="1" complexity="12">
-              <lines>
-                <line number="177" hits="34" branch="False" />
-                <line number="178" hits="34" branch="False" />
-                <line number="179" hits="34" branch="False" />
-                <line number="181" hits="34" branch="True" condition-coverage="100% (2/2)">
+                <line number="129" hits="13" branch="False" />
+                <line number="130" hits="13" branch="False" />
+                <line number="132" hits="13" branch="False" />
+                <line number="133" hits="5264130" branch="False" />
+                <line number="134" hits="5264130" branch="False" />
+                <line number="135" hits="13" branch="False" />
+                <line number="136" hits="13" branch="False" />
+                <line number="137" hits="5264130" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="28" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="183" hits="34" branch="False" />
-                <line number="186" hits="5264164" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="240" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="187" hits="5264130" branch="False" />
-                <line number="188" hits="5264130" branch="False" />
-                <line number="190" hits="66796446" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="221" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="191" hits="25502028" branch="False" />
-                <line number="192" hits="25502028" branch="False" />
-                <line number="195" hits="25502028" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="113" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="196" hits="20820" branch="False" />
-                <line number="197" hits="20820" branch="False" />
-                <line number="201" hits="25481208" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="141" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="202" hits="20181496" branch="False" />
-                <line number="203" hits="20181496" branch="False" />
-                <line number="207" hits="5299712" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="180" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="208" hits="35616" branch="False" />
-                <line number="209" hits="35616" branch="False" />
-                <line number="212" hits="5264096" branch="False" />
-                <line number="213" hits="5264096" branch="False" />
-                <line number="214" hits="5264096" branch="False" />
-                <line number="215" hits="5264130" branch="False" />
-                <line number="216" hits="34" branch="False" />
+                <line number="138" hits="5264096" branch="False" />
+                <line number="139" hits="5264096" branch="False" />
+                <line number="140" hits="13" branch="False" />
+                <line number="141" hits="13" branch="False" />
+                <line number="142" hits="34" branch="False" />
+                <line number="143" hits="34" branch="False" />
+                <line number="144" hits="5264143" branch="False" />
+                <line number="145" hits="13" branch="False" />
               </lines>
             </method>
-            <method name="ConvertToBinaryGrid" signature="(System.Drawing.Bitmap)" line-rate="1" branch-rate="1" complexity="4">
+            <method name="AssignSegmentIdToSameSegmentCell" signature="(TopologyCardRegister.Pos,System.Int32,TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="222" hits="13" branch="False" />
-                <line number="223" hits="13" branch="False" />
-                <line number="224" hits="13" branch="False" />
-                <line number="225" hits="13" branch="False" />
+                <line number="151" hits="34" branch="False" />
+                <line number="152" hits="10528362" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="48" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="153" hits="5264130" branch="False" />
+                <line number="154" hits="5264130" branch="False" />
+                <line number="155" hits="5264130" branch="False" />
+                <line number="156" hits="34" branch="False" />
+              </lines>
+            </method>
+            <method name="FindEqualSegmentPos" signature="(TopologyCardRegister.Pos,TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="6">
+              <lines>
+                <line number="159" hits="34" branch="False" />
+                <line number="160" hits="34" branch="False" />
+                <line number="162" hits="34" branch="False" />
+                <line number="163" hits="34" branch="False" />
+                <line number="166" hits="5264198" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="175" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="167" hits="5264164" branch="False" />
+                <line number="168" hits="5264164" branch="False" />
+                <line number="170" hits="66755240" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="142" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="171" hits="25481374" branch="False" />
+                <line number="172" hits="25481374" branch="False" />
+                <line number="173" hits="25481374" branch="False" />
+                <line number="175" hits="25481374" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="111" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="176" hits="20217244" branch="False" />
+                <line number="177" hits="20217244" branch="False" />
+                <line number="180" hits="5264130" branch="False" />
+                <line number="181" hits="5264130" branch="False" />
+                <line number="182" hits="5264130" branch="False" />
+                <line number="183" hits="5264164" branch="False" />
+                <line number="185" hits="34" branch="False" />
+                <line number="186" hits="34" branch="False" />
+              </lines>
+            </method>
+            <method name="CalculateWhiteSegmentIdNextToBlackSegment" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="6">
+              <lines>
+                <line number="193" hits="13" branch="False" />
+                <line number="194" hits="41" branch="False" />
+                <line number="196" hits="2222793" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="222" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="197" hits="1111377" branch="False" />
+                <line number="198" hits="1111377" branch="False" />
+                <line number="200" hits="21116163" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="195" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="201" hits="8891016" branch="False" />
+                <line number="203" hits="8891016" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="156" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="204" hits="8812214" branch="False" />
+                <line number="205" hits="8812214" branch="False" />
+                <line number="208" hits="78802" branch="False" />
+                <line number="209" hits="78802" branch="False" />
+                <line number="210" hits="1111377" branch="False" />
+                <line number="212" hits="13" branch="False" />
+                <line number="213" hits="13" branch="False" />
+              </lines>
+            </method>
+            <method name="FindBlackPositions" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="216" hits="13" branch="False" />
+                <line number="217" hits="13" branch="False" />
+                <line number="218" hits="13" branch="False" />
+                <line number="219" hits="5264130" branch="False" />
+                <line number="220" hits="5264130" branch="False" />
+                <line number="221" hits="13" branch="False" />
+                <line number="222" hits="5264130" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="28" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="223" hits="1111377" branch="False" />
+                <line number="224" hits="1111377" branch="False" />
+                <line number="225" hits="1111377" branch="False" />
+                <line number="226" hits="5264143" branch="False" />
                 <line number="228" hits="13" branch="False" />
-                <line number="230" hits="13" branch="False" />
-                <line number="232" hits="10528286" branch="True" condition-coverage="100% (2/2)">
+                <line number="229" hits="13" branch="False" />
+              </lines>
+            </method>
+            <method name="FindBlackSegmentIds" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="232" hits="13" branch="False" />
+                <line number="233" hits="13" branch="False" />
+                <line number="235" hits="13" branch="False" />
+                <line number="236" hits="5264130" branch="False" />
+                <line number="237" hits="5264130" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="147" type="jump" coverage="100%" />
+                    <condition number="21" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="233" hits="5264130" branch="False" />
-                <line number="234" hits="5264130" branch="False" />
-                <line number="235" hits="5264130" branch="False" />
-                <line number="237" hits="5264130" branch="False" />
-                <line number="238" hits="5264130" branch="False" />
-                <line number="241" hits="5264130" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="117" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="242" hits="5264130" branch="False" />
+                <line number="238" hits="1111377" branch="False" />
+                <line number="239" hits="1111377" branch="False" />
+                <line number="240" hits="1111377" branch="False" />
+                <line number="241" hits="5264143" branch="False" />
+                <line number="243" hits="13" branch="False" />
                 <line number="244" hits="13" branch="False" />
-                <line number="245" hits="13" branch="False" />
               </lines>
             </method>
-            <method name="AddPadding" signature="(System.Drawing.Bitmap,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="FindNextPos" signature="(TopologyCardRegister.Pos,TopologyCardRegister.Grid`1&lt;TopologyCardRegister.MonochromeCell&gt;)" line-rate="1" branch-rate="1" complexity="6">
               <lines>
-                <line number="251" hits="13" branch="False" />
-                <line number="253" hits="13" branch="False" />
-                <line number="254" hits="13" branch="False" />
-                <line number="257" hits="13" branch="False" />
-                <line number="259" hits="13" branch="False" />
-                <line number="260" hits="13" branch="False" />
-                <line number="262" hits="13" branch="False" />
-                <line number="265" hits="13" branch="False" />
-                <line number="266" hits="13" branch="False" />
-                <line number="268" hits="13" branch="False" />
-                <line number="269" hits="13" branch="False" />
-              </lines>
-            </method>
-            <method name="CopyBitmap" signature="(System.Drawing.Bitmap)" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="275" hits="13" branch="False" />
-                <line number="276" hits="13" branch="False" />
-                <line number="277" hits="13" branch="False" />
-                <line number="279" hits="13" branch="False" />
-                <line number="282" hits="13" branch="False" />
-                <line number="283" hits="13" branch="False" />
-                <line number="285" hits="13" branch="False" />
-                <line number="287" hits="13" branch="False" />
-                <line number="288" hits="13" branch="False" />
-              </lines>
-            </method>
-            <method name="CalculateWhiteSegmentIdNextToBlackSegment" signature="(TopologyCardRegister.Grid`1&lt;TopologyCardRegister.TopologyStatusCalculator/Cell&gt;)" line-rate="0.9512" branch-rate="0.9" complexity="10">
-              <lines>
-                <line number="295" hits="13" branch="False" />
-                <line number="296" hits="13" branch="False" />
-                <line number="297" hits="13" branch="False" />
-                <line number="299" hits="13" branch="False" />
-                <line number="300" hits="5264130" branch="False" />
-                <line number="301" hits="5264130" branch="False" />
-                <line number="302" hits="13" branch="False" />
-                <line number="303" hits="13" branch="False" />
-                <line number="304" hits="5264130" branch="True" condition-coverage="100% (2/2)">
+                <line number="247" hits="11639671" branch="False" />
+                <line number="248" hits="11639671" branch="False" />
+                <line number="250" hits="11639671" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="31" type="jump" coverage="100%" />
+                    <condition number="19" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="305" hits="4152753" branch="False" />
-                <line number="306" hits="4152753" branch="False" />
-                <line number="307" hits="13" branch="False" />
-                <line number="308" hits="13" branch="False" />
-                <line number="309" hits="1111377" branch="False" />
-                <line number="310" hits="21116163" branch="True" condition-coverage="100% (2/2)">
+                <line number="251" hits="154709541" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="234" type="jump" coverage="100%" />
+                    <condition number="95" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="311" hits="8891016" branch="False" />
-                <line number="312" hits="8891016" branch="False" />
-                <line number="313" hits="13" branch="False" />
-                <line number="314" hits="13" branch="False" />
-                <line number="315" hits="8891016" branch="True" condition-coverage="50% (1/2)">
+                <line number="252" hits="59895264" branch="False" />
+                <line number="253" hits="59895264" branch="False" />
+                <line number="254" hits="59895264" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="110" type="jump" coverage="50%" />
+                    <condition number="72" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="316" hits="0" branch="False" />
-                <line number="317" hits="0" branch="False" />
-                <line number="318" hits="13" branch="False" />
-                <line number="319" hits="13" branch="False" />
-                <line number="320" hits="13" branch="False" />
-                <line number="321" hits="8891016" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="140" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="322" hits="8812214" branch="False" />
-                <line number="323" hits="8812214" branch="False" />
-                <line number="324" hits="13" branch="False" />
-                <line number="325" hits="13" branch="False" />
-                <line number="326" hits="13" branch="False" />
-                <line number="327" hits="78802" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="164" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="328" hits="14" branch="False" />
-                <line number="329" hits="14" branch="False" />
-                <line number="330" hits="14" branch="False" />
-                <line number="331" hits="13" branch="False" />
-                <line number="332" hits="78802" branch="False" />
-                <line number="333" hits="78802" branch="False" />
-                <line number="334" hits="5264143" branch="False" />
-                <line number="336" hits="13" branch="False" />
-                <line number="337" hits="13" branch="False" />
+                <line number="255" hits="41666" branch="False" />
+                <line number="256" hits="41666" branch="False" />
+                <line number="258" hits="59853598" branch="False" />
+                <line number="259" hits="59853598" branch="False" />
+                <line number="261" hits="11639671" branch="False" />
+                <line number="262" hits="11639671" branch="False" />
               </lines>
             </method>
             <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="52" hits="1" branch="False" />
-                <line number="53" hits="1" branch="False" />
+                <line number="21" hits="1" branch="False" />
+                <line number="22" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="65" hits="14" branch="False" />
-            <line number="66" hits="14" branch="False" />
-            <line number="69" hits="13" branch="False" />
-            <line number="71" hits="13" branch="False" />
-            <line number="73" hits="13" branch="False" />
-            <line number="77" hits="13" branch="False" />
-            <line number="80" hits="13" branch="False" />
-            <line number="81" hits="67" branch="True" condition-coverage="100% (2/2)">
+            <line number="28" hits="14" branch="False" />
+            <line number="29" hits="14" branch="False" />
+            <line number="32" hits="13" branch="False" />
+            <line number="34" hits="13" branch="False" />
+            <line number="36" hits="13" branch="False" />
+            <line number="38" hits="13" branch="False" />
+            <line number="40" hits="13" branch="False" />
+            <line number="41" hits="13" branch="False" />
+            <line number="44" hits="13" branch="False" />
+            <line number="47" hits="13" branch="False" />
+            <line number="50" hits="13" branch="False" />
+            <line number="51" hits="67" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="91" type="jump" coverage="100%" />
+                <condition number="61" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="82" hits="14" branch="False" />
-            <line number="83" hits="14" branch="False" />
-            <line number="84" hits="14" branch="False" />
-            <line number="87" hits="13" branch="False" />
-            <line number="89" hits="13" branch="False" />
-            <line number="90" hits="13" branch="False" />
-            <line number="93" hits="14" branch="False" />
-            <line number="94" hits="14" branch="True" condition-coverage="100% (2/2)">
+            <line number="52" hits="14" branch="False" />
+            <line number="53" hits="14" branch="False" />
+            <line number="54" hits="14" branch="False" />
+            <line number="57" hits="13" branch="False" />
+            <line number="59" hits="13" branch="False" />
+            <line number="60" hits="13" branch="False" />
+            <line number="63" hits="14" branch="False" />
+            <line number="64" hits="14" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="7" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="95" hits="1" branch="False" />
-            <line number="96" hits="1" branch="False" />
-            <line number="98" hits="13" branch="False" />
-            <line number="101" hits="14" branch="False" />
-            <line number="102" hits="14" branch="False" />
-            <line number="103" hits="13" branch="False" />
-            <line number="113" hits="13" branch="False" />
-            <line number="114" hits="13" branch="False" />
-            <line number="115" hits="5264130" branch="False" />
-            <line number="116" hits="5264130" branch="False" />
-            <line number="117" hits="5264130" branch="True" condition-coverage="100% (2/2)">
+            <line number="65" hits="1" branch="False" />
+            <line number="66" hits="1" branch="False" />
+            <line number="68" hits="13" branch="False" />
+            <line number="78" hits="13" branch="False" />
+            <line number="79" hits="43" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="40" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="80" hits="2" branch="False" />
+            <line number="81" hits="2" branch="False" />
+            <line number="82" hits="2" branch="False" />
+            <line number="83" hits="13" branch="False" />
+            <line number="86" hits="13" branch="False" />
+            <line number="87" hits="13" branch="False" />
+            <line number="89" hits="13" branch="False" />
+            <line number="90" hits="5264130" branch="False" />
+            <line number="91" hits="5264130" branch="False" />
+            <line number="92" hits="5264130" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="23" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="118" hits="2" branch="False" />
-            <line number="119" hits="2" branch="False" />
-            <line number="120" hits="2" branch="False" />
-            <line number="121" hits="5264143" branch="False" />
-            <line number="122" hits="13" branch="False" />
-            <line number="128" hits="5264130" branch="False" />
-            <line number="129" hits="5264130" branch="True" condition-coverage="100% (2/2)">
+            <line number="93" hits="2" branch="False" />
+            <line number="94" hits="2" branch="False" />
+            <line number="95" hits="2" branch="False" />
+            <line number="96" hits="5264143" branch="False" />
+            <line number="98" hits="13" branch="False" />
+            <line number="99" hits="13" branch="False" />
+            <line number="105" hits="5264130" branch="False" />
+            <line number="106" hits="21109110" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="14" type="jump" coverage="100%" />
+                <condition number="87" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="131" hits="21119556" branch="True" condition-coverage="100% (2/2)">
+            <line number="107" hits="5290424" branch="False" />
+            <line number="109" hits="5290424" branch="True" condition-coverage="50% (1/2)">
               <conditions>
-                <condition number="118" type="jump" coverage="100%" />
+                <condition number="38" type="jump" coverage="50%" />
               </conditions>
             </line>
-            <line number="132" hits="5295647" branch="False" />
-            <line number="133" hits="5295647" branch="False" />
-            <line number="136" hits="5295647" branch="True" condition-coverage="100% (2/2)">
+            <line number="110" hits="0" branch="False" />
+            <line number="111" hits="0" branch="False" />
+            <line number="115" hits="5290424" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="65" type="jump" coverage="100%" />
+                <condition number="71" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="137" hits="5223" branch="False" />
-            <line number="138" hits="5223" branch="False" />
-            <line number="142" hits="5290424" branch="True" condition-coverage="100% (2/2)">
-              <conditions>
-                <condition number="101" type="jump" coverage="100%" />
-              </conditions>
-            </line>
-            <line number="143" hits="5264128" branch="False" />
-            <line number="144" hits="5264128" branch="False" />
-            <line number="146" hits="26296" branch="False" />
-            <line number="148" hits="2" branch="False" />
-            <line number="149" hits="5264130" branch="False" />
-            <line number="155" hits="13" branch="False" />
-            <line number="156" hits="13" branch="False" />
-            <line number="158" hits="13" branch="False" />
-            <line number="159" hits="5264130" branch="False" />
-            <line number="160" hits="5264130" branch="False" />
-            <line number="161" hits="13" branch="False" />
-            <line number="162" hits="13" branch="False" />
-            <line number="163" hits="5264130" branch="True" condition-coverage="100% (2/2)">
-              <conditions>
-                <condition number="34" type="jump" coverage="100%" />
-              </conditions>
-            </line>
-            <line number="164" hits="5264096" branch="False" />
-            <line number="165" hits="5264096" branch="False" />
-            <line number="166" hits="13" branch="False" />
-            <line number="167" hits="13" branch="False" />
-            <line number="168" hits="34" branch="False" />
-            <line number="169" hits="34" branch="False" />
-            <line number="170" hits="5264143" branch="False" />
-            <line number="171" hits="13" branch="False" />
-            <line number="177" hits="34" branch="False" />
-            <line number="178" hits="34" branch="False" />
-            <line number="179" hits="34" branch="False" />
-            <line number="181" hits="34" branch="True" condition-coverage="100% (2/2)">
+            <line number="116" hits="5264128" branch="False" />
+            <line number="117" hits="5264128" branch="False" />
+            <line number="120" hits="26296" branch="False" />
+            <line number="122" hits="2" branch="False" />
+            <line number="123" hits="5264130" branch="False" />
+            <line number="129" hits="13" branch="False" />
+            <line number="130" hits="13" branch="False" />
+            <line number="132" hits="13" branch="False" />
+            <line number="133" hits="5264130" branch="False" />
+            <line number="134" hits="5264130" branch="False" />
+            <line number="135" hits="13" branch="False" />
+            <line number="136" hits="13" branch="False" />
+            <line number="137" hits="5264130" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="28" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="183" hits="34" branch="False" />
-            <line number="186" hits="5264164" branch="True" condition-coverage="100% (2/2)">
+            <line number="138" hits="5264096" branch="False" />
+            <line number="139" hits="5264096" branch="False" />
+            <line number="140" hits="13" branch="False" />
+            <line number="141" hits="13" branch="False" />
+            <line number="142" hits="34" branch="False" />
+            <line number="143" hits="34" branch="False" />
+            <line number="144" hits="5264143" branch="False" />
+            <line number="145" hits="13" branch="False" />
+            <line number="151" hits="34" branch="False" />
+            <line number="152" hits="10528362" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="240" type="jump" coverage="100%" />
+                <condition number="48" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="187" hits="5264130" branch="False" />
-            <line number="188" hits="5264130" branch="False" />
-            <line number="190" hits="66796446" branch="True" condition-coverage="100% (2/2)">
+            <line number="153" hits="5264130" branch="False" />
+            <line number="154" hits="5264130" branch="False" />
+            <line number="155" hits="5264130" branch="False" />
+            <line number="156" hits="34" branch="False" />
+            <line number="159" hits="34" branch="False" />
+            <line number="160" hits="34" branch="False" />
+            <line number="162" hits="34" branch="False" />
+            <line number="163" hits="34" branch="False" />
+            <line number="166" hits="5264198" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="221" type="jump" coverage="100%" />
+                <condition number="175" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="191" hits="25502028" branch="False" />
-            <line number="192" hits="25502028" branch="False" />
-            <line number="195" hits="25502028" branch="True" condition-coverage="100% (2/2)">
+            <line number="167" hits="5264164" branch="False" />
+            <line number="168" hits="5264164" branch="False" />
+            <line number="170" hits="66755240" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="113" type="jump" coverage="100%" />
+                <condition number="142" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="196" hits="20820" branch="False" />
-            <line number="197" hits="20820" branch="False" />
-            <line number="201" hits="25481208" branch="True" condition-coverage="100% (2/2)">
+            <line number="171" hits="25481374" branch="False" />
+            <line number="172" hits="25481374" branch="False" />
+            <line number="173" hits="25481374" branch="False" />
+            <line number="175" hits="25481374" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="141" type="jump" coverage="100%" />
+                <condition number="111" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="202" hits="20181496" branch="False" />
-            <line number="203" hits="20181496" branch="False" />
-            <line number="207" hits="5299712" branch="True" condition-coverage="100% (2/2)">
+            <line number="176" hits="20217244" branch="False" />
+            <line number="177" hits="20217244" branch="False" />
+            <line number="180" hits="5264130" branch="False" />
+            <line number="181" hits="5264130" branch="False" />
+            <line number="182" hits="5264130" branch="False" />
+            <line number="183" hits="5264164" branch="False" />
+            <line number="185" hits="34" branch="False" />
+            <line number="186" hits="34" branch="False" />
+            <line number="193" hits="13" branch="False" />
+            <line number="194" hits="41" branch="False" />
+            <line number="196" hits="2222793" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="180" type="jump" coverage="100%" />
+                <condition number="222" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="208" hits="35616" branch="False" />
-            <line number="209" hits="35616" branch="False" />
-            <line number="212" hits="5264096" branch="False" />
-            <line number="213" hits="5264096" branch="False" />
-            <line number="214" hits="5264096" branch="False" />
-            <line number="215" hits="5264130" branch="False" />
-            <line number="216" hits="34" branch="False" />
-            <line number="222" hits="13" branch="False" />
-            <line number="223" hits="13" branch="False" />
-            <line number="224" hits="13" branch="False" />
-            <line number="225" hits="13" branch="False" />
+            <line number="197" hits="1111377" branch="False" />
+            <line number="198" hits="1111377" branch="False" />
+            <line number="200" hits="21116163" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="195" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="201" hits="8891016" branch="False" />
+            <line number="203" hits="8891016" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="156" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="204" hits="8812214" branch="False" />
+            <line number="205" hits="8812214" branch="False" />
+            <line number="208" hits="78802" branch="False" />
+            <line number="209" hits="78802" branch="False" />
+            <line number="210" hits="1111377" branch="False" />
+            <line number="212" hits="13" branch="False" />
+            <line number="213" hits="13" branch="False" />
+            <line number="216" hits="13" branch="False" />
+            <line number="217" hits="13" branch="False" />
+            <line number="218" hits="13" branch="False" />
+            <line number="219" hits="5264130" branch="False" />
+            <line number="220" hits="5264130" branch="False" />
+            <line number="221" hits="13" branch="False" />
+            <line number="222" hits="5264130" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="28" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="223" hits="1111377" branch="False" />
+            <line number="224" hits="1111377" branch="False" />
+            <line number="225" hits="1111377" branch="False" />
+            <line number="226" hits="5264143" branch="False" />
             <line number="228" hits="13" branch="False" />
-            <line number="230" hits="13" branch="False" />
-            <line number="232" hits="10528286" branch="True" condition-coverage="100% (2/2)">
+            <line number="229" hits="13" branch="False" />
+            <line number="232" hits="13" branch="False" />
+            <line number="233" hits="13" branch="False" />
+            <line number="235" hits="13" branch="False" />
+            <line number="236" hits="5264130" branch="False" />
+            <line number="237" hits="5264130" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="147" type="jump" coverage="100%" />
+                <condition number="21" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="233" hits="5264130" branch="False" />
-            <line number="234" hits="5264130" branch="False" />
-            <line number="235" hits="5264130" branch="False" />
-            <line number="237" hits="5264130" branch="False" />
-            <line number="238" hits="5264130" branch="False" />
-            <line number="241" hits="5264130" branch="True" condition-coverage="100% (2/2)">
-              <conditions>
-                <condition number="117" type="jump" coverage="100%" />
-              </conditions>
-            </line>
-            <line number="242" hits="5264130" branch="False" />
+            <line number="238" hits="1111377" branch="False" />
+            <line number="239" hits="1111377" branch="False" />
+            <line number="240" hits="1111377" branch="False" />
+            <line number="241" hits="5264143" branch="False" />
+            <line number="243" hits="13" branch="False" />
             <line number="244" hits="13" branch="False" />
-            <line number="245" hits="13" branch="False" />
-            <line number="251" hits="13" branch="False" />
-            <line number="253" hits="13" branch="False" />
-            <line number="254" hits="13" branch="False" />
-            <line number="257" hits="13" branch="False" />
-            <line number="259" hits="13" branch="False" />
-            <line number="260" hits="13" branch="False" />
-            <line number="262" hits="13" branch="False" />
-            <line number="265" hits="13" branch="False" />
-            <line number="266" hits="13" branch="False" />
-            <line number="268" hits="13" branch="False" />
-            <line number="269" hits="13" branch="False" />
-            <line number="275" hits="13" branch="False" />
-            <line number="276" hits="13" branch="False" />
-            <line number="277" hits="13" branch="False" />
-            <line number="279" hits="13" branch="False" />
-            <line number="282" hits="13" branch="False" />
-            <line number="283" hits="13" branch="False" />
-            <line number="285" hits="13" branch="False" />
-            <line number="287" hits="13" branch="False" />
-            <line number="288" hits="13" branch="False" />
-            <line number="295" hits="13" branch="False" />
-            <line number="296" hits="13" branch="False" />
-            <line number="297" hits="13" branch="False" />
-            <line number="299" hits="13" branch="False" />
-            <line number="300" hits="5264130" branch="False" />
-            <line number="301" hits="5264130" branch="False" />
-            <line number="302" hits="13" branch="False" />
-            <line number="303" hits="13" branch="False" />
-            <line number="304" hits="5264130" branch="True" condition-coverage="100% (2/2)">
+            <line number="247" hits="11639671" branch="False" />
+            <line number="248" hits="11639671" branch="False" />
+            <line number="250" hits="11639671" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="31" type="jump" coverage="100%" />
+                <condition number="19" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="305" hits="4152753" branch="False" />
-            <line number="306" hits="4152753" branch="False" />
-            <line number="307" hits="13" branch="False" />
-            <line number="308" hits="13" branch="False" />
-            <line number="309" hits="1111377" branch="False" />
-            <line number="310" hits="21116163" branch="True" condition-coverage="100% (2/2)">
+            <line number="251" hits="154709541" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="234" type="jump" coverage="100%" />
+                <condition number="95" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="311" hits="8891016" branch="False" />
-            <line number="312" hits="8891016" branch="False" />
-            <line number="313" hits="13" branch="False" />
-            <line number="314" hits="13" branch="False" />
-            <line number="315" hits="8891016" branch="True" condition-coverage="50% (1/2)">
+            <line number="252" hits="59895264" branch="False" />
+            <line number="253" hits="59895264" branch="False" />
+            <line number="254" hits="59895264" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="110" type="jump" coverage="50%" />
+                <condition number="72" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="316" hits="0" branch="False" />
-            <line number="317" hits="0" branch="False" />
-            <line number="318" hits="13" branch="False" />
-            <line number="319" hits="13" branch="False" />
-            <line number="320" hits="13" branch="False" />
-            <line number="321" hits="8891016" branch="True" condition-coverage="100% (2/2)">
-              <conditions>
-                <condition number="140" type="jump" coverage="100%" />
-              </conditions>
-            </line>
-            <line number="322" hits="8812214" branch="False" />
-            <line number="323" hits="8812214" branch="False" />
-            <line number="324" hits="13" branch="False" />
-            <line number="325" hits="13" branch="False" />
-            <line number="326" hits="13" branch="False" />
-            <line number="327" hits="78802" branch="True" condition-coverage="100% (2/2)">
-              <conditions>
-                <condition number="164" type="jump" coverage="100%" />
-              </conditions>
-            </line>
-            <line number="328" hits="14" branch="False" />
-            <line number="329" hits="14" branch="False" />
-            <line number="330" hits="14" branch="False" />
-            <line number="331" hits="13" branch="False" />
-            <line number="332" hits="78802" branch="False" />
-            <line number="333" hits="78802" branch="False" />
-            <line number="334" hits="5264143" branch="False" />
-            <line number="336" hits="13" branch="False" />
-            <line number="337" hits="13" branch="False" />
-            <line number="52" hits="1" branch="False" />
-            <line number="53" hits="1" branch="False" />
-          </lines>
-        </class>
-        <class name="TopologyCardRegister.TopologyStatusCalculator/Cell" filename="TopologyCalculator.cs" line-rate="0.8461" branch-rate="0.75" complexity="7">
-          <methods>
-            <method name="get_SegmentId" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="10" hits="42463777" branch="False" />
-              </lines>
-            </method>
-            <method name="get_Color" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="11" hits="51127848" branch="False" />
-              </lines>
-            </method>
-            <method name="InvertColor" signature="()" line-rate="0.6666" branch-rate="0.75" complexity="4">
-              <lines>
-                <line number="31" hits="2" branch="False" />
-                <line number="32" hits="2" branch="True" condition-coverage="50% (1/2)">
-                  <conditions>
-                    <condition number="12" type="jump" coverage="50%" />
-                  </conditions>
-                </line>
-                <line number="33" hits="0" branch="False" />
-                <line number="34" hits="0" branch="False" />
-                <line number="37" hits="2" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="24" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="38" hits="2" branch="False" />
-              </lines>
-            </method>
-            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="13" hits="5264130" branch="False" />
-                <line number="14" hits="5264130" branch="False" />
-                <line number="15" hits="5264130" branch="False" />
-                <line number="16" hits="5264130" branch="False" />
-                <line number="17" hits="5264130" branch="False" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="10" hits="42463777" branch="False" />
-            <line number="11" hits="51127848" branch="False" />
-            <line number="31" hits="2" branch="False" />
-            <line number="32" hits="2" branch="True" condition-coverage="50% (1/2)">
-              <conditions>
-                <condition number="12" type="jump" coverage="50%" />
-              </conditions>
-            </line>
-            <line number="33" hits="0" branch="False" />
-            <line number="34" hits="0" branch="False" />
-            <line number="37" hits="2" branch="True" condition-coverage="100% (2/2)">
-              <conditions>
-                <condition number="24" type="jump" coverage="100%" />
-              </conditions>
-            </line>
-            <line number="38" hits="2" branch="False" />
-            <line number="13" hits="5264130" branch="False" />
-            <line number="14" hits="5264130" branch="False" />
-            <line number="15" hits="5264130" branch="False" />
-            <line number="16" hits="5264130" branch="False" />
-            <line number="17" hits="5264130" branch="False" />
+            <line number="255" hits="41666" branch="False" />
+            <line number="256" hits="41666" branch="False" />
+            <line number="258" hits="59853598" branch="False" />
+            <line number="259" hits="59853598" branch="False" />
+            <line number="261" hits="11639671" branch="False" />
+            <line number="262" hits="11639671" branch="False" />
+            <line number="21" hits="1" branch="False" />
+            <line number="22" hits="1" branch="False" />
           </lines>
         </class>
         <class name="TopologyCardRegister.TopologyCard" filename="TopologyCard.cs" line-rate="1" branch-rate="1" complexity="9">
