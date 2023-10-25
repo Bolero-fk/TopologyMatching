@@ -35,6 +35,13 @@ namespace TopologyCardRegister
 
             AssignSegmentIdToGridCell(grid);
 
+            var holeCount = CalculateHoleCount(grid);
+
+            return holeCount;
+        }
+
+        private static List<int> CalculateHoleCount(Grid<MonochromeCell> grid)
+        {
             // 各黒成分の隣にある白成分の数を数える
             // whiteSegmentIds[黒色成分のセグメントId]: キーに使われているセグメントに隣接する白色セグメントのId
             var whiteSegmentIds = CalculateWhiteSegmentIdNextToBlackSegment(grid);
