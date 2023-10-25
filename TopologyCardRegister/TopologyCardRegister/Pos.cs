@@ -40,5 +40,20 @@ namespace TopologyCardRegister
         public static readonly Pos RIGHT = new Pos(1, 0);
         public static readonly Pos DOWN = new Pos(0, -1);
         public static readonly Pos LEFT = new Pos(-1, 0);
+
+        public override int GetHashCode()
+        {
+            return unchecked((this.X * 33) ^ this.Y);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not Pos other)
+            {
+                return false;
+            }
+
+            return this.X == other.X && this.Y == other.Y;
+        }
     }
 }

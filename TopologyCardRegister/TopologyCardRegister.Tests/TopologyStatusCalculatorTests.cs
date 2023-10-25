@@ -14,7 +14,7 @@ namespace TopologyCardRegister.Tests
         {
             Bitmap nullBitmap = null;
 
-            Assert.Throws<ArgumentNullException>(() => TopologyStatusCalculator.CalculateHoleCount(nullBitmap));
+            Assert.Throws<ArgumentNullException>(() => TopologyStatusCalculator.Execute(nullBitmap));
         }
 
         [Theory]
@@ -31,7 +31,7 @@ namespace TopologyCardRegister.Tests
             var inputLines = File.ReadAllLines(TestcaseDirectory + inputPath);
             var bitmap = CreateBitmapFromStrings(inputLines);
 
-            var result = TopologyStatusCalculator.CalculateHoleCount(bitmap);
+            var result = TopologyStatusCalculator.Execute(bitmap);
 
             var expectResult = ConvertStringToList(File.ReadAllText(TestcaseDirectory + expectResultPath));
 

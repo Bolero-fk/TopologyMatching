@@ -45,7 +45,7 @@ namespace TopologyCardRegister
         {
             this.SvgFilePath = svgFilePath;
             this.SvgImage = this.LoadSvg();
-            this.HoleCounts = TopologyStatusCalculator.CalculateHoleCount(this.SvgImage).ToArray();
+            this.HoleCounts = TopologyStatusCalculator.Execute(this.SvgImage).ToArray();
         }
 
         /// <summary>
