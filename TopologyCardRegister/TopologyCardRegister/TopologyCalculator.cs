@@ -84,12 +84,8 @@ namespace TopologyCardRegister
         /// </summary>
         private static bool IsNoise(Pos pos, Grid<MonochromeCell> grid)
         {
-            var nextDirections = grid[pos].IsBlack() ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
-
-            foreach (var nextDirection in nextDirections)
+            foreach (var nextPos in FindNextPos(pos, grid))
             {
-                var nextPos = pos + nextDirection;
-
                 // 隣接マスが図形外の場合は飛ばす
                 if (!grid.IsIn(nextPos))
                 {
@@ -101,6 +97,7 @@ namespace TopologyCardRegister
                 {
                     return false;
                 }
+
             }
 
             return true;
@@ -136,8 +133,6 @@ namespace TopologyCardRegister
             var segmentPos = new Queue<Pos>();
             segmentPos.Enqueue(startPos);
 
-            var nextDirections = grid[startPos].IsBlack() ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
-
             grid[startPos].SegmentId = id;
 
             // bfsによりstartPosと同色の領域を全て探索する
@@ -145,16 +140,8 @@ namespace TopologyCardRegister
             {
                 var nowPos = segmentPos.Dequeue();
 
-                foreach (var nextDirection in nextDirections)
+                foreach (var nextPos in FindNextPos(nowPos, grid))
                 {
-                    var nextPos = nowPos + nextDirection;
-
-                    // 隣接マスが図形外の場合は飛ばす
-                    if (!grid.IsIn(nextPos))
-                    {
-                        continue;
-                    }
-
                     // 隣接マスが既にidを振られている場合は飛ばす
                     if (grid[nextPos].IsSegmentIdAssigned())
                     {
@@ -180,7 +167,6 @@ namespace TopologyCardRegister
         private static Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid<MonochromeCell> grid)
         {
             var whiteSegmentIds = new Dictionary<int, HashSet<int>>();
-            var nextDirections = BLACK_NEXT_DIRECTIONS;
 
             grid.For((h, w) =>
             {
@@ -193,16 +179,9 @@ namespace TopologyCardRegister
                 }
 
                 var blackSegmentId = grid[pos].SegmentId;
-                foreach (var nextDirection in nextDirections)
+
+                foreach (var nextPos in FindNextPos(pos, grid))
                 {
-                    var nextPos = pos + nextDirection;
-
-                    // 隣接マスが図形外の場合は飛ばす
-                    if (!grid.IsIn(nextPos))
-                    {
-                        continue;
-                    }
-
                     // 黒色に隣接する白色マスを探すために、そうでない場合は飛ばす
                     if (grid[nextPos].IsBlack())
                     {
@@ -220,6 +199,24 @@ namespace TopologyCardRegister
             });
 
             return whiteSegmentIds;
+        }
+
+        private static List<Pos> FindNextPos(Pos pos, Grid<MonochromeCell> grid)
+        {
+            var result = new List<Pos>();
+
+            var nextDirections = grid[pos].IsBlack() ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
+            foreach (var nextDirection in nextDirections)
+            {
+                var nextPos = pos + nextDirection;
+                if (!grid.IsIn(nextPos))
+                {
+                    continue;
+                }
+                result.Add(nextPos);
+            }
+
+            return result;
         }
     }
 }
