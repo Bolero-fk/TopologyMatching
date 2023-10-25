@@ -5,6 +5,8 @@ namespace TopologyCardRegister
 
     public class BitmapToMonochromeGridConverter
     {
+        private const int RGBA_BYTES_PER_PIXEL = 4;
+
         /// <summary>
         /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
@@ -19,10 +21,10 @@ namespace TopologyCardRegister
 
             var grid = new Grid<MonochromeCell>(height, width);
 
-            for (var i = 0; i < pixelValues.Length; i += 4)
+            for (var i = 0; i < pixelValues.Length; i += RGBA_BYTES_PER_PIXEL)
             {
-                var w = i / 4 % width;
-                var h = i / 4 / width;
+                var w = i / RGBA_BYTES_PER_PIXEL % width;
+                var h = i / RGBA_BYTES_PER_PIXEL / width;
 
                 var pixelColor = Color.FromArgb(pixelValues[i + 3], pixelValues[i + 2], pixelValues[i + 1], pixelValues[i]);
                 var brightness = pixelColor.GetBrightness();
@@ -68,8 +70,7 @@ namespace TopologyCardRegister
 
             var data = bitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
 
-            // RGBAの各ピクセルは4バイト
-            var pixelValues = new byte[width * height * 4];
+            var pixelValues = new byte[width * height * RGBA_BYTES_PER_PIXEL];
             Marshal.Copy(data.Scan0, pixelValues, 0, pixelValues.Length);
 
             bitmap.UnlockBits(data);
