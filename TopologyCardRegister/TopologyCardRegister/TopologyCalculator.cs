@@ -166,7 +166,7 @@ namespace TopologyCardRegister
         /// <returns>result[黒色成分のセグメントId]: キーに使われているセグメントに隣接する白色セグメントのId</returns>
         private static Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid<MonochromeCell> grid)
         {
-            var whiteSegmentIds = new Dictionary<int, HashSet<int>>();
+            var whiteSegmentIds = FindBlackSegmentIds(grid).ToDictionary(blackSegmentId => blackSegmentId, _ => new HashSet<int>());
 
             grid.For((h, w) =>
             {
@@ -188,17 +188,26 @@ namespace TopologyCardRegister
                         continue;
                     }
 
-                    // whiteSegmentIdsがblackSegmentIdをキーとして持たない場合はキーを追加する
-                    if (!whiteSegmentIds.ContainsKey(blackSegmentId))
-                    {
-                        whiteSegmentIds.Add(blackSegmentId, new HashSet<int>());
-                    }
-
                     whiteSegmentIds[blackSegmentId].Add(/* 白色セグメントのid */ grid[nextPos].SegmentId);
                 }
             });
 
             return whiteSegmentIds;
+        }
+
+        private static List<int> FindBlackSegmentIds(Grid<MonochromeCell> grid)
+        {
+            var result = new HashSet<int>();
+
+            grid.For((h, w) =>
+            {
+                if (grid[h, w].IsBlack())
+                {
+                    result.Add(grid[h, w].SegmentId);
+                }
+            });
+
+            return result.ToList();
         }
 
         private static List<Pos> FindNextPos(Pos pos, Grid<MonochromeCell> grid)
