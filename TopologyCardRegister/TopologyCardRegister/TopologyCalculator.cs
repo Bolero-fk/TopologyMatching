@@ -5,46 +5,6 @@ namespace TopologyCardRegister
 
     public class TopologyStatusCalculator
     {
-        private class Cell
-        {
-            private const int UNASSIGNED_SEGMENT_ID = -1;
-
-            public int SegmentId { get; set; }
-            public CellColor Color { get; set; }
-
-            public Cell()
-            {
-                this.SegmentId = UNASSIGNED_SEGMENT_ID;
-                this.Color = CellColor.NONE;
-            }
-
-            public enum CellColor
-            {
-                WHITE,
-                BLACK,
-                NONE
-            }
-
-            /// <summary>
-            /// セルに設定されている色を反転します。
-            /// 設定されている色がNONEになっている場合はなにも実行されません
-            /// </summary>
-            public void InvertColor()
-            {
-                if (this.Color == CellColor.NONE)
-                {
-                    return;
-                }
-
-                this.Color = this.Color == CellColor.WHITE ? CellColor.BLACK : CellColor.WHITE;
-            }
-
-            public bool IsSegmentIdAssigned()
-            {
-                return this.SegmentId != UNASSIGNED_SEGMENT_ID;
-            }
-        }
-
         /*
          * 以下の図の「.」を白、「#」を黒としたときに、黒のパーツの数が1、その穴の数が1となるように
          * 黒の隣接判定は8方向、白の隣接判定は4方向にする
@@ -116,7 +76,7 @@ namespace TopologyCardRegister
         /// .#.
         /// ...
         /// </summary>
-        private static void ChangeNoiseCellColor(Grid<Cell> grid)
+        private static void ChangeNoiseCellColor(Grid<MonochromeCell> grid)
         {
             grid.For((h, w) =>
             {
@@ -131,9 +91,9 @@ namespace TopologyCardRegister
         /// <summary>
         /// posの位置にあるセルがノイズかどうかを判定します
         /// </summary>
-        private static bool IsNoise(Pos pos, Grid<Cell> grid)
+        private static bool IsNoise(Pos pos, Grid<MonochromeCell> grid)
         {
-            var nextDirections = grid[pos].Color == Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
+            var nextDirections = grid[pos].Color == MonochromeCell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
 
             foreach (var nextDirection in nextDirections)
             {
@@ -158,7 +118,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// セグメントIdをグリッドのセルに割り当てます
         /// </summary>
-        private static void AssignSegmentIdToGridCell(Grid<Cell> grid)
+        private static void AssignSegmentIdToGridCell(Grid<MonochromeCell> grid)
         {
             var segmentCount = 0;
 
@@ -180,12 +140,12 @@ namespace TopologyCardRegister
         /// <summary>
         /// startPosの位置にあるセルと連結しているセグメントにidを割り当てます
         /// </summary>
-        private static void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid<Cell> grid)
+        private static void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid<MonochromeCell> grid)
         {
             var segmentPos = new Queue<Pos>();
             segmentPos.Enqueue(startPos);
 
-            var nextDirections = grid[startPos].Color == Cell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
+            var nextDirections = grid[startPos].Color == MonochromeCell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
 
             grid[startPos].SegmentId = id;
 
@@ -225,7 +185,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
-        private static Grid<Cell> ConvertToBinaryGrid(Bitmap bitmap)
+        private static Grid<MonochromeCell> ConvertToBinaryGrid(Bitmap bitmap)
         {
             var bitmapWithPadding = AddPadding(bitmap, INPUT_IMAGE_PADDING_SIZE);
             var width = bitmapWithPadding.Width;
@@ -234,7 +194,7 @@ namespace TopologyCardRegister
             // bitmapの各ピクセルを取得する処理が遅いので配列に各ピクセルのRGBAを転写してそれを処理に使う
             var pixelValues = CopyBitmap(bitmapWithPadding);
 
-            var grid = new Grid<Cell>(height, width);
+            var grid = new Grid<MonochromeCell>(height, width);
 
             for (var i = 0; i < pixelValues.Length; i += 4)
             {
@@ -245,7 +205,7 @@ namespace TopologyCardRegister
                 var brightness = pixelColor.GetBrightness();
 
                 // 閾値に基づいてピクセルを白または黒に分類します
-                grid[h, w].Color = brightness < BRIGHTNESS_THREHOLD ? Cell.CellColor.BLACK : Cell.CellColor.WHITE;
+                grid[h, w].Color = brightness < BRIGHTNESS_THREHOLD ? MonochromeCell.CellColor.BLACK : MonochromeCell.CellColor.WHITE;
             }
 
             return grid;
@@ -298,7 +258,7 @@ namespace TopologyCardRegister
         /// 各黒色成分の隣にある白成分を返します
         /// </summary>
         /// <returns>result[黒色成分のセグメントId]: キーに使われているセグメントに隣接する白色セグメントのId</returns>
-        private static Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid<Cell> grid)
+        private static Dictionary<int, HashSet<int>> CalculateWhiteSegmentIdNextToBlackSegment(Grid<MonochromeCell> grid)
         {
             var whiteSegmentIds = new Dictionary<int, HashSet<int>>();
             var nextDirections = BLACK_NEXT_DIRECTIONS;
@@ -308,7 +268,7 @@ namespace TopologyCardRegister
                 var pos = new Pos(h, w);
 
                 //　posが黒色の座標を探す
-                if (grid[pos].Color == Cell.CellColor.WHITE)
+                if (grid[pos].Color == MonochromeCell.CellColor.WHITE)
                 {
                     return;
                 }
@@ -325,7 +285,7 @@ namespace TopologyCardRegister
                     }
 
                     // 黒色に隣接する白色マスを探すために、そうでない場合は飛ばす
-                    if (grid[nextPos].Color == Cell.CellColor.BLACK)
+                    if (grid[nextPos].Color == MonochromeCell.CellColor.BLACK)
                     {
                         continue;
                     }
