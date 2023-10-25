@@ -2,8 +2,7 @@ namespace TopologyCardRegister
 {
     public class TopologyStatusCalculator
     {
-        // 画素の白黒を判定する際の輝度の閾値 (0に近いほど黒、1に近いほど白となる)
-        private const float BRIGHTNESS_THREHOLD = 0.5f;
+        private const float BRIGHTNESS_THRESHOLD = 0.5f;
 
         /// <summary> 黒画素が画像の端にあると正しく穴の判定ができないので入力画像の余白を設定する </summary>
         private const int INPUT_IMAGE_PADDING_SIZE = 1;
@@ -30,7 +29,7 @@ namespace TopologyCardRegister
             ValidateBitmap(bitmap);
 
             // 入力された画像を二値化したグラフに変換します
-            var grid = BitmapToMonochromeGridConverter.Execute(bitmap, INPUT_IMAGE_PADDING_SIZE, BRIGHTNESS_THREHOLD);
+            var grid = BitmapToMonochromeGridConverter.Execute(bitmap, INPUT_IMAGE_PADDING_SIZE, BRIGHTNESS_THRESHOLD);
 
             ChangeNoiseCellColor(grid);
 

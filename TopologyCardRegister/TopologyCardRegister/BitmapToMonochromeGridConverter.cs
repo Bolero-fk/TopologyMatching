@@ -10,7 +10,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// 入力されたbitmapデータを二値化したグラフに変換します
         /// </summary>
-        public static Grid<MonochromeCell> Execute(Bitmap bitmap, int paddingSize, float brightnessThrethold)
+        public static Grid<MonochromeCell> Execute(Bitmap bitmap, int paddingSize, float brightnessThreshold)
         {
             var bitmapWithPadding = AddPadding(bitmap, paddingSize);
             var width = bitmapWithPadding.Width;
@@ -30,7 +30,7 @@ namespace TopologyCardRegister
                 var brightness = pixelColor.GetBrightness();
 
                 // 閾値に基づいてピクセルを白または黒に分類します
-                grid[h, w].Color = brightness < brightnessThrethold ? MonochromeCell.CellColor.BLACK : MonochromeCell.CellColor.WHITE;
+                grid[h, w].Color = brightness < brightnessThreshold ? MonochromeCell.CellColor.BLACK : MonochromeCell.CellColor.WHITE;
             }
 
             return grid;
