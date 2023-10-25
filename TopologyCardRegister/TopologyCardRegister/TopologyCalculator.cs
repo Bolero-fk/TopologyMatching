@@ -7,12 +7,14 @@ namespace TopologyCardRegister
     {
         private class Cell
         {
+            private const int UNASSIGNED_SEGMENT_ID = -1;
+
             public int SegmentId { get; set; }
             public CellColor Color { get; set; }
 
             public Cell()
             {
-                this.SegmentId = -1;
+                this.SegmentId = UNASSIGNED_SEGMENT_ID;
                 this.Color = CellColor.NONE;
             }
 
@@ -35,6 +37,11 @@ namespace TopologyCardRegister
                 }
 
                 this.Color = this.Color == CellColor.WHITE ? CellColor.BLACK : CellColor.WHITE;
+            }
+
+            public bool IsSegmentIdAssigned()
+            {
+                return this.SegmentId != UNASSIGNED_SEGMENT_ID;
             }
         }
 
@@ -160,7 +167,7 @@ namespace TopologyCardRegister
                 var checkPos = new Pos(h, w);
 
                 // 割り振られていないマスが見つかったらそのマスと同じ色で連結している部分にidを割り振る
-                if (grid[checkPos].SegmentId != -1)
+                if (grid[checkPos].IsSegmentIdAssigned())
                 {
                     return;
                 }
@@ -198,7 +205,7 @@ namespace TopologyCardRegister
                     }
 
                     // 隣接マスが既にidを振られている場合は飛ばす
-                    if (grid[nextPos].SegmentId != -1)
+                    if (grid[nextPos].IsSegmentIdAssigned())
                     {
                         continue;
                     }
