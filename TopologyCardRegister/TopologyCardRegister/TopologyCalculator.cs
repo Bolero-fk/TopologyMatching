@@ -130,34 +130,40 @@ namespace TopologyCardRegister
         /// </summary>
         private static void AssignSegmentIdToSameSegmentCell(Pos startPos, int id, Grid<MonochromeCell> grid)
         {
+            foreach (var pos in FindEqualSegmentPos(startPos, grid))
+            {
+                grid[pos].SegmentId = id;
+            }
+        }
+
+        private static HashSet<Pos> FindEqualSegmentPos(Pos pos, Grid<MonochromeCell> grid)
+        {
+            var result = new HashSet<Pos>();
+
             var segmentPos = new Queue<Pos>();
-            segmentPos.Enqueue(startPos);
+            segmentPos.Enqueue(pos);
 
-            grid[startPos].SegmentId = id;
-
-            // bfsによりstartPosと同色の領域を全て探索する
+            // bfsによりposと同色の領域を全て探索する
             while (segmentPos.Count > 0)
             {
                 var nowPos = segmentPos.Dequeue();
 
                 foreach (var nextPos in FindNextPos(nowPos, grid))
                 {
-                    // 隣接マスが既にidを振られている場合は飛ばす
-                    if (grid[nextPos].IsSegmentIdAssigned())
+                    var isPassed = result.Contains(nextPos);
+                    var isNotSameColor = grid[nextPos].Color != grid[nowPos].Color;
+
+                    if (isPassed || isNotSameColor)
                     {
                         continue;
                     }
 
-                    // 同色の色を探すために隣接マスの色が異なる場合は飛ばす
-                    if (grid[nextPos].Color != grid[nowPos].Color)
-                    {
-                        continue;
-                    }
-
-                    grid[nextPos].SegmentId = id;
+                    result.Add(nextPos);
                     segmentPos.Enqueue(nextPos);
                 }
             }
+
+            return result;
         }
 
         /// <summary>
