@@ -24,7 +24,7 @@ namespace TopologyCardRegister
         /// <summary>
         /// 入力された図形の各連結成分の穴の数を数えて昇順にして返します
         /// </summary>
-        public static List<int> CalculateHoleCount(Bitmap bitmap)
+        public static List<int> Execute(Bitmap bitmap)
         {
             CheckBitmapNotNull(bitmap);
 
