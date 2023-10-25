@@ -35,12 +35,12 @@ namespace TopologyCardRegister
 
             AssignSegmentIdToGridCell(grid);
 
-            var holeCount = CalculateHoleCount(grid);
+            var holeCount = CalculateHoleCounts(grid);
 
             return holeCount;
         }
 
-        private static List<int> CalculateHoleCount(Grid<MonochromeCell> grid)
+        private static List<int> CalculateHoleCounts(Grid<MonochromeCell> grid)
         {
             // 各黒成分の隣にある白成分の数を数える
             // whiteSegmentIds[黒色成分のセグメントId]: キーに使われているセグメントに隣接する白色セグメントのId
@@ -76,14 +76,26 @@ namespace TopologyCardRegister
         /// </summary>
         private static void ChangeNoiseCellColor(Grid<MonochromeCell> grid)
         {
+            foreach (var noiseCell in FindNoiseCell(grid))
+            {
+                noiseCell.InvertColor();
+            }
+        }
+
+        private static List<MonochromeCell> FindNoiseCell(Grid<MonochromeCell> grid)
+        {
+            var result = new List<MonochromeCell>();
+
             grid.For((h, w) =>
             {
                 var checkPos = new Pos(h, w);
                 if (IsNoise(checkPos, grid))
                 {
-                    grid[checkPos].InvertColor();
+                    result.Add(grid[checkPos]);
                 }
             });
+
+            return result;
         }
 
         /// <summary>
