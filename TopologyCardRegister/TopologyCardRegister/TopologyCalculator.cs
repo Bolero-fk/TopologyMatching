@@ -93,7 +93,7 @@ namespace TopologyCardRegister
         /// </summary>
         private static bool IsNoise(Pos pos, Grid<MonochromeCell> grid)
         {
-            var nextDirections = grid[pos].Color == MonochromeCell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
+            var nextDirections = grid[pos].IsBlack() ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
 
             foreach (var nextDirection in nextDirections)
             {
@@ -145,7 +145,7 @@ namespace TopologyCardRegister
             var segmentPos = new Queue<Pos>();
             segmentPos.Enqueue(startPos);
 
-            var nextDirections = grid[startPos].Color == MonochromeCell.CellColor.BLACK ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
+            var nextDirections = grid[startPos].IsBlack() ? BLACK_NEXT_DIRECTIONS : WHITE_NEXT_DIRECTIONS;
 
             grid[startPos].SegmentId = id;
 
@@ -268,7 +268,7 @@ namespace TopologyCardRegister
                 var pos = new Pos(h, w);
 
                 //　posが黒色の座標を探す
-                if (grid[pos].Color == MonochromeCell.CellColor.WHITE)
+                if (grid[pos].IsWhite())
                 {
                     return;
                 }
@@ -285,7 +285,7 @@ namespace TopologyCardRegister
                     }
 
                     // 黒色に隣接する白色マスを探すために、そうでない場合は飛ばす
-                    if (grid[nextPos].Color == MonochromeCell.CellColor.BLACK)
+                    if (grid[nextPos].IsBlack())
                     {
                         continue;
                     }

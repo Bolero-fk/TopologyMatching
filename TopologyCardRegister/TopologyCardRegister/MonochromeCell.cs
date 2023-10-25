@@ -38,5 +38,15 @@ namespace TopologyCardRegister
         {
             return this.SegmentId != UNASSIGNED_SEGMENT_ID;
         }
+
+        public bool IsBlack()
+        {
+            return this.Color == CellColor.BLACK;
+        }
+
+        public bool IsWhite()
+        {
+            return this.Color == CellColor.WHITE;
+        }
     }
 }
