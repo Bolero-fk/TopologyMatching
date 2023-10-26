@@ -3,13 +3,21 @@ namespace TopologyCardRegister
     using System.Drawing.Imaging;
     using System.Runtime.InteropServices;
 
+    /// <summary>
+    /// bitmapを白黒セルを持つグリッドに変換します。
+    /// </summary>
     public class BitmapToMonochromeGridConverter
     {
+        /// <summary> 1ピクセルあたりのRGBAのバイト数 </summary>
         private const int RGBA_BYTES_PER_PIXEL = 4;
 
         /// <summary>
-        /// 入力されたbitmapデータを二値化したグラフに変換します
+        /// 入力されたbitmapデータを二値化したグラフに変換します。
         /// </summary>
+        /// <param name="bitmap">変換するビットマップ</param>
+        /// <param name="paddingSize">ビットマップに追加する余白のサイズ</param>
+        /// <param name="brightnessThreshold">二値化の閾値(0から1の間)</param>
+        /// <returns>二値化されたグリッド</returns>
         public static Grid<MonochromeCell> Execute(Bitmap bitmap, int paddingSize, float brightnessThreshold)
         {
             if (paddingSize < 0)
@@ -47,8 +55,11 @@ namespace TopologyCardRegister
         }
 
         /// <summary>
-        /// 入力されたbitmapの周囲にpaddingSizeの余白を追加します
+        /// 入力されたbitmapの周囲に指定されたサイズの余白を追加します。
         /// </summary>
+        /// <param name="original">オリジナルのビットマップ</param>
+        /// <param name="paddingSize">追加する余白のサイズ</param>
+        /// <returns>余白が追加されたビットマップ</returns>
         private static Bitmap AddPadding(Bitmap original, int paddingSize)
         {
             // 新しいBitmapのサイズを計算
@@ -71,8 +82,10 @@ namespace TopologyCardRegister
         }
 
         /// <summary>
-        /// bitmapデータをbyte配列をコピーしたものを返します
+        /// ビットマップのデータをバイト配列にコピーして返します。
         /// </summary>
+        /// <param name="bitmap">コピーするビットマップ</param>
+        /// <returns>ビットマップのデータを含むバイト配列</returns>
         private static byte[] CopyBitmap(Bitmap bitmap)
         {
             var width = bitmap.Width;
