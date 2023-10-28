@@ -1,3 +1,5 @@
+import { ICardDom } from "./ICardDom.js";
+
 const IMAGE_FOLDER_PATH = './TopologyCards/images/';
 
 export enum FlipStatus {
@@ -6,20 +8,26 @@ export enum FlipStatus {
 }
 
 export class Card {
-    private element: HTMLElement;
     private flipStatus: FlipStatus;
     private frontImageUrl: string;
     private onClickCallback: () => void;
+    private frontBackgroundColor: string;
+    private backBackgroundColor: string;
+    private cardDom: ICardDom;
 
     public matchingKey: string;
 
-    constructor(element: HTMLElement, onClickCallback: () => void) {
-        this.element = element;
+    constructor(cardDom: ICardDom, onClickCallback: () => void) {
         this.flipStatus = FlipStatus.Back;
         this.onClickCallback = onClickCallback;
-        this.element.onclick = () => {
+        this.cardDom = cardDom;
+
+        this.frontBackgroundColor = this.cardDom.getComputedStyleProperty("--front-background-color");
+        this.backBackgroundColor = this.cardDom.getComputedStyleProperty("--back-background-color");
+
+        this.cardDom.onClick(() => {
             this.onClick();
-        };
+        });
     }
 
     /**
@@ -40,12 +48,12 @@ export class Card {
 
         // カードの面ごとに色と画像を設定する
         if (this.flipStatus == FlipStatus.Front) {
-            this.element.style.backgroundColor = getComputedStyle(this.element).getPropertyValue("--front-background-color");
-            this.element.style.backgroundImage = this.frontImageUrl;
+            this.cardDom.setBackgroundColor(this.frontBackgroundColor);
+            this.cardDom.setBackgroundImage(this.frontImageUrl);
         }
         else {
-            this.element.style.backgroundColor = getComputedStyle(this.element).getPropertyValue("--back-background-color");
-            this.element.style.backgroundImage = '';
+            this.cardDom.setBackgroundColor(this.backBackgroundColor);
+            this.cardDom.setBackgroundImage('');
         }
     }
 

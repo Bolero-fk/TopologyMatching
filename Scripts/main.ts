@@ -1,5 +1,6 @@
-import { GameEngine } from './gameEngine';
-import { Card, FlipStatus } from './card';
+import { GameEngine } from './gameEngine.js';
+import { Card, FlipStatus } from './card.js';
+import { CardDom } from './cardDom.js';
 
 // ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
 // FIXME: jsonに記されたカードのペアがROW * COLUMN以下のときに落ちるので注意する
@@ -80,7 +81,7 @@ function initializeCardsOnBoardElement(gameBoard: HTMLElement): void {
         cardElement.className = 'card';
         gameBoard.appendChild(cardElement);
 
-        const card: Card = new Card(cardElement, () => cardClickedCallback(card));
+        const card: Card = new Card(new CardDom(cardElement), () => cardClickedCallback(card));
         card.flipCard(FlipStatus.Back);
         card.changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
 
