@@ -8,11 +8,11 @@ export enum FlipStatus {
 export class Card {
     private flipStatus: FlipStatus;
     private frontImageUrl: string;
-    private onClickCallback: () => void;
-    private frontBackgroundColor: string;
-    private backBackgroundColor: string;
-    private cardDom: ICardDom;
-    private imageFolderPath: string;
+    private readonly onClickCallback: () => void;
+    private readonly frontBackgroundColor: string;
+    private readonly backBackgroundColor: string;
+    private readonly cardDom: ICardDom;
+    private readonly imageFolderPath: string;
 
     public matchingKey: string;
 
