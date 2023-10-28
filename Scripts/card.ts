@@ -5,8 +5,6 @@ export enum FlipStatus {
     Back,
 }
 
-const IMAGE_FOLDER_PATH = './TopologyCards/images/';
-
 export class Card {
     private flipStatus: FlipStatus;
     private frontImageUrl: string;
@@ -14,13 +12,15 @@ export class Card {
     private frontBackgroundColor: string;
     private backBackgroundColor: string;
     private cardDom: ICardDom;
+    private imageFolderPath: string;
 
     public matchingKey: string;
 
-    constructor(cardDom: ICardDom, onClickCallback: () => void, frontBackgroundColor: string, backBackgroundColor: string) {
+    constructor(cardDom: ICardDom, onClickCallback: () => void, frontBackgroundColor: string, backBackgroundColor: string, imageFolderPath: string) {
         this.flipStatus = FlipStatus.Back;
         this.onClickCallback = onClickCallback;
         this.cardDom = cardDom;
+        this.imageFolderPath = imageFolderPath;
 
         this.frontBackgroundColor = frontBackgroundColor;
         this.backBackgroundColor = backBackgroundColor;
@@ -37,7 +37,7 @@ export class Card {
      */
     changeCard(matchingKey: string, imageName: string): void {
         this.matchingKey = matchingKey;
-        this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
+        this.frontImageUrl = 'url(' + this.imageFolderPath + imageName + ')';
     }
 
     /**

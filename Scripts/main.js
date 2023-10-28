@@ -6,6 +6,7 @@ import { CardDom } from './cardDom.js';
 const ROW = 4;
 const COLUMN = 5;
 const JSON_PATH = './TopologyCards/cards.json';
+const IMAGE_FOLDER_PATH = './TopologyCards/images/';
 const FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
 // FIXME: 現状の実装では選択可能枚数が2枚の時のみ実装されている
 const MAX_SELECTABLE_CARD = 2;
@@ -68,7 +69,7 @@ function initializeCardsOnBoardElement(gameBoard) {
         gameBoard.appendChild(cardElement);
         const frontBackgroundColor = getComputedStyle(cardElement).getPropertyValue("--front-background-color");
         const backBackgroundColor = getComputedStyle(cardElement).getPropertyValue("--back-background-color");
-        const card = new Card(new CardDom(cardElement), () => cardClickedCallback(card), frontBackgroundColor, backBackgroundColor);
+        const card = new Card(new CardDom(cardElement), () => cardClickedCallback(card), frontBackgroundColor, backBackgroundColor, IMAGE_FOLDER_PATH);
         card.flipCard(FlipStatus.Back);
         card.changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
         cardsOnBoard.push(card);

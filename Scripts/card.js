@@ -3,12 +3,12 @@ export var FlipStatus;
     FlipStatus[FlipStatus["Front"] = 0] = "Front";
     FlipStatus[FlipStatus["Back"] = 1] = "Back";
 })(FlipStatus || (FlipStatus = {}));
-const IMAGE_FOLDER_PATH = './TopologyCards/images/';
 export class Card {
-    constructor(cardDom, onClickCallback, frontBackgroundColor, backBackgroundColor) {
+    constructor(cardDom, onClickCallback, frontBackgroundColor, backBackgroundColor, imageFolderPath) {
         this.flipStatus = FlipStatus.Back;
         this.onClickCallback = onClickCallback;
         this.cardDom = cardDom;
+        this.imageFolderPath = imageFolderPath;
         this.frontBackgroundColor = frontBackgroundColor;
         this.backBackgroundColor = backBackgroundColor;
         this.cardDom.onClick(() => {
@@ -22,7 +22,7 @@ export class Card {
      */
     changeCard(matchingKey, imageName) {
         this.matchingKey = matchingKey;
-        this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
+        this.frontImageUrl = 'url(' + this.imageFolderPath + imageName + ')';
     }
     /**
      * 入力されたカードを指定された方向に返します
