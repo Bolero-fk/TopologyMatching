@@ -13,7 +13,7 @@ export class Card {
     private readonly backBackgroundColor: string;
     private readonly cardDom: ICardDom;
     private readonly imageFolderPath: string;
-    public matchingKey: string;
+    private matchingKey: string;
 
     constructor(cardDom: ICardDom, onClickCallback: () => void, frontBackgroundColor: string, backBackgroundColor: string, imageFolderPath: string) {
         this.flipStatus = FlipStatus.Back;
