@@ -13,7 +13,6 @@ export class Card {
     private readonly backBackgroundColor: string;
     private readonly cardDom: ICardDom;
     private readonly imageFolderPath: string;
-
     public matchingKey: string;
 
     constructor(cardDom: ICardDom, onClickCallback: () => void, frontBackgroundColor: string, backBackgroundColor: string, imageFolderPath: string) {
@@ -63,5 +62,9 @@ export class Card {
         }
 
         this.onClickCallback();
+    }
+
+    public static canMatchCard(card1: Card, card2: Card): boolean {
+        return card1.matchingKey == card2.matchingKey;
     }
 }

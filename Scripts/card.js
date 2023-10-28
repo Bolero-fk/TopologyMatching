@@ -45,4 +45,7 @@ export class Card {
         }
         this.onClickCallback();
     }
+    static canMatchCard(card1, card2) {
+        return card1.matchingKey == card2.matchingKey;
+    }
 }

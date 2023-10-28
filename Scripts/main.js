@@ -19,7 +19,7 @@ function cardClickedCallback(card) {
     card.flipCard(FlipStatus.Front);
     selectedCards.push(card);
     if (MAX_SELECTABLE_CARD <= selectedCards.length) {
-        if (selectedCards[0].matchingKey == selectedCards[1].matchingKey) {
+        if (Card.canMatchCard(selectedCards[0], selectedCards[1])) {
             selectedCards.length = 0;
         }
         else {
