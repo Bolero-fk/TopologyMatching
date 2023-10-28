@@ -11,7 +11,7 @@ export class Card {
         this.onClickCallback = onClickCallback;
         this.cardDom = cardDom;
         this.cardDom.onClick(() => {
-            this.onClick();
+            this.handleCardClick();
         });
         this.flipCard(FlipStatus.Back);
     }
@@ -36,7 +36,7 @@ export class Card {
             this.cardDom.flipToBack();
         }
     }
-    onClick() {
+    handleCardClick() {
         if (this.flipStatus === FlipStatus.Front) {
             return;
         }

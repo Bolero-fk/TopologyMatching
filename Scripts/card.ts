@@ -21,7 +21,7 @@ export class Card {
         this.cardDom = cardDom;
 
         this.cardDom.onClick(() => {
-            this.onClick();
+            this.handleCardClick();
         });
 
         this.flipCard(FlipStatus.Back);
@@ -51,7 +51,7 @@ export class Card {
         }
     }
 
-    private onClick(): void {
+    private handleCardClick(): void {
         if (this.flipStatus === FlipStatus.Front) {
             return;
         }
