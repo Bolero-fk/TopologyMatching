@@ -51,4 +51,28 @@ describe('GameEngine', () => {
             });
         }
     });
+
+    describe('startGame negative test', () => {
+        test('should throw an error when cardNum is less than or equal to 0', () => {
+            expect(() => {
+                engine.startGame(0);
+            }).toThrowError("Card number must be greater than zero.");
+
+            expect(() => {
+                engine.startGame(-1);
+            }).toThrowError("Card number must be greater than zero.");
+        });
+
+        test('should throw an error when cardNum is odd', () => {
+            expect(() => {
+                engine.startGame(3);
+            }).toThrowError("Card number must be even.");
+        });
+
+        test('should throw an error if not enough cards are available', () => {
+            expect(() => {
+                engine.startGame(topologyCards.length + 2);
+            }).toThrowError("Requested card number exceeds available cards.");
+        });
+    });
 });
