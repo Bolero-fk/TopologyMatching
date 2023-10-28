@@ -73,7 +73,7 @@ export class GameEngine {
         // cardGroupsから各グループのカードの数の分だけキーを抜き出す
         const keysArray = new Array<string>();
 
-        for (const key of cardGroups.keys()) {
+        for (const key of Array.from(cardGroups.keys())) {
             const length: number = cardGroups.get(key).length;
             keysArray.push(... new Array(length).fill(key));
         }
