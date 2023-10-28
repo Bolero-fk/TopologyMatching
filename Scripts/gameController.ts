@@ -41,7 +41,7 @@ export class GameController {
         this.selectedCards.push(card);
 
         if (this.maxSelectableCard <= this.selectedCards.length) {
-            if (Card.canMatchCard(this.selectedCards[0], this.selectedCards[1])) {
+            if (this.selectedCards.every((card) => Card.canMatchCard(card, this.selectedCards[0]))) {
                 this.selectedCards.length = 0;
             } else {
                 setTimeout(() => {
