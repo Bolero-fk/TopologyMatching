@@ -1,84 +1,42 @@
-import { GameEngine } from './gameEngine.js';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var gameEngine_1 = require("./gameEngine");
+var card_1 = require("./card");
 // ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
 // FIXME: jsonに記されたカードのペアがROW * COLUMN以下のときに落ちるので注意する
-const ROW = 4;
-const COLUMN = 5;
-const IMAGE_FOLDER_PATH = './TopologyCards/images/';
-const JSON_PATH = './TopologyCards/cards.json';
-const FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
+var ROW = 4;
+var COLUMN = 5;
+var JSON_PATH = './TopologyCards/cards.json';
+var FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
 // FIXME: 現状の実装では選択可能枚数が2枚の時のみ実装されている
-const MAX_SELECTABLE_CARD = 2;
-var FlipStatus;
-(function (FlipStatus) {
-    FlipStatus[FlipStatus["Front"] = 0] = "Front";
-    FlipStatus[FlipStatus["Back"] = 1] = "Back";
-})(FlipStatus || (FlipStatus = {}));
-class Card {
-    constructor(element) {
-        this.element = element;
-        this.flipStatus = FlipStatus.Back;
-        this.element.onclick = () => {
-            this.onClick();
-        };
+var MAX_SELECTABLE_CARD = 2;
+var cardsOnBoard = [];
+var selectedCards = [];
+function cardClickedCallback(card) {
+    if (MAX_SELECTABLE_CARD <= selectedCards.length) {
+        return;
     }
-    /**
-     * カードを変更します
-     * @param matchingKey カードの種類を指定するキー
-     * @param imageName カードの表面に表示する画像のurl
-     */
-    changeCard(matchingKey, imageName) {
-        this.matchingKey = matchingKey;
-        this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
-    }
-    /**
-     * 入力されたカードを指定された方向に返します
-     */
-    flipCard(flipStatus) {
-        this.flipStatus = flipStatus;
-        // カードの面ごとに色と画像を設定する
-        if (this.flipStatus == FlipStatus.Front) {
-            this.element.style.backgroundColor = getComputedStyle(this.element).getPropertyValue("--front-background-color");
-            this.element.style.backgroundImage = this.frontImageUrl;
+    card.flipCard(card_1.FlipStatus.Front);
+    selectedCards.push(card);
+    if (MAX_SELECTABLE_CARD <= selectedCards.length) {
+        if (selectedCards[0].matchingKey == selectedCards[1].matchingKey) {
+            selectedCards.length = 0;
         }
         else {
-            this.element.style.backgroundColor = getComputedStyle(this.element).getPropertyValue("--back-background-color");
-            this.element.style.backgroundImage = '';
-        }
-    }
-    /**
-     * カードクリック時の挙動を定義します
-     */
-    onClick() {
-        if (this.flipStatus == FlipStatus.Front) {
-            return;
-        }
-        else if (MAX_SELECTABLE_CARD <= selectedCards.length) {
-            return;
-        }
-        this.flipCard(FlipStatus.Front);
-        selectedCards.push(this);
-        if (MAX_SELECTABLE_CARD <= selectedCards.length) {
-            if (selectedCards[0].matchingKey == selectedCards[1].matchingKey) {
+            setTimeout(function () {
+                flipSelectedCards();
                 selectedCards.length = 0;
-            }
-            else {
-                setTimeout(() => {
-                    flipSelectedCards();
-                    selectedCards.length = 0;
-                }, FLIPPING_WAIT_TIME_MILLISECONDS);
-            }
+            }, FLIPPING_WAIT_TIME_MILLISECONDS);
         }
     }
 }
-const cardsOnBoard = [];
-const selectedCards = [];
 function flipSelectedCards() {
-    selectedCards.forEach(selectedCard => {
-        selectedCard.flipCard(FlipStatus.Back);
+    selectedCards.forEach(function (selectedCard) {
+        selectedCard.flipCard(card_1.FlipStatus.Back);
     });
 }
 ;
-window.onload = () => {
+window.onload = function () {
     initializeElements();
 };
 /**
@@ -92,7 +50,7 @@ function initializeElements() {
  * game boardを初期化します
  */
 function initializeGameBoardElement() {
-    const gameBoard = document.getElementById('game-board');
+    var gameBoard = document.getElementById('game-board');
     // カードの行と列の枚数を指定する
     gameBoard.style.setProperty('--cols', String(COLUMN));
     gameBoard.style.setProperty('--rows', String(ROW));
@@ -102,17 +60,20 @@ function initializeGameBoardElement() {
  * game board上のカードを初期化します
  */
 function initializeCardsOnBoardElement(gameBoard) {
-    const gameEngine = new GameEngine(LoadTopologyCardsJson());
-    const cardStatus = gameEngine.startGame(ROW * COLUMN);
-    for (let i = 0; i < ROW * COLUMN; i++) {
+    var gameEngine = new gameEngine_1.GameEngine(LoadTopologyCardsJson());
+    var cardStatus = gameEngine.startGame(ROW * COLUMN);
+    var _loop_1 = function (i) {
         // カードを追加していく
-        const cardElement = document.createElement('div');
+        var cardElement = document.createElement('div');
         cardElement.className = 'card';
         gameBoard.appendChild(cardElement);
-        const card = new Card(cardElement);
-        card.flipCard(FlipStatus.Back);
+        var card = new card_1.Card(cardElement, function () { return cardClickedCallback(card); });
+        card.flipCard(card_1.FlipStatus.Back);
         card.changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
         cardsOnBoard.push(card);
+    };
+    for (var i = 0; i < ROW * COLUMN; i++) {
+        _loop_1(i);
     }
 }
 /**
@@ -125,7 +86,7 @@ function initializeRestartGemeButtonElement() {
  * トポロジーカードをjsonから読み込む
  */
 function LoadTopologyCardsJson() {
-    let result;
+    var result;
     $.ajax({
         url: JSON_PATH,
         dataType: "json",
@@ -140,11 +101,11 @@ function LoadTopologyCardsJson() {
  * カードセットを新しく読み込んでゲームを再スタートします。
  */
 function RestartGame() {
-    const gameEngine = new GameEngine(LoadTopologyCardsJson());
-    const cardStatus = gameEngine.startGame(ROW * COLUMN);
-    for (let i = 0; i < cardStatus.length; i++) {
+    var gameEngine = new gameEngine_1.GameEngine(LoadTopologyCardsJson());
+    var cardStatus = gameEngine.startGame(ROW * COLUMN);
+    for (var i = 0; i < cardStatus.length; i++) {
         cardsOnBoard[i].changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
-        cardsOnBoard[i].flipCard(FlipStatus.Back);
+        cardsOnBoard[i].flipCard(card_1.FlipStatus.Back);
     }
     selectedCards.length = 0;
 }
