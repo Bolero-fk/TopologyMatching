@@ -1,6 +1,6 @@
 import { TopologyCardJson } from './JsonType.js';
 
-class CardStatus {
+export class CardStatus {
     private _imageName: string;
     private _matchingKey: string;
 
@@ -38,6 +38,8 @@ export class GameEngine {
      */
     startGame(cardNum: number): CardStatus[] {
 
+        this.validateCardNumber(cardNum);
+
         const cardGroups: Map<string, CardStatus[]> = this.initializeCardGroups();
 
         const selectedCards = new Array();
@@ -49,6 +51,26 @@ export class GameEngine {
 
         // カードをシャッフルする
         return this.shuffleArray(selectedCards);
+    }
+
+    /**
+     * カードの数を検証し、問題がある場合はエラーを投げる。
+     * 
+     * @param cardNum - 検証するカードの数
+     * @throws {Error} - カードの数が0以下、奇数、または利用可能なカードの最大数を超えている場合
+     */
+    private validateCardNumber(cardNum: number): void {
+        if (cardNum <= 0) {
+            throw new Error("Card number must be greater than zero.");
+        }
+
+        if (cardNum % 2 !== 0) {
+            throw new Error("Card number must be even.");
+        }
+
+        if (cardNum > this.cards.length) {
+            throw new Error("Requested card number exceeds available cards.");
+        }
     }
 
     /**

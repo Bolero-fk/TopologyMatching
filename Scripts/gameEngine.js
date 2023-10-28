@@ -1,4 +1,4 @@
-class CardStatus {
+export class CardStatus {
     get imageName() {
         return this._imageName;
     }
@@ -26,6 +26,7 @@ export class GameEngine {
      * @returns 神経衰弱ゲームに使用できるカードセット
      */
     startGame(cardNum) {
+        this.validateCardNumber(cardNum);
         const cardGroups = this.initializeCardGroups();
         const selectedCards = new Array();
         for (let i = 0; i < cardNum / 2; i++) {
@@ -34,6 +35,23 @@ export class GameEngine {
         }
         // カードをシャッフルする
         return this.shuffleArray(selectedCards);
+    }
+    /**
+     * カードの数を検証し、問題がある場合はエラーを投げる。
+     *
+     * @param cardNum - 検証するカードの数
+     * @throws {Error} - カードの数が0以下、奇数、または利用可能なカードの最大数を超えている場合
+     */
+    validateCardNumber(cardNum) {
+        if (cardNum <= 0) {
+            throw new Error("Card number must be greater than zero.");
+        }
+        if (cardNum % 2 !== 0) {
+            throw new Error("Card number must be even.");
+        }
+        if (cardNum > this.cards.length) {
+            throw new Error("Requested card number exceeds available cards.");
+        }
     }
     /**
      * 入力された配列をシャッフルしたものを返します
