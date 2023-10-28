@@ -20,11 +20,17 @@ describe('GameEngine', () => {
 
     let engine: GameEngine;
 
-    beforeEach(() => {
-        engine = new GameEngine(topologyCards);
+    describe('constructor positive test', () => {
+        test('should initialize object correctly with valid data', () => {
+            expect(() => new GameEngine(topologyCards)).not.toThrow();
+        });
     });
 
     describe('startGame positive test', () => {
+        beforeEach(() => {
+            engine = new GameEngine(topologyCards);
+        });
+
         test('should return an array of CardStatus with the specified length', () => {
             const result = engine.startGame(TEST_CARD_NUMBER);
             expect(result.length).toBe(TEST_CARD_NUMBER);
@@ -53,6 +59,10 @@ describe('GameEngine', () => {
     });
 
     describe('startGame negative test', () => {
+        beforeEach(() => {
+            engine = new GameEngine(topologyCards);
+        });
+
         test('should throw an error when cardNum is less than or equal to 0', () => {
             expect(() => {
                 engine.startGame(0);
