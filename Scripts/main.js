@@ -1,27 +1,24 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var gameEngine_js_1 = require("./gameEngine.js");
+import { GameEngine } from './gameEngine.js';
 // ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
 // FIXME: jsonに記されたカードのペアがROW * COLUMN以下のときに落ちるので注意する
-var ROW = 4;
-var COLUMN = 5;
-var IMAGE_FOLDER_PATH = './TopologyCards/images/';
-var JSON_PATH = './TopologyCards/cards.json';
-var FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
+const ROW = 4;
+const COLUMN = 5;
+const IMAGE_FOLDER_PATH = './TopologyCards/images/';
+const JSON_PATH = './TopologyCards/cards.json';
+const FLIPPING_WAIT_TIME_MILLISECONDS = 1000;
 // FIXME: 現状の実装では選択可能枚数が2枚の時のみ実装されている
-var MAX_SELECTABLE_CARD = 2;
+const MAX_SELECTABLE_CARD = 2;
 var FlipStatus;
 (function (FlipStatus) {
     FlipStatus[FlipStatus["Front"] = 0] = "Front";
     FlipStatus[FlipStatus["Back"] = 1] = "Back";
 })(FlipStatus || (FlipStatus = {}));
-var Card = /** @class */ (function () {
-    function Card(element) {
-        var _this = this;
+class Card {
+    constructor(element) {
         this.element = element;
         this.flipStatus = FlipStatus.Back;
-        this.element.onclick = function () {
-            _this.onClick();
+        this.element.onclick = () => {
+            this.onClick();
         };
     }
     /**
@@ -29,14 +26,14 @@ var Card = /** @class */ (function () {
      * @param matchingKey カードの種類を指定するキー
      * @param imageName カードの表面に表示する画像のurl
      */
-    Card.prototype.changeCard = function (matchingKey, imageName) {
+    changeCard(matchingKey, imageName) {
         this.matchingKey = matchingKey;
         this.frontImageUrl = 'url(' + IMAGE_FOLDER_PATH + imageName + ')';
-    };
+    }
     /**
      * 入力されたカードを指定された方向に返します
      */
-    Card.prototype.flipCard = function (flipStatus) {
+    flipCard(flipStatus) {
         this.flipStatus = flipStatus;
         // カードの面ごとに色と画像を設定する
         if (this.flipStatus == FlipStatus.Front) {
@@ -47,11 +44,11 @@ var Card = /** @class */ (function () {
             this.element.style.backgroundColor = getComputedStyle(this.element).getPropertyValue("--back-background-color");
             this.element.style.backgroundImage = '';
         }
-    };
+    }
     /**
      * カードクリック時の挙動を定義します
      */
-    Card.prototype.onClick = function () {
+    onClick() {
         if (this.flipStatus == FlipStatus.Front) {
             return;
         }
@@ -65,24 +62,23 @@ var Card = /** @class */ (function () {
                 selectedCards.length = 0;
             }
             else {
-                setTimeout(function () {
+                setTimeout(() => {
                     flipSelectedCards();
                     selectedCards.length = 0;
                 }, FLIPPING_WAIT_TIME_MILLISECONDS);
             }
         }
-    };
-    return Card;
-}());
-var cardsOnBoard = [];
-var selectedCards = [];
+    }
+}
+const cardsOnBoard = [];
+const selectedCards = [];
 function flipSelectedCards() {
-    selectedCards.forEach(function (selectedCard) {
+    selectedCards.forEach(selectedCard => {
         selectedCard.flipCard(FlipStatus.Back);
     });
 }
 ;
-window.onload = function () {
+window.onload = () => {
     initializeElements();
 };
 /**
@@ -96,7 +92,7 @@ function initializeElements() {
  * game boardを初期化します
  */
 function initializeGameBoardElement() {
-    var gameBoard = document.getElementById('game-board');
+    const gameBoard = document.getElementById('game-board');
     // カードの行と列の枚数を指定する
     gameBoard.style.setProperty('--cols', String(COLUMN));
     gameBoard.style.setProperty('--rows', String(ROW));
@@ -106,14 +102,14 @@ function initializeGameBoardElement() {
  * game board上のカードを初期化します
  */
 function initializeCardsOnBoardElement(gameBoard) {
-    var gameEngine = new gameEngine_js_1.GameEngine(LoadTopologyCardsJson());
-    var cardStatus = gameEngine.startGame(ROW * COLUMN);
-    for (var i = 0; i < ROW * COLUMN; i++) {
+    const gameEngine = new GameEngine(LoadTopologyCardsJson());
+    const cardStatus = gameEngine.startGame(ROW * COLUMN);
+    for (let i = 0; i < ROW * COLUMN; i++) {
         // カードを追加していく
-        var cardElement = document.createElement('div');
+        const cardElement = document.createElement('div');
         cardElement.className = 'card';
         gameBoard.appendChild(cardElement);
-        var card = new Card(cardElement);
+        const card = new Card(cardElement);
         card.flipCard(FlipStatus.Back);
         card.changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
         cardsOnBoard.push(card);
@@ -129,7 +125,7 @@ function initializeRestartGemeButtonElement() {
  * トポロジーカードをjsonから読み込む
  */
 function LoadTopologyCardsJson() {
-    var result;
+    let result;
     $.ajax({
         url: JSON_PATH,
         dataType: "json",
@@ -144,9 +140,9 @@ function LoadTopologyCardsJson() {
  * カードセットを新しく読み込んでゲームを再スタートします。
  */
 function RestartGame() {
-    var gameEngine = new gameEngine_js_1.GameEngine(LoadTopologyCardsJson());
-    var cardStatus = gameEngine.startGame(ROW * COLUMN);
-    for (var i = 0; i < cardStatus.length; i++) {
+    const gameEngine = new GameEngine(LoadTopologyCardsJson());
+    const cardStatus = gameEngine.startGame(ROW * COLUMN);
+    for (let i = 0; i < cardStatus.length; i++) {
         cardsOnBoard[i].changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
         cardsOnBoard[i].flipCard(FlipStatus.Back);
     }
