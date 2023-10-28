@@ -10,28 +10,30 @@ export class Card {
     private frontImageUrl: string;
     private readonly onClickCallback: () => void;
     private readonly cardDom: ICardDom;
-    private readonly imageFolderPath: string;
-    private matchingKey: string;
+    private readonly matchingKey: string;
 
-    constructor(cardDom: ICardDom, onClickCallback: () => void, imageFolderPath: string) {
+    constructor(cardDom: ICardDom, matchingKey: string, frontImageUrl: string, onClickCallback: () => void) {
         this.flipStatus = FlipStatus.Back;
+        this.matchingKey = matchingKey;
+        this.frontImageUrl = frontImageUrl;
+
         this.onClickCallback = onClickCallback;
         this.cardDom = cardDom;
-        this.imageFolderPath = imageFolderPath;
 
         this.cardDom.onClick(() => {
             this.onClick();
         });
+
+        this.flipCard(FlipStatus.Back);
     }
 
     /**
-     * カードを変更します
+     * カードを新しい柄に変更します
      * @param matchingKey カードの種類を指定するキー
      * @param imageName カードの表面に表示する画像のurl
      */
-    changeCard(matchingKey: string, imageName: string): void {
-        this.matchingKey = matchingKey;
-        this.frontImageUrl = 'url(' + this.imageFolderPath + imageName + ')';
+    cloneWithNewImage(matchingKey: string, frontImageUrl: string, onClickCallback: () => void): Card {
+        return new Card(this.cardDom, matchingKey, frontImageUrl, onClickCallback);
     }
 
     /**

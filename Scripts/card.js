@@ -4,23 +4,24 @@ export var FlipStatus;
     FlipStatus[FlipStatus["Back"] = 1] = "Back";
 })(FlipStatus || (FlipStatus = {}));
 export class Card {
-    constructor(cardDom, onClickCallback, imageFolderPath) {
+    constructor(cardDom, matchingKey, frontImageUrl, onClickCallback) {
         this.flipStatus = FlipStatus.Back;
+        this.matchingKey = matchingKey;
+        this.frontImageUrl = frontImageUrl;
         this.onClickCallback = onClickCallback;
         this.cardDom = cardDom;
-        this.imageFolderPath = imageFolderPath;
         this.cardDom.onClick(() => {
             this.onClick();
         });
+        this.flipCard(FlipStatus.Back);
     }
     /**
-     * カードを変更します
+     * カードを新しい柄に変更します
      * @param matchingKey カードの種類を指定するキー
      * @param imageName カードの表面に表示する画像のurl
      */
-    changeCard(matchingKey, imageName) {
-        this.matchingKey = matchingKey;
-        this.frontImageUrl = 'url(' + this.imageFolderPath + imageName + ')';
+    cloneWithNewImage(matchingKey, frontImageUrl, onClickCallback) {
+        return new Card(this.cardDom, matchingKey, frontImageUrl, onClickCallback);
     }
     /**
      * 入力されたカードを指定された方向に返します

@@ -83,10 +83,8 @@ function initializeCardsOnBoardElement(gameBoard: HTMLElement): void {
         cardElement.className = 'card';
         gameBoard.appendChild(cardElement);
 
-        const card: Card = new Card(new CardDom(cardElement), () => cardClickedCallback(card), IMAGE_FOLDER_PATH);
-
-        card.flipCard(FlipStatus.Back);
-        card.changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
+        const imagePath = 'url(' + IMAGE_FOLDER_PATH + cardStatus[i].imageName + ')';
+        const card: Card = new Card(new CardDom(cardElement), cardStatus[i].matchingKey, imagePath, () => cardClickedCallback(card));
 
         cardsOnBoard.push(card);
     }
@@ -124,8 +122,8 @@ function RestartGame(): void {
     const cardStatus = gameEngine.startGame(ROW * COLUMN);
 
     for (let i = 0; i < cardStatus.length; i++) {
-        cardsOnBoard[i].changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
-        cardsOnBoard[i].flipCard(FlipStatus.Back);
+        const imagePath = 'url(' + IMAGE_FOLDER_PATH + cardStatus[i].imageName + ')';
+        cardsOnBoard[i] = cardsOnBoard[i].cloneWithNewImage(cardStatus[i].matchingKey, imagePath, () => cardClickedCallback(cardsOnBoard[i]));
     }
 
     selectedCards.length = 0;
