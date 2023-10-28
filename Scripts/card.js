@@ -1,16 +1,16 @@
-const IMAGE_FOLDER_PATH = './TopologyCards/images/';
 export var FlipStatus;
 (function (FlipStatus) {
     FlipStatus[FlipStatus["Front"] = 0] = "Front";
     FlipStatus[FlipStatus["Back"] = 1] = "Back";
 })(FlipStatus || (FlipStatus = {}));
+const IMAGE_FOLDER_PATH = './TopologyCards/images/';
 export class Card {
-    constructor(cardDom, onClickCallback) {
+    constructor(cardDom, onClickCallback, frontBackgroundColor, backBackgroundColor) {
         this.flipStatus = FlipStatus.Back;
         this.onClickCallback = onClickCallback;
         this.cardDom = cardDom;
-        this.frontBackgroundColor = this.cardDom.getComputedStyleProperty("--front-background-color");
-        this.backBackgroundColor = this.cardDom.getComputedStyleProperty("--back-background-color");
+        this.frontBackgroundColor = frontBackgroundColor;
+        this.backBackgroundColor = backBackgroundColor;
         this.cardDom.onClick(() => {
             this.onClick();
         });

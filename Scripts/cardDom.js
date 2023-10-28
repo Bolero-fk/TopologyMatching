@@ -11,7 +11,4 @@ export class CardDom {
     setBackgroundImage(url) {
         this.element.style.backgroundImage = url || '';
     }
-    getComputedStyleProperty(propertyName) {
-        return getComputedStyle(this.element).getPropertyValue(propertyName);
-    }
 }

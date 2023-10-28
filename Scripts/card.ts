@@ -1,11 +1,11 @@
 import { ICardDom } from "./ICardDom.js";
 
-const IMAGE_FOLDER_PATH = './TopologyCards/images/';
-
 export enum FlipStatus {
     Front,
     Back,
 }
+
+const IMAGE_FOLDER_PATH = './TopologyCards/images/';
 
 export class Card {
     private flipStatus: FlipStatus;
@@ -17,13 +17,13 @@ export class Card {
 
     public matchingKey: string;
 
-    constructor(cardDom: ICardDom, onClickCallback: () => void) {
+    constructor(cardDom: ICardDom, onClickCallback: () => void, frontBackgroundColor: string, backBackgroundColor: string) {
         this.flipStatus = FlipStatus.Back;
         this.onClickCallback = onClickCallback;
         this.cardDom = cardDom;
 
-        this.frontBackgroundColor = this.cardDom.getComputedStyleProperty("--front-background-color");
-        this.backBackgroundColor = this.cardDom.getComputedStyleProperty("--back-background-color");
+        this.frontBackgroundColor = frontBackgroundColor;
+        this.backBackgroundColor = backBackgroundColor;
 
         this.cardDom.onClick(() => {
             this.onClick();
