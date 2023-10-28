@@ -67,6 +67,6 @@ export class GameController {
     }
 
     private getImagePath(imageFileName: string): string {
-        return 'url(' + this.imageFolderPath + imageFileName + ')';
+        return `url(${this.imageFolderPath}${imageFileName})`;
     }
 }

@@ -48,6 +48,6 @@ export class GameController {
         this.selectedCards.length = 0;
     }
     getImagePath(imageFileName) {
-        return 'url(' + this.imageFolderPath + imageFileName + ')';
+        return `url(${this.imageFolderPath}${imageFileName})`;
     }
 }
