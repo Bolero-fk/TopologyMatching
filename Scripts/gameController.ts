@@ -24,9 +24,7 @@ export class GameController {
         const cardStatus = this.gameEngine.startGame(gameCardNumber);
 
         for (let i = 0; i < gameCardNumber; i++) {
-
-            const imagePath = 'url(' + this.imageFolderPath + cardStatus[i].imageName + ')';
-            const card: Card = new Card(cardDoms[i], cardStatus[i].matchingKey, imagePath, () => this.cardClickedCallback(card));
+            const card: Card = new Card(cardDoms[i], cardStatus[i].matchingKey, this.getImagePath(cardStatus[i].imageName), () => this.cardClickedCallback(card));
 
             this.cardsOnBoard.push(card);
         }
@@ -56,16 +54,19 @@ export class GameController {
         this.selectedCards.forEach(selectedCard => {
             selectedCard.flipCard(FlipStatus.Back);
         });
-    };
+    }
 
     public restartGame(): void {
         const cardStatus = this.gameEngine.startGame(this.cardsOnBoard.length);
 
         for (let i = 0; i < cardStatus.length; i++) {
-            const imagePath = 'url(' + this.imageFolderPath + cardStatus[i].imageName + ')';
-            this.cardsOnBoard[i] = this.cardsOnBoard[i].cloneWithNewImage(cardStatus[i].matchingKey, imagePath, () => this.cardClickedCallback(this.cardsOnBoard[i]));
+            this.cardsOnBoard[i] = this.cardsOnBoard[i].cloneWithNewImage(cardStatus[i].matchingKey, this.getImagePath(cardStatus[i].imageName), () => this.cardClickedCallback(this.cardsOnBoard[i]));
         }
 
         this.selectedCards.length = 0;
+    }
+
+    private getImagePath(imageFileName: string): string {
+        return 'url(' + this.imageFolderPath + imageFileName + ')';
     }
 }
