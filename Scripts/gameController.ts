@@ -50,7 +50,7 @@ export class GameController {
         }
     }
 
-    private flipSelectedCardsToBack() {
+    private flipSelectedCardsToBack(): void {
         this.selectedCards.forEach(selectedCard => {
             selectedCard.flipCard(FlipStatus.Back);
         });
