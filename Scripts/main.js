@@ -67,9 +67,7 @@ function initializeCardsOnBoardElement(gameBoard) {
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
         gameBoard.appendChild(cardElement);
-        const frontBackgroundColor = getComputedStyle(cardElement).getPropertyValue("--front-background-color");
-        const backBackgroundColor = getComputedStyle(cardElement).getPropertyValue("--back-background-color");
-        const card = new Card(new CardDom(cardElement), () => cardClickedCallback(card), frontBackgroundColor, backBackgroundColor, IMAGE_FOLDER_PATH);
+        const card = new Card(new CardDom(cardElement), () => cardClickedCallback(card), IMAGE_FOLDER_PATH);
         card.flipCard(FlipStatus.Back);
         card.changeCard(cardStatus[i].matchingKey, cardStatus[i].imageName);
         cardsOnBoard.push(card);

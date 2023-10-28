@@ -4,13 +4,11 @@ export var FlipStatus;
     FlipStatus[FlipStatus["Back"] = 1] = "Back";
 })(FlipStatus || (FlipStatus = {}));
 export class Card {
-    constructor(cardDom, onClickCallback, frontBackgroundColor, backBackgroundColor, imageFolderPath) {
+    constructor(cardDom, onClickCallback, imageFolderPath) {
         this.flipStatus = FlipStatus.Back;
         this.onClickCallback = onClickCallback;
         this.cardDom = cardDom;
         this.imageFolderPath = imageFolderPath;
-        this.frontBackgroundColor = frontBackgroundColor;
-        this.backBackgroundColor = backBackgroundColor;
         this.cardDom.onClick(() => {
             this.onClick();
         });
@@ -31,12 +29,10 @@ export class Card {
         this.flipStatus = flipStatus;
         // カードの面ごとに色と画像を設定する
         if (this.flipStatus === FlipStatus.Front) {
-            this.cardDom.setBackgroundColor(this.frontBackgroundColor);
-            this.cardDom.setBackgroundImage(this.frontImageUrl);
+            this.cardDom.flipToFront(this.frontImageUrl);
         }
         else {
-            this.cardDom.setBackgroundColor(this.backBackgroundColor);
-            this.cardDom.setBackgroundImage('');
+            this.cardDom.flipToBack();
         }
     }
     onClick() {
