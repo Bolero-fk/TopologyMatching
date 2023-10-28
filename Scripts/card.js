@@ -30,7 +30,7 @@ export class Card {
     flipCard(flipStatus) {
         this.flipStatus = flipStatus;
         // カードの面ごとに色と画像を設定する
-        if (this.flipStatus == FlipStatus.Front) {
+        if (this.flipStatus === FlipStatus.Front) {
             this.cardDom.setBackgroundColor(this.frontBackgroundColor);
             this.cardDom.setBackgroundImage(this.frontImageUrl);
         }
@@ -40,12 +40,12 @@ export class Card {
         }
     }
     onClick() {
-        if (this.flipStatus == FlipStatus.Front) {
+        if (this.flipStatus === FlipStatus.Front) {
             return;
         }
         this.onClickCallback();
     }
     static canMatchCard(card1, card2) {
-        return card1.matchingKey == card2.matchingKey;
+        return card1.matchingKey === card2.matchingKey;
     }
 }
