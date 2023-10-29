@@ -11,12 +11,44 @@ export class GameController {
     private readonly imageFolderPath: string;
 
     constructor(topologyCardsJson: any[], maxSelectableCard: number, flippingWaitTimeMilliseconds: number, imageFolderPath: string) {
+        this.validateInputs(topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath);
+
         this.gameEngine = new GameEngine(topologyCardsJson);
         this.cardsOnBoard = [] as Card[];
         this.selectedCards = [] as Card[];
         this.maxSelectableCard = maxSelectableCard;
         this.flippingWaitTimeMilliseconds = flippingWaitTimeMilliseconds;
         this.imageFolderPath = imageFolderPath;
+    }
+
+    private validateInputs(topologyCardsJson: any[], maxSelectableCard: number, flippingWaitTimeMilliseconds: number, imageFolderPath: string): void {
+
+        topologyCardsJson.forEach(item => {
+            const keys = Object.keys(item);
+            if (keys.length !== 2 || !keys.includes('ImageName') || !keys.includes('HoleCount')) {
+                throw new Error('Each item in topologyCardsJson must only have the keys "ImageName" and "HoleCount"');
+            }
+
+            if (typeof item.ImageName !== 'string' || item.ImageName.trim() === '') {
+                throw new Error('ImageName must be a non-empty string');
+            }
+
+            if (!Array.isArray(item.HoleCount) || !item.HoleCount.every(val => typeof val === 'number')) {
+                throw new Error('HoleCount must be an array of numbers');
+            }
+        });
+
+        if (maxSelectableCard <= 0) {
+            throw new Error('maxSelectableCard must be a positive integer');
+        }
+
+        if (flippingWaitTimeMilliseconds <= 0) {
+            throw new Error('flippingWaitTimeMilliseconds must be a positive integer');
+        }
+
+        if (imageFolderPath.trim() === '') {
+            throw new Error('imageFolderPath must be a non-empty string');
+        }
     }
 
     public startGame(cardDoms: CardDom[]): void {
