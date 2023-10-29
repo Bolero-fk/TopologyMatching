@@ -52,7 +52,7 @@ var GameController = /** @class */ (function () {
     /**
      * ゲームを開始します
      *
-     * @param {CardDom[]} cardDoms - カードのDOM表現の配列
+     * @param {ICardDom[]} cardDoms - カードのDOM表現の配列
      */
     GameController.prototype.startGame = function (cardDoms) {
         var _this = this;
