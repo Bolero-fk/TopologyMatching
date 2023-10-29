@@ -1,3 +1,5 @@
+import { TopologyCardJson } from './JsonType.js';
+
 class CardStatus {
     private _imageName: string;
     private _matchingKey: string;
@@ -21,7 +23,7 @@ export class GameEngine {
     private cards: CardStatus[];
 
     // コンストラクター、初期化処理を行う
-    constructor(topologyCards: any[]) {
+    constructor(topologyCards: TopologyCardJson[]) {
         this.cards = new Array();
         topologyCards.forEach(topologyCard => {
             const card = new CardStatus(topologyCard.ImageName, topologyCard.HoleCount);

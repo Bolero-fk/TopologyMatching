@@ -1,6 +1,7 @@
 import { GameEngine } from './gameEngine.js';
 import { Card, FlipStatus } from './card.js';
 import { CardDom } from './cardDom.js';
+import { TopologyCardJson } from './JsonType.js';
 
 export class GameController {
     private readonly gameEngine: GameEngine;
@@ -13,12 +14,12 @@ export class GameController {
     /**
      * GameControllerクラスのコンストラクタ
      * 
-     * @param {any[]} topologyCardsJson - カード情報を持つJSON配列
+     * @param {TopologyCardJson[]} topologyCardsJson - カード情報を持つJSON配列
      * @param {number} maxSelectableCard - 選択可能なカードの最大数
      * @param {number} flippingWaitTimeMilliseconds - カードを裏返す待機時間（ミリ秒）
      * @param {string} imageFolderPath - 画像のフォルダパス
      */
-    constructor(topologyCardsJson: any[], maxSelectableCard: number, flippingWaitTimeMilliseconds: number, imageFolderPath: string) {
+    constructor(topologyCardsJson: TopologyCardJson[], maxSelectableCard: number, flippingWaitTimeMilliseconds: number, imageFolderPath: string) {
         this.validateInputs(topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath);
 
         this.gameEngine = new GameEngine(topologyCardsJson);
@@ -32,12 +33,12 @@ export class GameController {
     /**
      * 入力の検証を行います
      * 
-     * @param {any[]} topologyCardsJson - カード情報を持つJSON配列
+     * @param {TopologyCardJson[]} topologyCardsJson - カード情報を持つJSON配列
      * @param {number} maxSelectableCard - 選択可能なカードの最大数
      * @param {number} flippingWaitTimeMilliseconds - カードを裏返す待機時間（ミリ秒）
      * @param {string} imageFolderPath - 画像のフォルダパス
      */
-    private validateInputs(topologyCardsJson: any[], maxSelectableCard: number, flippingWaitTimeMilliseconds: number, imageFolderPath: string): void {
+    private validateInputs(topologyCardsJson: TopologyCardJson[], maxSelectableCard: number, flippingWaitTimeMilliseconds: number, imageFolderPath: string): void {
 
         topologyCardsJson.forEach(item => {
             const keys = Object.keys(item);
@@ -45,12 +46,8 @@ export class GameController {
                 throw new Error('Each item in topologyCardsJson must only have the keys "ImageName" and "HoleCount"');
             }
 
-            if (typeof item.ImageName !== 'string' || item.ImageName.trim() === '') {
+            if (item.ImageName.trim() === '') {
                 throw new Error('ImageName must be a non-empty string');
-            }
-
-            if (!Array.isArray(item.HoleCount) || !item.HoleCount.every(val => typeof val === 'number')) {
-                throw new Error('HoleCount must be an array of numbers');
             }
         });
 

@@ -1,5 +1,6 @@
 import { CardDom } from './cardDom.js';
 import { GameController } from './gameController.js';
+import { TopologyCardJson } from './JsonType.js';
 
 // ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
 // FIXME: jsonに記されたカードのペアがROW * COLUMN以下のときに落ちるので注意する
@@ -78,7 +79,7 @@ function loadTopologyCardsJson(): any {
         dataType: "json",
         async: false,
         success: function (data) {
-            result = data;
+            result = data as TopologyCardJson[];;
         }
     });
 
