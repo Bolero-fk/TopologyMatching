@@ -64,6 +64,12 @@ var Card = /** @class */ (function () {
         this.onClickCallback();
     };
     /**
+     * カードが今どちら向きを示しているかを返します
+     */
+    Card.prototype.getFlipStatus = function () {
+        return this.flipStatus;
+    };
+    /**
      * 2枚のカードが一致するか判定します
      * @param card1 1つ目のカード
      * @param card2 2つ目のカード
