@@ -61,6 +61,7 @@ function loadTopologyCardsJson() {
         async: false,
         success: function (data) {
             result = data;
+            ;
         }
     });
     return result;
