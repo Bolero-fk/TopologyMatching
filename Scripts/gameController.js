@@ -1,6 +1,14 @@
 import { GameEngine } from './gameEngine.js';
 import { Card, FlipStatus } from './card.js';
 export class GameController {
+    /**
+     * GameControllerクラスのコンストラクタ
+     *
+     * @param {any[]} topologyCardsJson - カード情報を持つJSON配列
+     * @param {number} maxSelectableCard - 選択可能なカードの最大数
+     * @param {number} flippingWaitTimeMilliseconds - カードを裏返す待機時間（ミリ秒）
+     * @param {string} imageFolderPath - 画像のフォルダパス
+     */
     constructor(topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath) {
         this.validateInputs(topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath);
         this.gameEngine = new GameEngine(topologyCardsJson);
@@ -10,6 +18,14 @@ export class GameController {
         this.flippingWaitTimeMilliseconds = flippingWaitTimeMilliseconds;
         this.imageFolderPath = imageFolderPath;
     }
+    /**
+     * 入力の検証を行います
+     *
+     * @param {any[]} topologyCardsJson - カード情報を持つJSON配列
+     * @param {number} maxSelectableCard - 選択可能なカードの最大数
+     * @param {number} flippingWaitTimeMilliseconds - カードを裏返す待機時間（ミリ秒）
+     * @param {string} imageFolderPath - 画像のフォルダパス
+     */
     validateInputs(topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath) {
         topologyCardsJson.forEach(item => {
             const keys = Object.keys(item);
@@ -33,6 +49,11 @@ export class GameController {
             throw new Error('imageFolderPath must be a non-empty string');
         }
     }
+    /**
+     * ゲームを開始します
+     *
+     * @param {CardDom[]} cardDoms - カードのDOM表現の配列
+     */
     startGame(cardDoms) {
         const gameCardNumber = cardDoms.length;
         const cardStatus = this.gameEngine.startGame(gameCardNumber);
@@ -41,6 +62,11 @@ export class GameController {
             this.cardsOnBoard.push(card);
         }
     }
+    /**
+     * カードがクリックされたときのコールバック関数
+     *
+     * @param {Card} card - クリックされたカード
+     */
     cardClickedCallback(card) {
         if (this.maxSelectableCard <= this.selectedCards.length) {
             return;
@@ -59,11 +85,17 @@ export class GameController {
             }
         }
     }
+    /**
+     * 選択されたカードを裏返します
+     */
     flipSelectedCardsToBack() {
         this.selectedCards.forEach(selectedCard => {
             selectedCard.flipCard(FlipStatus.Back);
         });
     }
+    /**
+     * ゲームを再開します
+     */
     restartGame() {
         const cardStatus = this.gameEngine.startGame(this.cardsOnBoard.length);
         for (let i = 0; i < cardStatus.length; i++) {
@@ -71,6 +103,12 @@ export class GameController {
         }
         this.selectedCards.length = 0;
     }
+    /**
+     * 画像のパスを取得します
+     *
+     * @param {string} imageFileName - 画像のファイル名
+     * @returns {string} 画像の完全なパス
+     */
     getImagePath(imageFileName) {
         return `url(${this.imageFolderPath}${imageFileName})`;
     }
