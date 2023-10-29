@@ -81,6 +81,15 @@ export class GameController {
     }
 
     /**
+     * ゲームに配置されたカードの枚数を返します
+     * 
+     * @returns {number} ゲームに配置されたカードの枚数
+     */
+    public getCardNumebr(): number {
+        return this.cardsOnBoard.length;
+    }
+
+    /**
      * カードがクリックされたときのコールバック関数
      * 
      * @param {Card} card - クリックされたカード
