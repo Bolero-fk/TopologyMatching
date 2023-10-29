@@ -42,8 +42,8 @@ export class GameController {
 
         topologyCardsJson.forEach(item => {
             const keys = Object.keys(item);
-            if (keys.length !== 2 || !keys.includes('ImageName') || !keys.includes('HoleCount')) {
-                throw new Error('Each item in topologyCardsJson must only have the keys "ImageName" and "HoleCount"');
+            if (item.HoleCount.some(count => count < 0)) {
+                throw new Error('HoleCount must be a positive integer');
             }
 
             if (item.ImageName.trim() === '') {
