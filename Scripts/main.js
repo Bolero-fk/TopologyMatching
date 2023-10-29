@@ -34,7 +34,7 @@ function initializeGameBoardElement() {
  * game board上のカードを初期化します
  */
 function initializeCardsOnBoardElement(gameBoard) {
-    gameController = new GameController(LoadTopologyCardsJson(), MAX_SELECTABLE_CARD, FLIPPING_WAIT_TIME_MILLISECONDS, IMAGE_FOLDER_PATH);
+    gameController = new GameController(loadTopologyCardsJson(), MAX_SELECTABLE_CARD, FLIPPING_WAIT_TIME_MILLISECONDS, IMAGE_FOLDER_PATH);
     const cardDoms = new Array();
     for (let i = 0; i < ROW * COLUMN; i++) {
         const cardElement = document.createElement('div');
@@ -48,12 +48,12 @@ function initializeCardsOnBoardElement(gameBoard) {
  * Restart Game ボタンを初期化します
  */
 function initializeRestartGemeButtonElement() {
-    document.getElementById('restart-button').onclick = RestartGame;
+    document.getElementById('restart-button').onclick = restartGame;
 }
 /**
  * トポロジーカードをjsonから読み込む
  */
-function LoadTopologyCardsJson() {
+function loadTopologyCardsJson() {
     let result;
     $.ajax({
         url: JSON_PATH,
@@ -68,6 +68,6 @@ function LoadTopologyCardsJson() {
 /**
  * カードセットを新しく読み込んでゲームを再スタートします。
  */
-function RestartGame() {
+function restartGame() {
     gameController.restartGame();
 }
