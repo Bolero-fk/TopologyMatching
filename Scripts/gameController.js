@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GameController = void 0;
-var gameEngine_js_1 = require("./gameEngine.js");
-var card_js_1 = require("./card.js");
-var GameController = /** @class */ (function () {
+import { GameEngine } from './gameEngine.js';
+import { Card, FlipStatus } from './card.js';
+export class GameController {
     /**
      * GameControllerクラスのコンストラクタ
      *
@@ -12,9 +9,9 @@ var GameController = /** @class */ (function () {
      * @param {number} flippingWaitTimeMilliseconds - カードを裏返す待機時間（ミリ秒）
      * @param {string} imageFolderPath - 画像のフォルダパス
      */
-    function GameController(topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath) {
+    constructor(topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath) {
         this.validateInputs(topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath);
-        this.gameEngine = new gameEngine_js_1.GameEngine(topologyCardsJson);
+        this.gameEngine = new GameEngine(topologyCardsJson);
         this.cardsOnBoard = [];
         this.selectedCards = [];
         this.maxSelectableCard = maxSelectableCard;
@@ -29,10 +26,10 @@ var GameController = /** @class */ (function () {
      * @param {number} flippingWaitTimeMilliseconds - カードを裏返す待機時間（ミリ秒）
      * @param {string} imageFolderPath - 画像のフォルダパス
      */
-    GameController.prototype.validateInputs = function (topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath) {
-        topologyCardsJson.forEach(function (item) {
-            var keys = Object.keys(item);
-            if (item.HoleCount.some(function (count) { return count < 0; })) {
+    validateInputs(topologyCardsJson, maxSelectableCard, flippingWaitTimeMilliseconds, imageFolderPath) {
+        topologyCardsJson.forEach(item => {
+            const keys = Object.keys(item);
+            if (item.HoleCount.some(count => count < 0)) {
                 throw new Error('HoleCount must be a positive integer');
             }
             if (item.ImageName.trim() === '') {
@@ -48,98 +45,85 @@ var GameController = /** @class */ (function () {
         if (imageFolderPath.trim() === '') {
             throw new Error('imageFolderPath must be a non-empty string');
         }
-    };
+    }
     /**
      * ゲームを開始します
      *
      * @param {ICardDom[]} cardDoms - カードのDOM表現の配列
      */
-    GameController.prototype.startGame = function (cardDoms) {
-        var _this = this;
-        var gameCardNumber = cardDoms.length;
-        var cardStatus = this.gameEngine.startGame(gameCardNumber);
-        var _loop_1 = function (i) {
-            var card = new card_js_1.Card(cardDoms[i], cardStatus[i].matchingKey, this_1.getImagePath(cardStatus[i].imageName), function () { return _this.cardClickedCallback(card); });
-            this_1.cardsOnBoard.push(card);
-        };
-        var this_1 = this;
-        for (var i = 0; i < gameCardNumber; i++) {
-            _loop_1(i);
+    startGame(cardDoms) {
+        const gameCardNumber = cardDoms.length;
+        const cardStatus = this.gameEngine.startGame(gameCardNumber);
+        for (let i = 0; i < gameCardNumber; i++) {
+            const card = new Card(cardDoms[i], cardStatus[i].matchingKey, this.getImagePath(cardStatus[i].imageName), () => this.cardClickedCallback(card));
+            this.cardsOnBoard.push(card);
         }
-    };
+    }
     /**
      * ゲームに配置されたカードの枚数を返します
      *
      * @returns {number} ゲームに配置されたカードの枚数
      */
-    GameController.prototype.getCardNumebr = function () {
+    getCardNumebr() {
         return this.cardsOnBoard.length;
-    };
+    }
     /**
      * 選択したカードの枚数を返します
      *
      * @returns {number} 選択したカードの枚数
      */
-    GameController.prototype.getSelectedCardNumber = function () {
+    getSelectedCardNumber() {
         return this.selectedCards.length;
-    };
+    }
     /**
      * カードがクリックされたときのコールバック関数
      *
      * @param {Card} card - クリックされたカード
      */
-    GameController.prototype.cardClickedCallback = function (card) {
-        var _this = this;
+    cardClickedCallback(card) {
         if (this.maxSelectableCard <= this.selectedCards.length) {
             return;
         }
-        card.flipCard(card_js_1.FlipStatus.Front);
+        card.flipCard(FlipStatus.Front);
         this.selectedCards.push(card);
         if (this.maxSelectableCard <= this.selectedCards.length) {
-            if (this.selectedCards.every(function (card) { return card_js_1.Card.canMatchCard(card, _this.selectedCards[0]); })) {
+            if (this.selectedCards.every((card) => Card.canMatchCard(card, this.selectedCards[0]))) {
                 this.selectedCards.length = 0;
             }
             else {
-                this.resetCardTimerId = setTimeout(function () {
-                    _this.flipSelectedCardsToBack();
-                    _this.selectedCards.length = 0;
+                this.resetCardTimerId = setTimeout(() => {
+                    this.flipSelectedCardsToBack();
+                    this.selectedCards.length = 0;
                 }, this.flippingWaitTimeMilliseconds);
             }
         }
-    };
+    }
     /**
      * 選択されたカードを裏返します
      */
-    GameController.prototype.flipSelectedCardsToBack = function () {
-        this.selectedCards.forEach(function (selectedCard) {
-            selectedCard.flipCard(card_js_1.FlipStatus.Back);
+    flipSelectedCardsToBack() {
+        this.selectedCards.forEach(selectedCard => {
+            selectedCard.flipCard(FlipStatus.Back);
         });
-    };
+    }
     /**
      * ゲームを再開します
      */
-    GameController.prototype.restartGame = function () {
-        var _this = this;
+    restartGame() {
         clearTimeout(this.resetCardTimerId);
-        var cardStatus = this.gameEngine.startGame(this.cardsOnBoard.length);
-        var _loop_2 = function (i) {
-            this_2.cardsOnBoard[i] = this_2.cardsOnBoard[i].cloneWithNewImage(cardStatus[i].matchingKey, this_2.getImagePath(cardStatus[i].imageName), function () { return _this.cardClickedCallback(_this.cardsOnBoard[i]); });
-        };
-        var this_2 = this;
-        for (var i = 0; i < cardStatus.length; i++) {
-            _loop_2(i);
+        const cardStatus = this.gameEngine.startGame(this.cardsOnBoard.length);
+        for (let i = 0; i < cardStatus.length; i++) {
+            this.cardsOnBoard[i] = this.cardsOnBoard[i].cloneWithNewImage(cardStatus[i].matchingKey, this.getImagePath(cardStatus[i].imageName), () => this.cardClickedCallback(this.cardsOnBoard[i]));
         }
         this.selectedCards.length = 0;
-    };
+    }
     /**
      * 画像のパスを取得します
      *
      * @param {string} imageFileName - 画像のファイル名
      * @returns {string} 画像の完全なパス
      */
-    GameController.prototype.getImagePath = function (imageFileName) {
-        return "url(".concat(this.imageFolderPath).concat(imageFileName, ")");
-    };
-    return GameController;
-}());
-exports.GameController = GameController;
+    getImagePath(imageFileName) {
+        return `url(${this.imageFolderPath}${imageFileName})`;
+    }
+}
