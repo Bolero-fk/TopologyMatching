@@ -1,6 +1,6 @@
 import { GameEngine } from './gameEngine.js';
 import { Card, FlipStatus } from './card.js';
-import { CardDom } from './cardDom.js';
+import { ICardDom } from './ICardDom.js';
 import { TopologyCardJson } from './JsonType.js';
 
 export class GameController {
@@ -67,9 +67,9 @@ export class GameController {
     /**
      * ゲームを開始します
      * 
-     * @param {CardDom[]} cardDoms - カードのDOM表現の配列
+     * @param {ICardDom[]} cardDoms - カードのDOM表現の配列
      */
-    public startGame(cardDoms: CardDom[]): void {
+    public startGame(cardDoms: ICardDom[]): void {
         const gameCardNumber = cardDoms.length;
         const cardStatus = this.gameEngine.startGame(gameCardNumber);
 
