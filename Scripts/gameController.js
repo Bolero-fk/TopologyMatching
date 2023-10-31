@@ -100,7 +100,7 @@ var GameController = /** @class */ (function () {
                 this.selectedCards.length = 0;
             }
             else {
-                setTimeout(function () {
+                this.resetCardTimerId = setTimeout(function () {
                     _this.flipSelectedCardsToBack();
                     _this.selectedCards.length = 0;
                 }, this.flippingWaitTimeMilliseconds);
@@ -120,6 +120,7 @@ var GameController = /** @class */ (function () {
      */
     GameController.prototype.restartGame = function () {
         var _this = this;
+        clearTimeout(this.resetCardTimerId);
         var cardStatus = this.gameEngine.startGame(this.cardsOnBoard.length);
         var _loop_2 = function (i) {
             this_2.cardsOnBoard[i] = this_2.cardsOnBoard[i].cloneWithNewImage(cardStatus[i].matchingKey, this_2.getImagePath(cardStatus[i].imageName), function () { return _this.cardClickedCallback(_this.cardsOnBoard[i]); });
