@@ -68,6 +68,22 @@ var GameController = /** @class */ (function () {
         }
     };
     /**
+     * ゲームに配置されたカードの枚数を返します
+     *
+     * @returns {number} ゲームに配置されたカードの枚数
+     */
+    GameController.prototype.getCardNumebr = function () {
+        return this.cardsOnBoard.length;
+    };
+    /**
+     * 選択したカードの枚数を返します
+     *
+     * @returns {number} 選択したカードの枚数
+     */
+    GameController.prototype.getSelectedCardNumber = function () {
+        return this.selectedCards.length;
+    };
+    /**
      * カードがクリックされたときのコールバック関数
      *
      * @param {Card} card - クリックされたカード
