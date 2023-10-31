@@ -10,6 +10,7 @@ export class GameController {
     private readonly maxSelectableCard: number;
     private readonly flippingWaitTimeMilliseconds: number;
     private readonly imageFolderPath: string;
+    private resetCardTimerId: NodeJS.Timeout;
 
     /**
      * GameControllerクラスのコンストラクタ
@@ -116,7 +117,7 @@ export class GameController {
             if (this.selectedCards.every((card) => Card.canMatchCard(card, this.selectedCards[0]))) {
                 this.selectedCards.length = 0;
             } else {
-                setTimeout(() => {
+                this.resetCardTimerId = setTimeout(() => {
                     this.flipSelectedCardsToBack();
                     this.selectedCards.length = 0;
                 }, this.flippingWaitTimeMilliseconds);
@@ -137,6 +138,8 @@ export class GameController {
      * ゲームを再開します
      */
     public restartGame(): void {
+        clearTimeout(this.resetCardTimerId);
+
         const cardStatus = this.gameEngine.startGame(this.cardsOnBoard.length);
 
         for (let i = 0; i < cardStatus.length; i++) {
