@@ -76,6 +76,14 @@ var GameController = /** @class */ (function () {
         return this.cardsOnBoard.length;
     };
     /**
+     * 選択したカードの枚数を返します
+     *
+     * @returns {number} 選択したカードの枚数
+     */
+    GameController.prototype.getSelectedCardNumber = function () {
+        return this.selectedCards.length;
+    };
+    /**
      * カードがクリックされたときのコールバック関数
      *
      * @param {Card} card - クリックされたカード
