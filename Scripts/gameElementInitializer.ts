@@ -3,12 +3,12 @@ import { GameController } from './gameController.js';
 import { TopologyCardJsonLoader } from './topologyCardJsonLoader.js';
 
 export class GameConfig {
-    row: number;
-    column: number;
-    jsonPath: string;
-    imageFolderPath: string;
-    flippingWaitTimeMilliseconds: number;
-    maxSelectableCard: number;
+    public row: number;
+    public column: number;
+    public jsonPath: string;
+    public imageFolderPath: string;
+    public flippingWaitTimeMilliseconds: number;
+    public maxSelectableCard: number;
 }
 
 export class GameElementInitializer {
