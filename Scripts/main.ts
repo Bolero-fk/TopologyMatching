@@ -13,6 +13,6 @@ const GAME_CONFIG = new GameConfig(
 );
 
 export function run() {
-    const gameInitializer = new GameElementInitializer(GAME_CONFIG, new CardDomFactory, new TopologyCardJsonLoader);
+    const gameInitializer = new GameElementInitializer(document, GAME_CONFIG, new CardDomFactory, new TopologyCardJsonLoader);
     gameInitializer.initialize();
 }
