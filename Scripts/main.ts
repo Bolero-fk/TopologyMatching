@@ -1,5 +1,3 @@
-import { CardDom } from './cardDom.js';
-import { GameController } from './gameController.js';
 import { CardDomFactory } from './cardDomFactory.js';
 import { TopologyCardJsonLoader } from './topologyCardJsonLoader.js';
 import { GameElementInitializer, GameConfig } from './gameElementInitializer.js';
