@@ -7,6 +7,11 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
+<script type="module">
+    import { run } from './Scripts/main.js';
+    window.addEventListener('DOMContentLoaded', run);
+</script>
+
 <body>
     <h1>トポロジー神経衰弱ゲーム</h1>
     <div id="game-board">
@@ -30,7 +35,6 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="module" src="./Scripts/main.js"></script>
 </body>
 
 </html>
