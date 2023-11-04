@@ -69,9 +69,7 @@ function initializeRestartGemeButtonElement(): void {
     document.getElementById('restart-button').onclick = restartGame;
 }
 
-/**
- * トポロジーカードをjsonから読み込む
- */
+
 function loadTopologyCardsJson(): any {
     let result: any;
     $.ajax({
