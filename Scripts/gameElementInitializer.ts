@@ -3,6 +3,9 @@ import { ICardDom } from './ICardDom.js';
 import { ICardDomFactory } from './ICardDomFactory.js';
 import { ITopologyCardJsonLoader } from './ITopologyCardJsonLoader.js';
 
+/**
+ * ゲームの設定
+ */
 export class GameConfig {
     public row: number;
     public column: number;
@@ -12,12 +15,21 @@ export class GameConfig {
     public maxSelectableCard: number;
 }
 
+
+/**
+ * ゲームのHTML要素を初期化するクラス
+ */
 export class GameElementInitializer {
     private gameController: GameController;
     private readonly config: GameConfig;
     private readonly cardDomFactory: ICardDomFactory;
     private readonly topologyCardJsonLoader: ITopologyCardJsonLoader;
 
+    /**
+     * @param config ゲームの設定
+     * @param cardDomFactory ICardDomインスタンスを生成するためのファクトリ
+     * @param topologyCardJsonLoader カード情報のJSONを読み込むローダ
+     */
     constructor(config: GameConfig, cardDomFactory: ICardDomFactory, topologyCardJsonLoader: ITopologyCardJsonLoader) {
         this.config = config;
         this.gameController = null;
@@ -25,11 +37,17 @@ export class GameElementInitializer {
         this.topologyCardJsonLoader = topologyCardJsonLoader;
     }
 
+    /**
+     * html上に配置する要素を初期化します
+     */
     public initialize(): void {
         this.initializeGameBoardElement();
         this.initializeRestartGameButtonElement();
     }
 
+    /**
+     * game boardを初期化します
+     */
     private initializeGameBoardElement(): void {
         const gameBoard = document.getElementById('game-board');
 
@@ -40,6 +58,10 @@ export class GameElementInitializer {
         this.initializeCardsOnBoardElement(gameBoard);
     }
 
+    /**
+     * game board上のカードを初期化します
+     * @param gameBoard カードを配置するHtml Element
+     */
     private initializeCardsOnBoardElement(gameBoard: HTMLElement): void {
         const cardData = this.topologyCardJsonLoader.loadTopologyCardsJson(this.config.jsonPath);
 
@@ -58,10 +80,16 @@ export class GameElementInitializer {
         this.gameController.startGame(cardDoms);
     }
 
+    /**
+     * Restart Game ボタンを初期化します
+     */
     private initializeRestartGameButtonElement(): void {
         document.getElementById('restart-button').onclick = this.restartGame.bind(this);
     }
 
+    /**
+     * カードセットを新しく読み込んでゲームを再スタートします。
+     */
     private restartGame(): void {
         this.gameController.restartGame();
     }
