@@ -1,20 +1,8 @@
 import { GameController } from './gameController.js';
+import { GameConfig } from './gameConfig.js';
 import { ICardDom } from './ICardDom.js';
 import { ICardDomFactory } from './ICardDomFactory.js';
 import { ITopologyCardJsonLoader } from './ITopologyCardJsonLoader.js';
-
-/**
- * ゲームの設定
- */
-export class GameConfig {
-    public row: number;
-    public column: number;
-    public jsonPath: string;
-    public imageFolderPath: string;
-    public flippingWaitTimeMilliseconds: number;
-    public maxSelectableCard: number;
-}
-
 
 /**
  * ゲームのHTML要素を初期化するクラス
