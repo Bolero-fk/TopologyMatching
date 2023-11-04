@@ -1,4 +1,4 @@
-import { GameConfig } from './../gameConfig.js';
+import { GameConfig } from '../dist/gameConfig.js';
 
 describe('GameConfig', () => {
 

@@ -1,4 +1,4 @@
-import { GameEngine, CardStatus } from '../gameEngine';
+import { GameEngine, CardStatus } from '../dist/gameEngine';
 
 describe('GameEngine', () => {
     let topologyCards = [

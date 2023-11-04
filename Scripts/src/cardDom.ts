@@ -1,4 +1,4 @@
-import { ICardDom } from './ICardDom.js';
+import { ICardDom } from '../dist/ICardDom.js';
 
 export class CardDom implements ICardDom {
     private readonly frontBackgroundColor: string;

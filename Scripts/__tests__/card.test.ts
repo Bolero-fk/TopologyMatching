@@ -1,5 +1,5 @@
-import { Card, FlipStatus } from "./../card.js";
-import { ICardDom } from "./../ICardDom.js";
+import { Card, FlipStatus } from "../dist/card.js";
+import { ICardDom } from "../dist/ICardDom.js";
 
 describe("Card", () => {
     let mockCardDom: ICardDom;

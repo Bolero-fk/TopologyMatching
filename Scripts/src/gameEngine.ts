@@ -1,4 +1,4 @@
-import { TopologyCardJson } from './JsonType.js';
+import { TopologyCardJson } from '../dist/JsonType.js';
 
 export class CardStatus {
     private _imageName: string;

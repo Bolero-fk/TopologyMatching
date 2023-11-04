@@ -1,7 +1,7 @@
-import { GameController } from './../gameController.js';
-import { ICardDom } from './../ICardDom.js';
-import { TopologyCardJson } from './../JsonType.js';
-import { CardStatus, GameEngine } from './../gameEngine.js';
+import { GameController } from '../dist/gameController.js';
+import { ICardDom } from '../dist/ICardDom.js';
+import { TopologyCardJson } from '../dist/JsonType.js';
+import { CardStatus, GameEngine } from '../dist/gameEngine.js';
 
 describe('GameController', () => {
     let sampleTopologyCardsJson: TopologyCardJson[];
