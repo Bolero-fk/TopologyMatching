@@ -75,4 +75,24 @@ describe('GameElementInitializer', () => {
             expect(mockGameController.restartGame).toHaveBeenCalled();
         });
     });
+
+    describe('Negative test', () => {
+        describe('when required HTML elements are missing', () => {
+            test('should throw an error if game-board is missing', () => {
+                document.body.innerHTML = `
+                <button id="restart-button"></button>
+            `;
+
+                expect(() => new GameElementInitializer(document, gameConfig, mockCardDomFactory, mockTopologyCardJsonLoader)).toThrowError("game-board element is missing");
+            });
+
+            test('should throw an error if restart-button is missing', () => {
+                document.body.innerHTML = `
+                <div id="game-board"></div>
+            `;
+
+                expect(() => new GameElementInitializer(document, gameConfig, mockCardDomFactory, mockTopologyCardJsonLoader)).toThrowError("restart-button element is missing");
+            });
+        });
+    });
 });
