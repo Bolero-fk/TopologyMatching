@@ -1,12 +1,12 @@
-import { CardDom } from './cardDom.js';
 import { GameController } from './gameController.js';
-import { TopologyCardJsonLoader } from './topologyCardJsonLoader.js';
 export class GameConfig {
 }
 export class GameElementInitializer {
-    constructor(config) {
+    constructor(config, cardDomFactory, topologyCardJsonLoader) {
         this.config = config;
         this.gameController = null;
+        this.cardDomFactory = cardDomFactory;
+        this.topologyCardJsonLoader = topologyCardJsonLoader;
     }
     initialize() {
         this.initializeGameBoardElement();
@@ -20,15 +20,14 @@ export class GameElementInitializer {
         this.initializeCardsOnBoardElement(gameBoard);
     }
     initializeCardsOnBoardElement(gameBoard) {
-        const topologyCardLoader = new TopologyCardJsonLoader();
-        const cardData = topologyCardLoader.loadTopologyCardsJson(this.config.jsonPath);
+        const cardData = this.topologyCardJsonLoader.loadTopologyCardsJson(this.config.jsonPath);
         this.gameController = new GameController(cardData, this.config.maxSelectableCard, this.config.flippingWaitTimeMilliseconds, this.config.imageFolderPath);
         const cardDoms = [];
         for (let i = 0; i < this.config.row * this.config.column; i++) {
             const cardElement = document.createElement('div');
             cardElement.className = 'card';
             gameBoard.appendChild(cardElement);
-            cardDoms.push(new CardDom(cardElement));
+            cardDoms.push(this.cardDomFactory.create(cardElement));
         }
         this.gameController.startGame(cardDoms);
     }

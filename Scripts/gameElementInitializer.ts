@@ -1,6 +1,7 @@
-import { CardDom } from './cardDom.js';
 import { GameController } from './gameController.js';
-import { TopologyCardJsonLoader } from './topologyCardJsonLoader.js';
+import { ICardDom } from './ICardDom.js';
+import { ICardDomFactory } from './ICardDomFactory.js';
+import { ITopologyCardJsonLoader } from './ITopologyCardJsonLoader.js';
 
 export class GameConfig {
     public row: number;
@@ -14,10 +15,14 @@ export class GameConfig {
 export class GameElementInitializer {
     private gameController: GameController;
     private readonly config: GameConfig;
+    private readonly cardDomFactory: ICardDomFactory;
+    private readonly topologyCardJsonLoader: ITopologyCardJsonLoader;
 
-    constructor(config: GameConfig) {
+    constructor(config: GameConfig, cardDomFactory: ICardDomFactory, topologyCardJsonLoader: ITopologyCardJsonLoader) {
         this.config = config;
         this.gameController = null;
+        this.cardDomFactory = cardDomFactory;
+        this.topologyCardJsonLoader = topologyCardJsonLoader;
     }
 
     public initialize(): void {
@@ -36,19 +41,18 @@ export class GameElementInitializer {
     }
 
     private initializeCardsOnBoardElement(gameBoard: HTMLElement): void {
-        const topologyCardLoader = new TopologyCardJsonLoader();
-        const cardData = topologyCardLoader.loadTopologyCardsJson(this.config.jsonPath);
+        const cardData = this.topologyCardJsonLoader.loadTopologyCardsJson(this.config.jsonPath);
 
         this.gameController = new GameController(cardData, this.config.maxSelectableCard, this.config.flippingWaitTimeMilliseconds, this.config.imageFolderPath);
 
-        const cardDoms: CardDom[] = [];
+        const cardDoms: ICardDom[] = [];
 
         for (let i = 0; i < this.config.row * this.config.column; i++) {
             const cardElement = document.createElement('div');
             cardElement.className = 'card';
             gameBoard.appendChild(cardElement);
 
-            cardDoms.push(new CardDom(cardElement));
+            cardDoms.push(this.cardDomFactory.create(cardElement));
         }
 
         this.gameController.startGame(cardDoms);
