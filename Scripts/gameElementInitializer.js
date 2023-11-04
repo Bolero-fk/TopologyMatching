@@ -1,14 +1,11 @@
 import { CardDom } from './cardDom.js';
 import { GameController } from './gameController.js';
 import { TopologyCardJsonLoader } from './topologyCardJsonLoader.js';
+export class GameConfig {
+}
 export class GameElementInitializer {
-    constructor(row, column, jsonPath, imageFolderPath, flippingWaitTimeMilliseconds, maxSelectableCard) {
-        this.row = row;
-        this.column = column;
-        this.jsonPath = jsonPath;
-        this.imageFolderPath = imageFolderPath;
-        this.flippingWaitTimeMilliseconds = flippingWaitTimeMilliseconds;
-        this.maxSelectableCard = maxSelectableCard;
+    constructor(config) {
+        this.config = config;
         this.gameController = null;
     }
     initialize() {
@@ -18,16 +15,16 @@ export class GameElementInitializer {
     initializeGameBoardElement() {
         const gameBoard = document.getElementById('game-board');
         // カードの行と列の枚数を指定する
-        gameBoard.style.setProperty('--cols', String(this.column));
-        gameBoard.style.setProperty('--rows', String(this.row));
+        gameBoard.style.setProperty('--cols', String(this.config.column));
+        gameBoard.style.setProperty('--rows', String(this.config.row));
         this.initializeCardsOnBoardElement(gameBoard);
     }
     initializeCardsOnBoardElement(gameBoard) {
         const topologyCardLoader = new TopologyCardJsonLoader();
-        const cardData = topologyCardLoader.loadTopologyCardsJson(this.jsonPath);
-        this.gameController = new GameController(cardData, this.maxSelectableCard, this.flippingWaitTimeMilliseconds, this.imageFolderPath);
+        const cardData = topologyCardLoader.loadTopologyCardsJson(this.config.jsonPath);
+        this.gameController = new GameController(cardData, this.config.maxSelectableCard, this.config.flippingWaitTimeMilliseconds, this.config.imageFolderPath);
         const cardDoms = [];
-        for (let i = 0; i < this.row * this.column; i++) {
+        for (let i = 0; i < this.config.row * this.config.column; i++) {
             const cardElement = document.createElement('div');
             cardElement.className = 'card';
             gameBoard.appendChild(cardElement);

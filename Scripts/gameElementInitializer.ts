@@ -2,22 +2,21 @@ import { CardDom } from './cardDom.js';
 import { GameController } from './gameController.js';
 import { TopologyCardJsonLoader } from './topologyCardJsonLoader.js';
 
+export class GameConfig {
+    row: number;
+    column: number;
+    jsonPath: string;
+    imageFolderPath: string;
+    flippingWaitTimeMilliseconds: number;
+    maxSelectableCard: number;
+}
+
 export class GameElementInitializer {
     private gameController: GameController;
-    private readonly row: number;
-    private readonly column: number;
-    private readonly jsonPath: string;
-    private readonly imageFolderPath: string;
-    private readonly flippingWaitTimeMilliseconds: number;
-    private readonly maxSelectableCard: number;
+    private readonly config: GameConfig;
 
-    constructor(row: number, column: number, jsonPath: string, imageFolderPath: string, flippingWaitTimeMilliseconds: number, maxSelectableCard: number) {
-        this.row = row;
-        this.column = column;
-        this.jsonPath = jsonPath;
-        this.imageFolderPath = imageFolderPath;
-        this.flippingWaitTimeMilliseconds = flippingWaitTimeMilliseconds;
-        this.maxSelectableCard = maxSelectableCard;
+    constructor(config: GameConfig) {
+        this.config = config;
         this.gameController = null;
     }
 
@@ -30,21 +29,21 @@ export class GameElementInitializer {
         const gameBoard = document.getElementById('game-board');
 
         // カードの行と列の枚数を指定する
-        gameBoard.style.setProperty('--cols', String(this.column));
-        gameBoard.style.setProperty('--rows', String(this.row));
+        gameBoard.style.setProperty('--cols', String(this.config.column));
+        gameBoard.style.setProperty('--rows', String(this.config.row));
 
         this.initializeCardsOnBoardElement(gameBoard);
     }
 
     private initializeCardsOnBoardElement(gameBoard: HTMLElement): void {
         const topologyCardLoader = new TopologyCardJsonLoader();
-        const cardData = topologyCardLoader.loadTopologyCardsJson(this.jsonPath);
+        const cardData = topologyCardLoader.loadTopologyCardsJson(this.config.jsonPath);
 
-        this.gameController = new GameController(cardData, this.maxSelectableCard, this.flippingWaitTimeMilliseconds, this.imageFolderPath);
+        this.gameController = new GameController(cardData, this.config.maxSelectableCard, this.config.flippingWaitTimeMilliseconds, this.config.imageFolderPath);
 
         const cardDoms: CardDom[] = [];
 
-        for (let i = 0; i < this.row * this.column; i++) {
+        for (let i = 0; i < this.config.row * this.config.column; i++) {
             const cardElement = document.createElement('div');
             cardElement.className = 'card';
             gameBoard.appendChild(cardElement);
