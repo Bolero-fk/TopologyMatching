@@ -9,7 +9,7 @@ const GAME_CONFIG = {
     flippingWaitTimeMilliseconds: 1000,
     maxSelectableCard: 2 // FIXME: 現状の実装では選択可能枚数が2枚の時のみ実装されている
 };
-window.onload = () => {
+export function run() {
     const gameInitializer = new GameElementInitializer(GAME_CONFIG, new CardDomFactory, new TopologyCardJsonLoader);
     gameInitializer.initialize();
-};
+}
