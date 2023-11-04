@@ -4,15 +4,26 @@ import { GameController } from './gameController.js';
  */
 export class GameElementInitializer {
     /**
+     * @param htmlDocument ゲームの描画を行うhtmlDocument
      * @param config ゲームの設定
      * @param cardDomFactory ICardDomインスタンスを生成するためのファクトリ
      * @param topologyCardJsonLoader カード情報のJSONを読み込むローダ
      */
-    constructor(config, cardDomFactory, topologyCardJsonLoader) {
+    constructor(htmlDocument, config, cardDomFactory, topologyCardJsonLoader) {
+        this.validate(htmlDocument);
+        this.htmlDocument = htmlDocument;
         this.config = config;
         this.gameController = null;
         this.cardDomFactory = cardDomFactory;
         this.topologyCardJsonLoader = topologyCardJsonLoader;
+    }
+    validate(htmlDocument) {
+        if (!htmlDocument.getElementById('game-board')) {
+            throw new Error("game-board element is missing");
+        }
+        if (!htmlDocument.getElementById('restart-button')) {
+            throw new Error("restart-button element is missing");
+        }
     }
     /**
      * html上に配置する要素を初期化します
@@ -25,7 +36,7 @@ export class GameElementInitializer {
      * game boardを初期化します
      */
     initializeGameBoardElement() {
-        const gameBoard = document.getElementById('game-board');
+        const gameBoard = this.htmlDocument.getElementById('game-board');
         // カードの行と列の枚数を指定する
         gameBoard.style.setProperty('--cols', String(this.config.column));
         gameBoard.style.setProperty('--rows', String(this.config.row));
@@ -40,7 +51,7 @@ export class GameElementInitializer {
         this.gameController = new GameController(cardData, this.config.maxSelectableCard, this.config.flippingWaitTimeMilliseconds, this.config.imageFolderPath);
         const cardDoms = [];
         for (let i = 0; i < this.config.row * this.config.column; i++) {
-            const cardElement = document.createElement('div');
+            const cardElement = this.htmlDocument.createElement('div');
             cardElement.className = 'card';
             gameBoard.appendChild(cardElement);
             cardDoms.push(this.cardDomFactory.create(cardElement));
@@ -51,7 +62,7 @@ export class GameElementInitializer {
      * Restart Game ボタンを初期化します
      */
     initializeRestartGameButtonElement() {
-        document.getElementById('restart-button').onclick = this.restartGame.bind(this);
+        this.htmlDocument.getElementById('restart-button').onclick = this.restartGame.bind(this);
     }
     /**
      * カードセットを新しく読み込んでゲームを再スタートします。

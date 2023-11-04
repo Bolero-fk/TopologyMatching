@@ -8,21 +8,36 @@ import { ITopologyCardJsonLoader } from './ITopologyCardJsonLoader.js';
  * ゲームのHTML要素を初期化するクラス
  */
 export class GameElementInitializer {
+    private readonly htmlDocument: Document;
     private gameController: GameController;
     private readonly config: GameConfig;
     private readonly cardDomFactory: ICardDomFactory;
     private readonly topologyCardJsonLoader: ITopologyCardJsonLoader;
 
     /**
+     * @param htmlDocument ゲームの描画を行うhtmlDocument
      * @param config ゲームの設定
      * @param cardDomFactory ICardDomインスタンスを生成するためのファクトリ
      * @param topologyCardJsonLoader カード情報のJSONを読み込むローダ
      */
-    constructor(config: GameConfig, cardDomFactory: ICardDomFactory, topologyCardJsonLoader: ITopologyCardJsonLoader) {
+    constructor(htmlDocument: Document, config: GameConfig, cardDomFactory: ICardDomFactory, topologyCardJsonLoader: ITopologyCardJsonLoader) {
+        this.validate(htmlDocument);
+
+        this.htmlDocument = htmlDocument;
         this.config = config;
         this.gameController = null;
         this.cardDomFactory = cardDomFactory;
         this.topologyCardJsonLoader = topologyCardJsonLoader;
+    }
+
+    private validate(htmlDocument: Document) {
+        if (!htmlDocument.getElementById('game-board')) {
+            throw new Error("game-board element is missing");
+        }
+
+        if (!htmlDocument.getElementById('restart-button')) {
+            throw new Error("restart-button element is missing");
+        }
     }
 
     /**
@@ -37,7 +52,7 @@ export class GameElementInitializer {
      * game boardを初期化します
      */
     private initializeGameBoardElement(): void {
-        const gameBoard = document.getElementById('game-board');
+        const gameBoard = this.htmlDocument.getElementById('game-board');
 
         // カードの行と列の枚数を指定する
         gameBoard.style.setProperty('--cols', String(this.config.column));
@@ -58,7 +73,7 @@ export class GameElementInitializer {
         const cardDoms: ICardDom[] = [];
 
         for (let i = 0; i < this.config.row * this.config.column; i++) {
-            const cardElement = document.createElement('div');
+            const cardElement = this.htmlDocument.createElement('div');
             cardElement.className = 'card';
             gameBoard.appendChild(cardElement);
 
@@ -72,7 +87,7 @@ export class GameElementInitializer {
      * Restart Game ボタンを初期化します
      */
     private initializeRestartGameButtonElement(): void {
-        document.getElementById('restart-button').onclick = this.restartGame.bind(this);
+        this.htmlDocument.getElementById('restart-button').onclick = this.restartGame.bind(this);
     }
 
     /**
