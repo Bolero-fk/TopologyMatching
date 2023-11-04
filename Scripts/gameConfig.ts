@@ -19,7 +19,7 @@ export class GameConfig {
         this.maxSelectableCard = maxSelectableCard;
     }
 
-    validate(row: number, column: number, jsonPath: string, imageFolderPath: string, flippingWaitTimeMilliseconds: number, maxSelectableCard: number) {
+    private validate(row: number, column: number, jsonPath: string, imageFolderPath: string, flippingWaitTimeMilliseconds: number, maxSelectableCard: number) {
         if (row <= 0) {
             throw new Error('Row must be positive values.');
         }
