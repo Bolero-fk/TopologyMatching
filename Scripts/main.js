@@ -1,5 +1,6 @@
 import { CardDom } from './cardDom.js';
 import { GameController } from './gameController.js';
+import { TopologyCardJsonLoader } from './topologyCardJsonLoader.js';
 // ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする
 // FIXME: jsonに記されたカードのペアがROW * COLUMN以下のときに落ちるので注意する
 const ROW = 4;
@@ -34,7 +35,9 @@ function initializeGameBoardElement() {
  * game board上のカードを初期化します
  */
 function initializeCardsOnBoardElement(gameBoard) {
-    gameController = new GameController(loadTopologyCardsJson(), MAX_SELECTABLE_CARD, FLIPPING_WAIT_TIME_MILLISECONDS, IMAGE_FOLDER_PATH);
+    const topologyCardLoader = new TopologyCardJsonLoader();
+    const cardData = topologyCardLoader.loadTopologyCardsJson(JSON_PATH);
+    gameController = new GameController(cardData, MAX_SELECTABLE_CARD, FLIPPING_WAIT_TIME_MILLISECONDS, IMAGE_FOLDER_PATH);
     const cardDoms = new Array();
     for (let i = 0; i < ROW * COLUMN; i++) {
         const cardElement = document.createElement('div');
@@ -49,22 +52,6 @@ function initializeCardsOnBoardElement(gameBoard) {
  */
 function initializeRestartGemeButtonElement() {
     document.getElementById('restart-button').onclick = restartGame;
-}
-/**
- * トポロジーカードをjsonから読み込む
- */
-function loadTopologyCardsJson() {
-    let result;
-    $.ajax({
-        url: JSON_PATH,
-        dataType: "json",
-        async: false,
-        success: function (data) {
-            result = data;
-            ;
-        }
-    });
-    return result;
 }
 /**
  * カードセットを新しく読み込んでゲームを再スタートします。
