@@ -1,6 +1,7 @@
 import { CardDomFactory } from './cardDomFactory.js';
 import { TopologyCardJsonLoader } from './topologyCardJsonLoader.js';
-import { GameElementInitializer, GameConfig } from './gameElementInitializer.js';
+import { GameElementInitializer } from './gameElementInitializer.js';
+import { GameConfig } from './gameConfig.js';
 
 const GAME_CONFIG: GameConfig = {
     row: 4,    // ゲームに配置するカードの枚数, ROW*COLUMNの値が偶数になるようにする

@@ -1,10 +1,5 @@
 import { GameController } from './gameController.js';
 /**
- * ゲームの設定
- */
-export class GameConfig {
-}
-/**
  * ゲームのHTML要素を初期化するクラス
  */
 export class GameElementInitializer {
