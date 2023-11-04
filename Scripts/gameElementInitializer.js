@@ -10,11 +10,20 @@ export class GameElementInitializer {
      * @param topologyCardJsonLoader カード情報のJSONを読み込むローダ
      */
     constructor(htmlDocument, config, cardDomFactory, topologyCardJsonLoader) {
+        this.validate(htmlDocument);
         this.htmlDocument = htmlDocument;
         this.config = config;
         this.gameController = null;
         this.cardDomFactory = cardDomFactory;
         this.topologyCardJsonLoader = topologyCardJsonLoader;
+    }
+    validate(htmlDocument) {
+        if (!htmlDocument.getElementById('game-board')) {
+            throw new Error("game-board element is missing");
+        }
+        if (!htmlDocument.getElementById('restart-button')) {
+            throw new Error("restart-button element is missing");
+        }
     }
     /**
      * html上に配置する要素を初期化します
