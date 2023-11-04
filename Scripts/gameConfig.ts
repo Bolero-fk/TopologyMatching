@@ -10,7 +10,7 @@ export class GameConfig {
     public maxSelectableCard: number;
 
     constructor(row: number, column: number, jsonPath: string, imageFolderPath: string, flippingWaitTimeMilliseconds: number, maxSelectableCard: number) {
-        this.Validate(row, column, jsonPath, imageFolderPath, flippingWaitTimeMilliseconds, maxSelectableCard);
+        this.validate(row, column, jsonPath, imageFolderPath, flippingWaitTimeMilliseconds, maxSelectableCard);
         this.row = row;
         this.column = column;
         this.jsonPath = jsonPath;
@@ -19,7 +19,7 @@ export class GameConfig {
         this.maxSelectableCard = maxSelectableCard;
     }
 
-    Validate(row: number, column: number, jsonPath: string, imageFolderPath: string, flippingWaitTimeMilliseconds: number, maxSelectableCard: number) {
+    validate(row: number, column: number, jsonPath: string, imageFolderPath: string, flippingWaitTimeMilliseconds: number, maxSelectableCard: number) {
         if (row <= 0) {
             throw new Error('Row must be positive values.');
         }
