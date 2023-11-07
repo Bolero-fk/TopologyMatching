@@ -1,4 +1,8 @@
 # トポロジー神経衰弱ゲーム
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=Flat-square&logo=c-sharp&logoColor=white)[![.NET Test](https://github.com/Bolero-fk/TopologyMatching/actions/workflows/dotnetTest.yml/badge.svg)](https://github.com/Bolero-fk/TopologyMatching/actions/workflows/dotnetTest.yml)![badge](https://raw.githubusercontent.com/Bolero-fk/TopologyMatching/_xml_coverage_reports/data/RewriteComment%2343/badge.svg)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=Flat-square&logo=typescript&logoColor=white)[![Jest Test](https://github.com/Bolero-fk/TopologyMatching/actions/workflows/jestTest.yml/badge.svg)](https://github.com/Bolero-fk/TopologyMatching/actions/workflows/jestTest.yml)![badge](https://raw.githubusercontent.com/Bolero-fk/TopologyMatching/jest-_xml_coverage_reports/data/AddJestWorkflow%2391/badge.svg)
+
+
 
 ## 概要
 トポロジー神経衰弱ゲームは、神経衰弱の要領でトポロジー同相な図形を見つけるゲームです。
