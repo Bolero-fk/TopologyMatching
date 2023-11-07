@@ -6,7 +6,7 @@ export var FlipStatus;
     FlipStatus[FlipStatus["Front"] = 0] = "Front";
     FlipStatus[FlipStatus["Back"] = 1] = "Back";
 })(FlipStatus || (FlipStatus = {}));
-/**
+/*
  * カードの振る舞いと状態を管理するクラス
  */
 export class Card {
