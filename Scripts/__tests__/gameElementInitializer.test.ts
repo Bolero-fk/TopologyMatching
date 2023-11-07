@@ -1,8 +1,8 @@
-import { GameElementInitializer } from './../gameElementInitializer.js';
-import { GameController } from './../gameController.js';
-import { ICardDom } from './../ICardDom.js';
-import { ICardDomFactory } from './../ICardDomFactory.js';
-import { ITopologyCardJsonLoader } from './../ITopologyCardJsonLoader.js';
+import { GameElementInitializer } from '../dist/gameElementInitializer.js';
+import { GameController } from '../dist/gameController.js';
+import { ICardDom } from '../dist/ICardDom.js';
+import { ICardDomFactory } from '../dist/ICardDomFactory.js';
+import { ITopologyCardJsonLoader } from '../dist/ITopologyCardJsonLoader.js';
 
 describe('GameElementInitializer', () => {
     let mockCardDomFactory: ICardDomFactory;

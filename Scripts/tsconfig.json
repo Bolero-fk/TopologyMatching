@@ -1,4 +1,7 @@
 {
+    "include": [
+        "src/**/*.ts"
+    ],
     "compilerOptions": {
         "target": "es2015",
         "module": "ES2015",
@@ -8,5 +11,6 @@
             "esnext"
         ],
         "moduleResolution": "Node",
+        "outDir": "./dist",
     }
 }

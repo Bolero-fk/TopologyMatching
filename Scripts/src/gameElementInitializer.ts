@@ -1,8 +1,8 @@
-import { GameController } from './gameController.js';
-import { GameConfig } from './gameConfig.js';
-import { ICardDom } from './ICardDom.js';
-import { ICardDomFactory } from './ICardDomFactory.js';
-import { ITopologyCardJsonLoader } from './ITopologyCardJsonLoader.js';
+import { GameController } from '../dist/gameController.js';
+import { GameConfig } from '../dist/gameConfig.js';
+import { ICardDom } from '../dist/ICardDom.js';
+import { ICardDomFactory } from '../dist/ICardDomFactory.js';
+import { ITopologyCardJsonLoader } from '../dist/ITopologyCardJsonLoader.js';
 
 /**
  * ゲームのHTML要素を初期化するクラス

@@ -1,5 +1,5 @@
-import { ITopologyCardJsonLoader } from './ITopologyCardJsonLoader.js';
-import { TopologyCardJson } from './JsonType.js';
+import { ITopologyCardJsonLoader } from '../dist/ITopologyCardJsonLoader.js';
+import { TopologyCardJson } from '../dist/JsonType.js';
 
 export class TopologyCardJsonLoader implements ITopologyCardJsonLoader {
 

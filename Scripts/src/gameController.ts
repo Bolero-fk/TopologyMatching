@@ -1,7 +1,7 @@
-import { GameEngine } from './gameEngine.js';
-import { Card, FlipStatus } from './card.js';
-import { ICardDom } from './ICardDom.js';
-import { TopologyCardJson } from './JsonType.js';
+import { GameEngine } from '../dist/gameEngine.js';
+import { Card, FlipStatus } from '../dist/card.js';
+import { ICardDom } from '../dist/ICardDom.js';
+import { TopologyCardJson } from '../dist/JsonType.js';
 
 export class GameController {
     private readonly gameEngine: GameEngine;

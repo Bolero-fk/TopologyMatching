@@ -1,5 +1,5 @@
-import { ICardDom } from './ICardDom.js';
-import { CardDom } from './cardDom.js';
+import { ICardDom } from '../dist/ICardDom.js';
+import { CardDom } from '../dist/cardDom.js';
 
 export class CardDomFactory {
     create(element: HTMLElement): ICardDom {

@@ -1,4 +1,4 @@
-import { ICardDom } from "./ICardDom.js";
+import { ICardDom } from "../dist/ICardDom.js";
 
 /**
  * カードの表面または裏面を示す列挙型
