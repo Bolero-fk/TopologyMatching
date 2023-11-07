@@ -9,4 +9,9 @@ module.exports = {
             useESM: true,
         }],
     },
+    coverageReporters: ["text", "html", "cobertura"],
+    collectCoverage: true,
+    collectCoverageFrom: [
+        "dist/*.js"
+    ],
 };
