@@ -9,7 +9,4 @@ module.exports = {
             useESM: true,
         }],
     },
-    transformIgnorePatterns: [
-        '/node_modules/(エラーになっているライブラリ).+\\.ts',
-    ],
 };
