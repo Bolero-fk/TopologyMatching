@@ -4,7 +4,7 @@ module.exports = {
     preset: 'ts-jest/presets/default-esm',
     globals: {
         'ts-jest': {
-            tsConfig: 'tsconfig.json',
+            tsconfig: 'tsconfig.json',
             useESM: true,
         },
     },
