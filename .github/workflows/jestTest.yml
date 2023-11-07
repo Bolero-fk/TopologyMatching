@@ -1,4 +1,4 @@
-name: Jest Test with Coverage Report
+name: Jest Test
 
 on:
   push:
