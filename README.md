@@ -1,4 +1,5 @@
 # トポロジー神経衰弱ゲーム
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=Flat-square&logo=c-sharp&logoColor=white)
 
 ## 概要
 トポロジー神経衰弱ゲームは、神経衰弱の要領でトポロジー同相な図形を見つけるゲームです。
