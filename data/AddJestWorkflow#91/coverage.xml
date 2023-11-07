@@ -1,12 +1,36 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="156" lines-covered="156" line-rate="1" branches-valid="50" branches-covered="50" branch-rate="1" timestamp="1699345158682" complexity="0" version="0.1">
+<coverage lines-valid="173" lines-covered="156" line-rate="0.9017000000000001" branches-valid="52" branches-covered="50" branch-rate="0.9615" timestamp="1699345622655" complexity="0" version="0.1">
   <sources>
     <source>/home/runner/work/TopologyMatching/TopologyMatching/Scripts</source>
   </sources>
   <packages>
-    <package name="main" line-rate="1" branch-rate="1">
+    <package name="main" line-rate="0.9017000000000001" branch-rate="0.9615">
       <classes>
+        <class name="ICardDom.js" filename="dist/ICardDom.js" line-rate="0" branch-rate="0">
+          <methods>
+          </methods>
+          <lines>
+          </lines>
+        </class>
+        <class name="ICardDomFactory.js" filename="dist/ICardDomFactory.js" line-rate="0" branch-rate="0">
+          <methods>
+          </methods>
+          <lines>
+          </lines>
+        </class>
+        <class name="ITopologyCardJsonLoader.js" filename="dist/ITopologyCardJsonLoader.js" line-rate="0" branch-rate="0">
+          <methods>
+          </methods>
+          <lines>
+          </lines>
+        </class>
+        <class name="JsonType.js" filename="dist/JsonType.js" line-rate="0" branch-rate="0">
+          <methods>
+          </methods>
+          <lines>
+          </lines>
+        </class>
         <class name="card.js" filename="dist/card.js" line-rate="1" branch-rate="1">
           <methods>
             <method name="(anonymous_0)" hits="3" signature="()V">
@@ -72,6 +96,64 @@
             <line number="60" hits="24" branch="false"/>
             <line number="66" hits="6" branch="false"/>
             <line number="75" hits="12" branch="false"/>
+          </lines>
+        </class>
+        <class name="cardDom.js" filename="dist/cardDom.js" line-rate="0" branch-rate="0">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="2" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="7" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_2)" hits="0" signature="()V">
+              <lines>
+                <line number="11" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_3)" hits="0" signature="()V">
+              <lines>
+                <line number="15" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_4)" hits="0" signature="()V">
+              <lines>
+                <line number="18" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_5)" hits="0" signature="()V">
+              <lines>
+                <line number="21" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="3" hits="0" branch="false"/>
+            <line number="4" hits="0" branch="false"/>
+            <line number="5" hits="0" branch="false"/>
+            <line number="8" hits="0" branch="false"/>
+            <line number="9" hits="0" branch="false"/>
+            <line number="12" hits="0" branch="false"/>
+            <line number="13" hits="0" branch="false"/>
+            <line number="16" hits="0" branch="false"/>
+            <line number="19" hits="0" branch="false"/>
+            <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)"/>
+          </lines>
+        </class>
+        <class name="cardDomFactory.js" filename="dist/cardDomFactory.js" line-rate="0" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="3" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="4" hits="0" branch="false"/>
           </lines>
         </class>
         <class name="gameConfig.js" filename="dist/gameConfig.js" line-rate="1" branch-rate="1">
@@ -421,6 +503,39 @@
             <line number="103" hits="25" branch="true" condition-coverage="100% (2/2)"/>
             <line number="104" hits="8" branch="false"/>
             <line number="107" hits="7" branch="false"/>
+          </lines>
+        </class>
+        <class name="main.js" filename="dist/main.js" line-rate="0" branch-rate="1">
+          <methods>
+            <method name="run" hits="0" signature="()V">
+              <lines>
+                <line number="13" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false"/>
+            <line number="14" hits="0" branch="false"/>
+            <line number="15" hits="0" branch="false"/>
+          </lines>
+        </class>
+        <class name="topologyCardJsonLoader.js" filename="dist/topologyCardJsonLoader.js" line-rate="0" branch-rate="1">
+          <methods>
+            <method name="(anonymous_0)" hits="0" signature="()V">
+              <lines>
+                <line number="7" hits="0"/>
+              </lines>
+            </method>
+            <method name="(anonymous_1)" hits="0" signature="()V">
+              <lines>
+                <line number="13" hits="0"/>
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="0" branch="false"/>
+            <line number="14" hits="0" branch="false"/>
+            <line number="17" hits="0" branch="false"/>
           </lines>
         </class>
       </classes>
