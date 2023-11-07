@@ -11,4 +11,7 @@ module.exports = {
     },
     coverageReporters: ["text", "html", "cobertura"],
     collectCoverage: true,
+    collectCoverageFrom: [
+        "dist/*.js"
+    ],
 };
